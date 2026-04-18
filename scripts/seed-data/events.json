@@ -1,0 +1,362 @@
+[
+  {
+    "slug": "2026-01-10-kartenvorverkauf-prunksitzung",
+    "title": "Kartenvorverkauf Prunksitzung",
+    "startDate": "2026-01-10",
+    "endDate": null,
+    "location": "Pfarrheim",
+    "description": "13:00 – 15:00 Uhr — Kartenvorverkauf Prunksitzung im Pfarrheim",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-02-07-prunksitzung",
+    "title": "Prunksitzung",
+    "startDate": "2026-02-07",
+    "endDate": null,
+    "location": "Eistalhalle",
+    "description": "20:11 Uhr — Prunksitzung in der Eistalhalle",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-02-14-fastnachtsfeier-fuer-kinder",
+    "title": "Fastnachtsfeier für Kinder",
+    "startDate": "2026-02-14",
+    "endDate": null,
+    "location": "Pfarrheim",
+    "description": "14:00 Uhr — Fastnachtsfeier für Kinder im Pfarrheim (Next Generation)",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-03-07-black-orange-party",
+    "title": "Black Orange Party",
+    "startDate": "2026-03-07",
+    "endDate": null,
+    "location": "Pfarrheim",
+    "description": "19:00 Uhr — Black Orange Party im Pfarrheim (Jugend)",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-03-15-bezirks-friedengebet",
+    "title": "Bezirks Friedengebet",
+    "startDate": "2026-03-15",
+    "endDate": null,
+    "location": "Grünstadt",
+    "description": "15:00 Uhr — Bezirks Friedengebet in Grünstadt am Kolpingkreuz 2000",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-03-19-mitgliederversammlung",
+    "title": "Mitgliederversammlung",
+    "startDate": "2026-03-19",
+    "endDate": null,
+    "location": "Pfarrheim",
+    "description": "20:00 Uhr — Mitgliederversammlung im Pfarrheim",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-03-20-bezirks-kreuzweg",
+    "title": "Bezirks Kreuzweg",
+    "startDate": "2026-03-20",
+    "endDate": null,
+    "location": "Park",
+    "description": "19:00 Uhr — Bezirks Kreuzweg im Park von Dirmstein",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-03-21-ostereier-basteln",
+    "title": "Ostereier basteln",
+    "startDate": "2026-03-21",
+    "endDate": null,
+    "location": "Pfarrheim",
+    "description": "Ostereier basteln im Pfarrheim (Next Generation)",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-03-22-konzert",
+    "title": "Konzert",
+    "startDate": "2026-03-22",
+    "endDate": null,
+    "location": "Eistalhalle",
+    "description": "15:00 Uhr — Konzert in der Eistalhalle (Blaskapelle)",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-04-19-besichtigung-kloster-sion-mit-wolfgang-mueller",
+    "title": "Besichtigung Kloster Sion mit Wolfgang Müller",
+    "startDate": "2026-04-19",
+    "endDate": null,
+    "location": "Kloster Sion",
+    "description": "15:00 Uhr — Besichtigung Kloster Sion mit Wolfgang Müller",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-05-03-kolpinggedenktag-pfarrkirche-pfarrheim",
+    "title": "Kolpinggedenktag Pfarrkirche & Pfarrheim",
+    "startDate": "2026-05-03",
+    "endDate": null,
+    "location": "Pfarrheim",
+    "description": "09:00 Uhr — Kolpinggedenktag Pfarrkirche & Pfarrheim",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-05-14-waldfest",
+    "title": "Waldfest",
+    "startDate": "2026-05-14",
+    "endDate": null,
+    "location": "Kolpingwiese",
+    "description": "10:00 Uhr — Waldfest auf der Kolpingwiese",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-05-22-bezirksmaiandacht",
+    "title": "Bezirksmaiandacht",
+    "startDate": "2026-05-22",
+    "endDate": null,
+    "location": "Ramsen",
+    "description": "19:00 Uhr — Bezirksmaiandacht in Ramsen an der Mariengrotte",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-06-12-singen-mit-walter",
+    "title": "Singen mit Walter",
+    "startDate": "2026-06-12",
+    "endDate": null,
+    "location": "Kolpingwiese",
+    "description": "19:00 Uhr — Singen mit Walter auf der Kolpingwiese",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-06-14-gottesdienst",
+    "title": "Gottesdienst",
+    "startDate": "2026-06-14",
+    "endDate": null,
+    "location": "Pfarrkirche",
+    "description": "10:30 Uhr — Gottesdienst in der Pfarrkirche",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-06-20-erlebnistag-einweihung-der-wanderwege",
+    "title": "Erlebnistag, Einweihung der Wanderwege",
+    "startDate": "2026-06-20",
+    "endDate": null,
+    "location": "Eisenberg",
+    "description": "Erlebnistag, Einweihung der Wanderwege (VG Eisenberg)",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-06-21-sommerfest",
+    "title": "Sommerfest",
+    "startDate": "2026-06-21",
+    "endDate": null,
+    "location": "Kolpingwiese",
+    "description": "Sommerfest auf der Kolpingwiese (Next Generation)",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-06-27-poolparty",
+    "title": "Poolparty",
+    "startDate": "2026-06-27",
+    "endDate": null,
+    "location": "Kolpingwiese",
+    "description": "Poolparty auf der Kolpingwiese (Jugend)",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-07-04-10-jahre-kolping-open-air-theater",
+    "title": "10 Jahre Kolping Open-Air-Theater",
+    "startDate": "2026-07-04",
+    "endDate": null,
+    "location": "Kolpingwiese",
+    "description": "10 Jahre Kolping Open-Air-Theater auf der Kolpingwiese",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-07-18-familien-zeltlager",
+    "title": "Familien Zeltlager",
+    "startDate": "2026-07-18",
+    "endDate": "2026-07-25",
+    "location": "Niederschlettenbach",
+    "description": "Familien Zeltlager in Niederschlettenbach",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-08-21-open-air-theater",
+    "title": "Open Air Theater",
+    "startDate": "2026-08-21",
+    "endDate": "2026-08-22",
+    "location": "Kolpingwiese",
+    "description": "20 Uhr — Open Air Theater auf der Kolpingwiese (Jugend)",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-08-22-ausflug-zum-barfusspfad-bad-sobernheim",
+    "title": "Ausflug zum Barfußpfad Bad Sobernheim",
+    "startDate": "2026-08-22",
+    "endDate": null,
+    "location": "Bad Sobernheim",
+    "description": "Ausflug zum Barfußpfad Bad Sobernheim (Next Generation)",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-08-28-open-air-theater",
+    "title": "Open Air Theater",
+    "startDate": "2026-08-28",
+    "endDate": "2026-08-29",
+    "location": "Kolpingwiese",
+    "description": "20 Uhr — Open Air Theater auf der Kolpingwiese (Jugend)",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-09-04-steaktasting",
+    "title": "Steaktasting",
+    "startDate": "2026-09-04",
+    "endDate": null,
+    "location": "Kolpingwiese",
+    "description": "18:00 Uhr — Steaktasting auf der Kolpingwiese mit Peter Weihrauch",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-09-05-kennst-du-deine-heimat",
+    "title": "„Kennst du deine Heimat“",
+    "startDate": "2026-09-05",
+    "endDate": null,
+    "location": null,
+    "description": "15:00 Uhr — „Kennst du deine Heimat“",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-09-26-krimidinner",
+    "title": "Krimidinner",
+    "startDate": "2026-09-26",
+    "endDate": null,
+    "location": "Pfarrheim",
+    "description": "19:00 Uhr — Krimidinner im Pfarrheim (Jugend)",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-10-02-rosenkranzandacht-anschl-zwiebelkuchen-neuer-wein",
+    "title": "Rosenkranzandacht anschl. Zwiebelkuchen & Neuer Wein",
+    "startDate": "2026-10-02",
+    "endDate": null,
+    "location": null,
+    "description": "19:00 Uhr — Rosenkranzandacht anschl. Zwiebelkuchen & Neuer Wein",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-10-17-oktoberfest",
+    "title": "Oktoberfest",
+    "startDate": "2026-10-17",
+    "endDate": null,
+    "location": "Kolpingwiese",
+    "description": "17:00 Uhr — Oktoberfest auf der Kolpingwiese (Blaskapelle & Jugend)",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-10-21-19-00-uhr-bezirksrosenkranz-in",
+    "title": "19.00 Uhr Bezirksrosenkranz in ?????",
+    "startDate": "2026-10-21",
+    "endDate": null,
+    "location": null,
+    "description": "19.00 Uhr Bezirksrosenkranz in ?????",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-10-24-herbstwanderung",
+    "title": "Herbstwanderung",
+    "startDate": "2026-10-24",
+    "endDate": null,
+    "location": null,
+    "description": "09:15 Uhr — Herbstwanderung",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-10-25-kuerbis-schnitzen",
+    "title": "Kürbis schnitzen",
+    "startDate": "2026-10-25",
+    "endDate": null,
+    "location": "Pfarrheim",
+    "description": "Kürbis schnitzen im Pfarrheim (Next Generation)",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-11-07-lieblings-weinprobe",
+    "title": "Lieblings Weinprobe",
+    "startDate": "2026-11-07",
+    "endDate": null,
+    "location": "Pfarrheim",
+    "description": "19:00 Uhr — Lieblings Weinprobe im Pfarrheim",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-11-21-dioezesan-ehrung",
+    "title": "Diözesan Ehrung",
+    "startDate": "2026-11-21",
+    "endDate": null,
+    "location": "Heßheim",
+    "description": "Diözesan Ehrung in Heßheim",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-11-28-arbeitseinsatz-wir-machen-unser-gelaende-winterfest",
+    "title": "Arbeitseinsatz \"Wir machen unser Gelände winterfest\"",
+    "startDate": "2026-11-28",
+    "endDate": null,
+    "location": null,
+    "description": "09:00 Uhr — Arbeitseinsatz \"Wir machen unser Gelände winterfest\"",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-11-29-musikalische-adventsandacht",
+    "title": "Musikalische Adventsandacht",
+    "startDate": "2026-11-29",
+    "endDate": null,
+    "location": "Ev. Kirche",
+    "description": "18:00 Uhr — Musikalische Adventsandacht in der Ev. Kirche",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-12-06-kolpinggedenktag-pfarrkirche-pfarrheim",
+    "title": "Kolpinggedenktag Pfarrkirche & Pfarrheim",
+    "startDate": "2026-12-06",
+    "endDate": null,
+    "location": "Pfarrheim",
+    "description": "09:00 Uhr — Kolpinggedenktag Pfarrkirche & Pfarrheim",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-12-13-plaetzchen-backen",
+    "title": "Plätzchen backen",
+    "startDate": "2026-12-13",
+    "endDate": null,
+    "location": "Pfarrheim",
+    "description": "Plätzchen backen im Pfarrheim (Next Generation)",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-12-20-adventsfeier",
+    "title": "Adventsfeier",
+    "startDate": "2026-12-20",
+    "endDate": null,
+    "location": "Kolpingwiese",
+    "description": "17:00 Uhr — Adventsfeier auf der Kolpingwiese",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-12-26-theaterauffuehrung",
+    "title": "Theateraufführung",
+    "startDate": "2026-12-26",
+    "endDate": "2026-12-27",
+    "location": null,
+    "description": "Theateraufführung",
+    "category": "alle"
+  },
+  {
+    "slug": "2026-12-28-winterwanderung-in-unserer-region",
+    "title": "Winterwanderung in unserer Region",
+    "startDate": "2026-12-28",
+    "endDate": null,
+    "location": null,
+    "description": "10:00 Uhr — Winterwanderung in unserer Region",
+    "category": "alle"
+  }
+]

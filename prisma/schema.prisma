@@ -1,0 +1,152 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         String   @default("redakteur")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  news       News[]
+  events     Event[]
+  pages      Page[]
+  galleries  Gallery[]
+}
+
+model Page {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  content     String
+  metaTitle   String?
+  metaDesc    String?
+  parent      String?
+  sortOrder   Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  authorId String?
+  author   User?   @relation(fields: [authorId], references: [id])
+
+  @@index([slug])
+  @@index([parent])
+}
+
+model News {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  date      DateTime
+  teaser    String
+  content   String
+  coverImage String?
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  authorId String?
+  author   User?   @relation(fields: [authorId], references: [id])
+
+  @@index([slug])
+  @@index([date])
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  startDate   DateTime
+  endDate     DateTime?
+  location    String?
+  description String
+  category    String   @default("alle")
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  authorId String?
+  author   User?   @relation(fields: [authorId], references: [id])
+
+  @@index([slug])
+  @@index([startDate])
+  @@index([category])
+}
+
+model Gallery {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  description String?
+  date        DateTime?
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  authorId String?
+  author   User?   @relation(fields: [authorId], references: [id])
+  images   Image[]
+
+  @@index([slug])
+}
+
+model Image {
+  id        String   @id @default(cuid())
+  filename  String
+  alt       String   @default("")
+  width     Int?
+  height    Int?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  galleryId String
+  gallery   Gallery @relation(fields: [galleryId], references: [id], onDelete: Cascade)
+
+  @@index([galleryId])
+}
+
+model MediaAsset {
+  id        String   @id @default(cuid())
+  path      String   @unique
+  alt       String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PageHit {
+  id        String   @id @default(cuid())
+  path      String
+  referrer  String?
+  createdAt DateTime @default(now())
+
+  @@index([path])
+  @@index([createdAt])
+}
+
+model GuestbookEntry {
+  id        String   @id @default(cuid())
+  name      String
+  message   String
+  approved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([approved, createdAt])
+}
+
+model Redirect {
+  id        String   @id @default(cuid())
+  fromPath  String   @unique
+  toPath    String
+  createdAt DateTime @default(now())
+
+  @@index([fromPath])
+}

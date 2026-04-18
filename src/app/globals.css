@@ -1,26 +1,170 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fbf8f1;
+  --surface: #ffffff;
+  --foreground: #1f1a14;
+  --brand: #b85c00;
+  --brand-dark: #8a3f00;
+  --brand-soft: #f6ead6;
+  --muted: #6b6357;
+  --border: #e2dccd;
+  --rule: #c9bfa6;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
   --color-foreground: var(--foreground);
+  --color-brand: var(--brand);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-soft: var(--brand-soft);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-rule: var(--rule);
   --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-source-serif);
   --font-mono: var(--font-geist-mono);
+
+  --radius-xs: 0.0625rem;
+  --radius-sm: 0.0625rem;
+  --radius-md: 0.125rem;
+  --radius-lg: 0.1875rem;
+  --radius-xl: 0.25rem;
+  --radius-2xl: 0.375rem;
+  --radius-3xl: 0.5rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html,
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-serif), "Georgia", "Times New Roman", serif;
+  letter-spacing: -0.005em;
+}
+
+.eyebrow {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--brand-dark);
+}
+
+.rule-ornament {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--rule);
+}
+.rule-ornament::before,
+.rule-ornament::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--rule);
+}
+.rule-ornament > span {
+  font-family: var(--font-serif), "Georgia", serif;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.prose-content {
+  line-height: 1.75;
+  font-family: var(--font-serif), "Georgia", serif;
+  font-size: 1.0625rem;
+}
+.prose-content h2 {
+  font-size: 1.625rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+.prose-content h3 {
+  font-size: 1.3125rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.prose-content p {
+  margin-bottom: 1rem;
+}
+.prose-content a {
+  color: var(--brand-dark);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.prose-content ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.prose-content ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.prose-content img {
+  border-radius: 0.125rem;
+  margin: 1.5rem 0;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+}
+.prose-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5rem 0;
+}
+.prose-content th,
+.prose-content td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+.prose-content th {
+  background: var(--brand-soft);
+  font-weight: 600;
+}
+.prose-content blockquote {
+  border-left: 3px solid var(--brand);
+  padding: 0.25rem 1rem;
+  color: var(--muted);
+  margin: 1.25rem 0;
+  font-style: italic;
+}
+.prose-content hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 2rem 0;
+}
+.prose-content code {
+  background: #f1ecdf;
+  padding: 0.125rem 0.35rem;
+  border-radius: 0.125rem;
+  font-size: 0.9em;
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+.prose-content pre {
+  background: #1f1a14;
+  color: #f6ead6;
+  padding: 1rem;
+  border-radius: 0.125rem;
+  overflow-x: auto;
+  margin: 1.25rem 0;
+}
+.prose-content pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
 }
