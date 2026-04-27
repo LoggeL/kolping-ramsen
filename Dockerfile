@@ -19,6 +19,7 @@ ENV DATABASE_URL=file:/data/dev.db
 
 COPY . .
 RUN mkdir -p /data
+COPY build-dev.db /data/dev.db
 RUN npx prisma generate
 RUN npm run build
 
