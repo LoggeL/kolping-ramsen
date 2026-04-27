@@ -1,0 +1,17 @@
+.env
+.env*
+!.env.example
+.git
+.next
+node_modules
+coverage
+out
+build
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.tsbuildinfo
+next-env.d.ts
+public/uploads/*
+!public/uploads/.gitkeep
