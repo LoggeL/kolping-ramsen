@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { SidebarBrand, SidebarNav } from "./site-sidebar";
+import { IconClose } from "./admin/icons";
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
@@ -59,7 +60,7 @@ export function MobileNav() {
                 onClick={() => setOpen(false)}
                 className="p-2 rounded-md border border-border hover:bg-brand-soft shrink-0"
               >
-                ✕
+                <IconClose width={16} height={16} />
               </button>
             </div>
             <div className="flex-1 overflow-y-auto p-3">

@@ -6,6 +6,7 @@ import { SITE } from "@/lib/site";
 import { getSession } from "@/lib/session";
 import { Markdown } from "@/components/markdown";
 import { DraftBanner } from "@/components/draft-banner";
+import { IconCalendar, IconPin } from "@/components/admin/icons";
 
 export async function generateMetadata(
   { params }: PageProps<"/termine/[slug]">,
@@ -54,8 +55,8 @@ export default async function EventDetailPage(
       <header className="mt-4 mb-8">
         <h1 className="text-3xl md:text-4xl font-bold">{event.title}</h1>
         <div className="mt-3 text-muted">
-          <div>
-            🗓{" "}
+          <div className="inline-flex items-center gap-1.5">
+            <IconCalendar width={14} height={14} />
             <time dateTime={event.startDate.toISOString()}>
               {new Intl.DateTimeFormat("de-DE", {
                 dateStyle: "full",
@@ -63,7 +64,12 @@ export default async function EventDetailPage(
               }).format(event.startDate)}
             </time>
           </div>
-          {event.location ? <div className="mt-1">📍 {event.location}</div> : null}
+          {event.location ? (
+            <div className="mt-1 inline-flex items-center gap-1.5">
+              <IconPin width={14} height={14} />
+              {event.location}
+            </div>
+          ) : null}
         </div>
       </header>
       <Markdown source={event.description} />

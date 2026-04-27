@@ -51,11 +51,15 @@ export default async function CmsPage(
   const session = await getSession();
   if (!page.published && !session) notFound();
 
+  const source = page.gallerySlug
+    ? `${page.content}\n\n::gallery[${page.gallerySlug}]::\n`
+    : page.content;
+
   return (
     <article className="mx-auto max-w-3xl px-4 py-12">
       {!page.published ? <DraftBanner /> : null}
       <h1 className="text-3xl md:text-4xl font-bold mb-6">{page.title}</h1>
-      <Markdown source={page.content} />
+      <Markdown source={source} />
     </article>
   );
 }

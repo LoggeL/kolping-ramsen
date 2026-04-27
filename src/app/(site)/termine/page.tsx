@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/session";
 import { TermineViews } from "@/components/termine-views";
+import { IconDownload } from "@/components/admin/icons";
 
 export const metadata: Metadata = {
   title: "Termine",
@@ -54,9 +55,10 @@ export default async function EventsPage(
         </div>
         <a
           href="/termine.ics"
-          className="text-sm rounded-md border border-border px-3 py-2 hover:bg-brand-soft"
+          className="inline-flex items-center gap-1.5 text-sm rounded-md border border-border px-3 py-2 hover:bg-brand-soft"
         >
-          📥 Kalender abonnieren (.ics)
+          <IconDownload width={14} height={14} />
+          Kalender abonnieren (.ics)
         </a>
       </div>
 

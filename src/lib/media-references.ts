@@ -6,7 +6,7 @@ export type MediaReferenceKind =
   | "news-content"
   | "page"
   | "event"
-  | "gallery";
+  | "group";
 
 export type MediaReference = {
   kind: MediaReferenceKind;
@@ -26,7 +26,7 @@ export function extractImageUrls(content: string | null | undefined): string[] {
 }
 
 export async function buildReferenceMap(): Promise<Map<string, MediaReference[]>> {
-  const [news, pages, events, images] = await Promise.all([
+  const [news, pages, events, groupItems] = await Promise.all([
     prisma.news.findMany({
       select: { id: true, slug: true, title: true, coverImage: true, content: true },
     }),
@@ -36,10 +36,10 @@ export async function buildReferenceMap(): Promise<Map<string, MediaReference[]>
     prisma.event.findMany({
       select: { id: true, slug: true, title: true, description: true },
     }),
-    prisma.image.findMany({
+    prisma.mediaGroupItem.findMany({
       select: {
-        filename: true,
-        gallery: { select: { id: true, slug: true, title: true } },
+        path: true,
+        group: { select: { id: true, slug: true, name: true } },
       },
     }),
   ]);
@@ -96,12 +96,12 @@ export async function buildReferenceMap(): Promise<Map<string, MediaReference[]>
       });
     }
   }
-  for (const img of images) {
-    push(`/uploads/${img.filename}`, {
-      kind: "gallery",
-      label: `Galerie · ${img.gallery.title}`,
-      href: `/galerien/${img.gallery.slug}`,
-      adminHref: `/admin/galleries/${img.gallery.id}`,
+  for (const item of groupItems) {
+    push(item.path, {
+      kind: "group",
+      label: `Galerie · ${item.group.name}`,
+      href: `/admin/media/groups/${item.group.id}`,
+      adminHref: `/admin/media/groups/${item.group.id}`,
     });
   }
 
@@ -113,5 +113,5 @@ export const REFERENCE_KIND_LABEL: Record<MediaReferenceKind, string> = {
   "news-content": "News",
   page: "Seite",
   event: "Termin",
-  gallery: "Galerie",
+  group: "Galerie",
 };

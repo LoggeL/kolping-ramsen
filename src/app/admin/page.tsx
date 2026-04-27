@@ -25,8 +25,6 @@ export default async function AdminDashboard() {
     eventUpcoming,
     pageTotal,
     pagePublished,
-    galleryTotal,
-    galleryPublished,
     guestApproved,
     guestPending,
     recentNews,
@@ -43,8 +41,6 @@ export default async function AdminDashboard() {
     prisma.event.count({ where: { startDate: { gte: now } } }),
     prisma.page.count(),
     prisma.page.count({ where: { published: true } }),
-    prisma.gallery.count(),
-    prisma.gallery.count({ where: { published: true } }),
     prisma.guestbookEntry.count({ where: { approved: true } }),
     prisma.guestbookEntry.count({ where: { approved: false } }),
     prisma.news.findMany({
@@ -97,12 +93,6 @@ export default async function AdminDashboard() {
             value={pageTotal}
             sub={`${pagePublished} veröffentlicht`}
             href="/admin/pages"
-          />
-          <StatCard
-            label="Galerien"
-            value={galleryTotal}
-            sub={`${galleryPublished} veröffentlicht`}
-            href="/admin/galleries"
           />
           <StatCard
             label="Mediathek"

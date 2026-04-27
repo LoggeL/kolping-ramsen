@@ -4,7 +4,8 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { revalidatePath } from "next/cache";
 import { getSession } from "@/lib/session";
-import { scanMedia, listBuckets } from "@/lib/media-scan";
+import { scanMedia } from "@/lib/media-scan";
+import { buildReferenceMap } from "@/lib/media-references";
 import { prisma } from "@/lib/prisma";
 
 const PUBLIC_DIR = path.join(process.cwd(), "public");
@@ -34,17 +35,40 @@ export async function GET() {
   if (!session) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
-  const files = await scanMedia();
-  const buckets = listBuckets(files);
+  const [files, refMap, groupItems, groups] = await Promise.all([
+    scanMedia(),
+    buildReferenceMap(),
+    prisma.mediaGroupItem.findMany({ select: { path: true } }),
+    prisma.mediaGroup.findMany({
+      orderBy: { updatedAt: "desc" },
+      include: {
+        items: { orderBy: { sortOrder: "asc" }, take: 1 },
+        _count: { select: { items: true } },
+      },
+    }),
+  ]);
+  const inGroup = new Set(groupItems.map((i) => i.path.toLowerCase()));
+
   return NextResponse.json({
-    files: files.map((f) => ({
-      url: f.url,
-      bucket: f.bucket,
-      filename: f.filename,
-      size: f.size,
-      mtime: f.mtime.toISOString(),
+    files: files.map((f) => {
+      const key = f.url.toLowerCase();
+      const refs = refMap.get(key) ?? [];
+      const orphan = refs.length === 0 && !inGroup.has(key);
+      return {
+        url: f.url,
+        filename: f.filename,
+        size: f.size,
+        mtime: f.mtime.toISOString(),
+        orphan,
+      };
+    }),
+    groups: groups.map((g) => ({
+      id: g.id,
+      slug: g.slug,
+      name: g.name,
+      itemCount: g._count.items,
+      thumb: g.items[0]?.path ?? null,
     })),
-    buckets,
   });
 }
 

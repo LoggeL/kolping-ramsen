@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
-import { scanMedia, listBuckets } from "@/lib/media-scan";
+import { scanMedia } from "@/lib/media-scan";
 import {
   buildReferenceMap,
   REFERENCE_KIND_LABEL,
@@ -15,6 +15,7 @@ import {
   deleteMediaFile,
 } from "./actions";
 import { CopyButton } from "@/components/admin/copy-button";
+import { IconExternal } from "@/components/admin/icons";
 
 export const metadata = {
   title: "Mediathek",
@@ -27,9 +28,9 @@ function formatBytes(n: number) {
   return `${(n / 1024 / 1024).toFixed(1)} MB`;
 }
 
-function buildHref(params: { bucket?: string | null; q?: string }) {
+function buildHref(params: { orphans?: boolean; q?: string }) {
   const sp = new URLSearchParams();
-  if (params.bucket) sp.set("bucket", params.bucket);
+  if (params.orphans) sp.set("filter", "orphans");
   if (params.q) sp.set("q", params.q);
   const qs = sp.toString();
   return qs ? `/admin/media?${qs}` : "/admin/media";
@@ -40,9 +41,9 @@ export default async function AdminMediaPage(
 ) {
   if (!(await getSession())) redirect("/admin/login");
   const sp = await searchParams;
-  const bucketFilter = typeof sp.bucket === "string" ? sp.bucket : null;
-  const search =
-    typeof sp.q === "string" ? sp.q.trim().toLowerCase() : "";
+  const filter = typeof sp.filter === "string" ? sp.filter : "";
+  const onlyOrphans = filter === "orphans";
+  const search = typeof sp.q === "string" ? sp.q.trim().toLowerCase() : "";
 
   const [files, refMap, assets] = await Promise.all([
     scanMedia(),
@@ -50,21 +51,34 @@ export default async function AdminMediaPage(
     prisma.mediaAsset.findMany({ select: { path: true, alt: true } }),
   ]);
   const assetMap = new Map(assets.map((a) => [a.path, a]));
-  const buckets = listBuckets(files);
-  const filtered = files.filter((f) => {
-    if (bucketFilter && f.bucket !== bucketFilter) return false;
-    if (search && !f.filename.toLowerCase().includes(search)) return false;
+
+  const annotated = files.map((f) => {
+    const refs = refMap.get(("/" + f.relPath).toLowerCase()) ?? [];
+    return { file: f, refs, orphan: refs.length === 0 };
+  });
+  const filtered = annotated.filter(({ file, orphan }) => {
+    if (onlyOrphans && !orphan) return false;
+    if (search && !file.filename.toLowerCase().includes(search)) return false;
     return true;
   });
+  const orphanCount = annotated.filter((a) => a.orphan).length;
 
   return (
     <div className="space-y-6">
-      <header>
-        <h1 className="text-2xl font-bold">Mediathek</h1>
-        <p className="text-sm text-muted mt-1">
-          Zentrale Verwaltung aller Bilder — hochladen, umbenennen, Alt-Text
-          pflegen, löschen und sehen, wo sie verlinkt sind.
-        </p>
+      <header className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold">Mediathek</h1>
+          <p className="text-sm text-muted mt-1">
+            Alle Bilder — hochladen, Alt-Text pflegen, löschen und sehen, wo sie
+            verlinkt sind.
+          </p>
+        </div>
+        <Link
+          href="/admin/media/groups"
+          className="rounded-md border border-border bg-surface px-3 py-1.5 text-sm hover:bg-brand-soft"
+        >
+          Galerie-Gruppen verwalten →
+        </Link>
       </header>
 
       <section
@@ -91,14 +105,16 @@ export default async function AdminMediaPage(
             Hochladen
           </button>
           <p className="text-xs text-muted">
-            JPEG · PNG · WebP · GIF · AVIF — max. 10 MB pro Datei. Wird unter{" "}
-            <code>uploads/library/</code> gespeichert.
+            JPEG · PNG · WebP · GIF · AVIF — max. 10 MB pro Datei.
           </p>
         </form>
       </section>
 
       <section className="space-y-3">
-        <form className="flex flex-wrap items-center gap-2 text-sm" action="/admin/media">
+        <form
+          className="flex flex-wrap items-center gap-2 text-sm"
+          action="/admin/media"
+        >
           <input
             type="search"
             name="q"
@@ -106,8 +122,8 @@ export default async function AdminMediaPage(
             placeholder="Dateinamen durchsuchen…"
             className="border border-border rounded-md px-3 py-1.5 w-64"
           />
-          {bucketFilter ? (
-            <input type="hidden" name="bucket" value={bucketFilter} />
+          {onlyOrphans ? (
+            <input type="hidden" name="filter" value="orphans" />
           ) : null}
           <button
             type="submit"
@@ -115,7 +131,7 @@ export default async function AdminMediaPage(
           >
             Suchen
           </button>
-          {(search || bucketFilter) && (
+          {(search || onlyOrphans) && (
             <Link
               href="/admin/media"
               className="text-brand-dark text-xs hover:underline"
@@ -128,20 +144,17 @@ export default async function AdminMediaPage(
           </span>
         </form>
 
-        <nav className="flex flex-wrap gap-2 text-sm" aria-label="Ordner filtern">
+        <nav className="flex flex-wrap gap-2 text-sm" aria-label="Filter">
           <FilterChip
             label={`Alle (${files.length})`}
-            href={buildHref({ bucket: null, q: search })}
-            active={!bucketFilter}
+            href={buildHref({ q: search })}
+            active={!onlyOrphans}
           />
-          {buckets.map((b) => (
-            <FilterChip
-              key={b.bucket}
-              label={`${b.bucket} (${b.count})`}
-              href={buildHref({ bucket: b.bucket, q: search })}
-              active={bucketFilter === b.bucket}
-            />
-          ))}
+          <FilterChip
+            label={`Ungenutzt (${orphanCount})`}
+            href={buildHref({ orphans: true, q: search })}
+            active={onlyOrphans}
+          />
         </nav>
       </section>
 
@@ -151,9 +164,8 @@ export default async function AdminMediaPage(
         </p>
       ) : (
         <ul className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {filtered.map((f) => {
+          {filtered.map(({ file: f, refs, orphan }) => {
             const meta = assetMap.get(f.relPath);
-            const refs = refMap.get(("/" + f.relPath).toLowerCase()) ?? [];
             const altValue = meta?.alt ?? "";
             return (
               <li
@@ -169,14 +181,16 @@ export default async function AdminMediaPage(
                     className="object-cover"
                     unoptimized={f.url.toLowerCase().endsWith(".svg")}
                   />
+                  {orphan ? (
+                    <span className="absolute top-1 left-1 text-[0.6rem] uppercase tracking-wider bg-amber-100 text-amber-900 border border-amber-300 rounded px-1 py-0.5">
+                      ungenutzt
+                    </span>
+                  ) : null}
                 </div>
                 <div className="p-3 flex-1 min-w-0 space-y-3 text-xs">
                   <div className="space-y-0.5">
                     <div className="font-mono truncate" title={f.filename}>
                       {f.filename}
-                    </div>
-                    <div className="text-muted truncate" title={f.bucket}>
-                      {f.bucket}
                     </div>
                     <div className="text-muted">
                       {formatBytes(f.size)} ·{" "}
@@ -251,10 +265,10 @@ export default async function AdminMediaPage(
                               href={r.href}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-muted hover:text-brand-dark"
+                              className="text-muted hover:text-brand-dark inline-flex align-middle"
                               title="Im Frontend ansehen"
                             >
-                              ↗
+                              <IconExternal width={11} height={11} />
                             </Link>
                           </li>
                         ))}

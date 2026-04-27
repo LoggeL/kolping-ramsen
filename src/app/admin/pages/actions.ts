@@ -16,6 +16,7 @@ const pageSchema = z.object({
   metaDesc: z.string().max(300).optional(),
   sortOrder: z.string().optional(),
   published: z.string().optional(),
+  gallerySlug: z.string().max(140).optional(),
 });
 
 function pickSlug(slug: string | undefined, title: string, parent?: string) {
@@ -41,6 +42,7 @@ export async function createPage(formData: FormData) {
       parent: data.parent || null,
       sortOrder: data.sortOrder ? Number(data.sortOrder) : 0,
       published: data.published === "on",
+      gallerySlug: data.gallerySlug ? data.gallerySlug.trim() || null : null,
       authorId: session.userId,
     },
   });
@@ -65,6 +67,7 @@ export async function updatePage(id: string, formData: FormData) {
       parent: data.parent || null,
       sortOrder: data.sortOrder ? Number(data.sortOrder) : 0,
       published: data.published === "on",
+      gallerySlug: data.gallerySlug ? data.gallerySlug.trim() || null : null,
     },
   });
   revalidatePath(`/${slug}`);
@@ -77,15 +80,51 @@ export async function deletePage(id: string) {
   redirect("/admin/pages");
 }
 
+export async function reorderSiblings(orderedIds: string[]) {
+  await requireSession();
+  if (!Array.isArray(orderedIds) || orderedIds.length === 0) return;
+  // Guard: all ids exist and share the same slug-path prefix (same depth/parent).
+  const rows = await prisma.page.findMany({
+    where: { id: { in: orderedIds } },
+    select: { id: true, slug: true },
+  });
+  if (rows.length !== orderedIds.length) return;
+  const prefixOf = (slug: string) => {
+    const parts = slug.split("/");
+    return parts.slice(0, -1).join("/");
+  };
+  const prefix = prefixOf(rows[0].slug);
+  const depth = rows[0].slug.split("/").length;
+  const consistent = rows.every(
+    (r) => prefixOf(r.slug) === prefix && r.slug.split("/").length === depth,
+  );
+  if (!consistent) return;
+
+  await prisma.$transaction(
+    orderedIds.map((id, i) =>
+      prisma.page.update({ where: { id }, data: { sortOrder: i * 10 } }),
+    ),
+  );
+  revalidatePath("/admin/pages");
+}
+
 export async function movePage(id: string, direction: "up" | "down") {
   await requireSession();
   const page = await prisma.page.findUnique({ where: { id } });
   if (!page) return;
 
-  // Siblings share the same parent, ordered by sortOrder then title.
-  const siblings = await prisma.page.findMany({
-    where: { parent: page.parent },
+  // Siblings share the same slug-path prefix (depth). "foo/bar/baz" has
+  // prefix "foo/bar"; top-level pages have no slash. We can't rely on the
+  // legacy `parent` column because older rows left it null.
+  const segments = page.slug.split("/");
+  const prefix = segments.slice(0, -1).join("/");
+  const allAtLevel = await prisma.page.findMany({
     orderBy: [{ sortOrder: "asc" }, { title: "asc" }],
+  });
+  const siblings = allAtLevel.filter((p) => {
+    const parts = p.slug.split("/");
+    if (parts.length !== segments.length) return false;
+    return parts.slice(0, -1).join("/") === prefix;
   });
   const idx = siblings.findIndex((s) => s.id === id);
   if (idx < 0) return;

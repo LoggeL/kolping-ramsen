@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { IconCalendar, IconList, IconPin } from "./admin/icons";
 
 type EventRec = {
   id: string;
@@ -44,25 +45,27 @@ export function TermineViews({ events }: { events: EventRec[] }) {
           type="button"
           onClick={() => setView("agenda")}
           aria-pressed={view === "agenda"}
-          className={`text-sm px-4 py-1.5 rounded transition-colors ${
+          className={`inline-flex items-center gap-1.5 text-sm px-4 py-1.5 rounded transition-colors ${
             view === "agenda"
               ? "bg-brand text-white"
               : "text-muted hover:text-brand-dark"
           }`}
         >
-          📋 Agenda
+          <IconList width={14} height={14} />
+          Agenda
         </button>
         <button
           type="button"
           onClick={() => setView("kalender")}
           aria-pressed={view === "kalender"}
-          className={`text-sm px-4 py-1.5 rounded transition-colors ${
+          className={`inline-flex items-center gap-1.5 text-sm px-4 py-1.5 rounded transition-colors ${
             view === "kalender"
               ? "bg-brand text-white"
               : "text-muted hover:text-brand-dark"
           }`}
         >
-          🗓 Kalender
+          <IconCalendar width={14} height={14} />
+          Kalender
         </button>
       </div>
 
@@ -130,7 +133,10 @@ function AgendaView({
                       </Link>
                     </h3>
                     {e.location ? (
-                      <div className="text-sm text-muted mt-0.5">📍 {e.location}</div>
+                      <div className="text-sm text-muted mt-0.5 inline-flex items-center gap-1.5">
+                        <IconPin width={12} height={12} />
+                        {e.location}
+                      </div>
                     ) : null}
                   </div>
                 </li>

@@ -8,7 +8,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "",
     "/aktuelles",
     "/termine",
-    "/galerien",
     "/gaestebuch",
     "/kontakt",
     "/mitglied-werden",
@@ -16,11 +15,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/datenschutz",
   ].map((p) => ({ url: `${base}${p}`, changeFrequency: "weekly", priority: p === "" ? 1 : 0.7 }));
 
-  const [news, events, pages, galleries] = await Promise.all([
+  const [news, events, pages] = await Promise.all([
     prisma.news.findMany({ where: { published: true }, select: { slug: true, updatedAt: true } }),
     prisma.event.findMany({ where: { published: true }, select: { slug: true, updatedAt: true } }),
     prisma.page.findMany({ where: { published: true }, select: { slug: true, updatedAt: true } }),
-    prisma.gallery.findMany({ where: { published: true }, select: { slug: true, updatedAt: true } }),
   ]);
 
   const dynamicRoutes: MetadataRoute.Sitemap = [
@@ -39,12 +37,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...pages.map((p) => ({
       url: `${base}/${p.slug}`,
       lastModified: p.updatedAt,
-      changeFrequency: "monthly" as const,
-      priority: 0.5,
-    })),
-    ...galleries.map((g) => ({
-      url: `${base}/galerien/${g.slug}`,
-      lastModified: g.updatedAt,
       changeFrequency: "monthly" as const,
       priority: 0.5,
     })),

@@ -1,12 +1,14 @@
 import { renderMarkdown } from "@/lib/markdown";
+import { expandGalleryEmbeds } from "@/lib/gallery-embed";
 
-export function Markdown({
+export async function Markdown({
   source,
   className = "prose-content",
 }: {
   source: string;
   className?: string;
 }) {
-  const html = renderMarkdown(source);
+  const expanded = await expandGalleryEmbeds(source ?? "");
+  const html = renderMarkdown(expanded);
   return <div className={className} dangerouslySetInnerHTML={{ __html: html }} />;
 }

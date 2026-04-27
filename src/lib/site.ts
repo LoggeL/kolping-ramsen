@@ -56,7 +56,6 @@ export const MAIN_NAV: NavItem[] = [
     ],
   },
   { label: "Theater", href: "https://kolpingtheater-ramsen.de", external: true },
-  { label: "Galerien", href: "/galerien" },
   { label: "Mitglied werden", href: "/mitglied-werden" },
   { label: "Gästebuch", href: "/gaestebuch" },
   { label: "Kontakt", href: "/kontakt" },

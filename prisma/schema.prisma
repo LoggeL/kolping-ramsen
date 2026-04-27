@@ -19,7 +19,6 @@ model User {
   news       News[]
   events     Event[]
   pages      Page[]
-  galleries  Gallery[]
 }
 
 model Page {
@@ -32,6 +31,7 @@ model Page {
   parent      String?
   sortOrder   Int      @default(0)
   published   Boolean  @default(true)
+  gallerySlug String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -82,36 +82,27 @@ model Event {
   @@index([category])
 }
 
-model Gallery {
-  id          String   @id @default(cuid())
-  slug        String   @unique
-  title       String
-  description String?
-  date        DateTime?
-  published   Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+model MediaGroup {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  authorId String?
-  author   User?   @relation(fields: [authorId], references: [id])
-  images   Image[]
+  items MediaGroupItem[]
 
   @@index([slug])
 }
 
-model Image {
-  id        String   @id @default(cuid())
-  filename  String
-  alt       String   @default("")
-  width     Int?
-  height    Int?
-  sortOrder Int      @default(0)
-  createdAt DateTime @default(now())
+model MediaGroupItem {
+  id        String     @id @default(cuid())
+  groupId   String
+  group     MediaGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  path      String
+  sortOrder Int        @default(0)
+  createdAt DateTime   @default(now())
 
-  galleryId String
-  gallery   Gallery @relation(fields: [galleryId], references: [id], onDelete: Cascade)
-
-  @@index([galleryId])
+  @@index([groupId])
 }
 
 model MediaAsset {

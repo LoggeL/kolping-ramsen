@@ -102,14 +102,6 @@ export async function updateMediaAlt(relPath: string, formData: FormData) {
     create: { path: relPath, alt },
   });
 
-  if (relPath.startsWith("uploads/")) {
-    const filename = relPath.slice("uploads/".length);
-    await prisma.image.updateMany({
-      where: { filename },
-      data: { alt },
-    });
-  }
-
   revalidatePath("/admin/media");
 }
 
@@ -153,15 +145,6 @@ export async function renameMediaFile(relPath: string, formData: FormData) {
     data: { path: newRel },
   });
 
-  if (relPath.startsWith("uploads/") && newRel.startsWith("uploads/")) {
-    const oldFilename = relPath.slice("uploads/".length);
-    const newFilename = newRel.slice("uploads/".length);
-    await prisma.image.updateMany({
-      where: { filename: oldFilename },
-      data: { filename: newFilename },
-    });
-  }
-
   await prisma.news.updateMany({
     where: { coverImage: oldUrl },
     data: { coverImage: newUrl },
@@ -186,12 +169,5 @@ export async function deleteMediaFile(relPath: string) {
 
   await prisma.mediaAsset.deleteMany({ where: { path: relPath } });
 
-  if (relPath.startsWith("uploads/")) {
-    const filename = relPath.slice("uploads/".length);
-    await prisma.image.deleteMany({ where: { filename } });
-  }
-
   broadRevalidate();
 }
-
-export { UPLOAD_LIBRARY_REL };
