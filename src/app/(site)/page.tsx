@@ -10,7 +10,7 @@ export default function Page() {
       <section className="border-b border-rule bg-background">
         <div className="mx-auto max-w-6xl px-4 py-16 md:py-24 grid gap-10 md:grid-cols-[1.1fr_1fr] items-center">
           <div>
-            <p className="eyebrow">Treu Kolping &middot; seit 1850</p>
+            <p className="eyebrow">Treu Kolping &middot; seit 1953</p>
             <h1 className="mt-4 text-4xl md:text-5xl font-semibold leading-[1.1]">
               Kolpingsfamilie
               <span className="block italic text-brand-dark">Ramsen</span>
@@ -20,7 +20,7 @@ export default function Page() {
             </div>
             <p className="mt-5 text-lg text-muted max-w-xl font-serif leading-relaxed">
               Gemeinschaft, Glaube, Tradition und gelebtes Miteinander —
-              seit Generationen im Herzen von Ramsen.
+              seit 1953 im Herzen von Ramsen.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link
