@@ -2,11 +2,11 @@ import "server-only";
 import { SignJWT, jwtVerify, type JWTPayload } from "jose";
 import { cookies } from "next/headers";
 
-const SESSION_COOKIE = "kolping_session_v2";
-const LEGACY_SESSION_COOKIES = ["kolping_session"] as const;
+const SESSION_COOKIE = "kolping_session_v3";
+const LEGACY_SESSION_COOKIES = ["kolping_session", "kolping_session_v2"] as const;
 const SESSION_TTL_DAYS = 7;
 const SESSION_ISSUER = "kolping-ramsen";
-const SESSION_AUDIENCE = "redaktion-v2";
+const SESSION_AUDIENCE = "redaktion-v3";
 
 export type SessionPayload = {
   userId: string;

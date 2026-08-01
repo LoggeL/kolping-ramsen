@@ -81,6 +81,10 @@ ADMIN_EMAIL="admin@kolping-ramsen.de" npm run admin:reset
 unset ADMIN_PASSWORD
 ```
 
+Der historisch veröffentlichte Bootstrap-Admin bleibt bis zu diesem Reset
+gesperrt. Der Reset aktualisiert zugleich den Credential-Zeitstempel, der die
+Sperre aufhebt.
+
 Wenn `SMTP_HOST` leer ist, werden Mails nur in die Konsole geloggt — praktisch für die Entwicklung.
 
 ---
