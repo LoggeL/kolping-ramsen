@@ -4,24 +4,16 @@ import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/session";
 import { Markdown } from "@/components/markdown";
 import { DraftBanner } from "@/components/draft-banner";
-
-const RESERVED = new Set([
-  "admin",
-  "aktuelles",
-  "termine",
-  "termine.ics",
-  "kontakt",
-  "gaestebuch",
-  "api",
-]);
+import { isReservedContentSlug } from "@/lib/legacy-routing";
+import { findPublishedRedirect } from "@/lib/legacy-redirect";
+import {
+  cleanLegacyMetaDescription,
+  preparePublicMarkdown,
+} from "@/lib/public-content";
 
 async function loadPage(slug: string) {
-  if (RESERVED.has(slug.split("/")[0])) return null;
+  if (isReservedContentSlug(slug)) return null;
   return prisma.page.findUnique({ where: { slug } });
-}
-
-async function loadRedirect(path: string) {
-  return prisma.redirect.findUnique({ where: { fromPath: path } });
 }
 
 export async function generateMetadata(
@@ -33,27 +25,29 @@ export async function generateMetadata(
   if (!page) return { title: "Nicht gefunden" };
   return {
     title: page.metaTitle ?? page.title,
-    description: page.metaDesc ?? undefined,
+    description: cleanLegacyMetaDescription(page.metaDesc),
   };
 }
 
 export default async function CmsPage(
-  { params }: PageProps<"/[...slug]">,
+  { params, searchParams }: PageProps<"/[...slug]">,
 ) {
-  const { slug } = await params;
+  const [{ slug }, query] = await Promise.all([params, searchParams]);
   const path = slug.join("/");
+  const requestPath = `/${path}`;
 
-  const redirectEntry = await loadRedirect("/" + path);
-  if (redirectEntry) redirect(redirectEntry.toPath);
+  const redirectTarget = await findPublishedRedirect(requestPath, query);
+  if (redirectTarget) redirect(redirectTarget);
 
   const page = await loadPage(path);
   if (!page) notFound();
   const session = await getSession();
   if (!page.published && !session) notFound();
 
+  const content = preparePublicMarkdown(page.content, page.title);
   const source = page.gallerySlug
-    ? `${page.content}\n\n::gallery[${page.gallerySlug}]::\n`
-    : page.content;
+    ? `${content}\n\n::gallery[${page.gallerySlug}]::\n`
+    : content;
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-12">

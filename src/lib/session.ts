@@ -1,17 +1,24 @@
 import "server-only";
 import { SignJWT, jwtVerify, type JWTPayload } from "jose";
 import { cookies } from "next/headers";
+import { requiresPasswordReset } from "./credential-policy";
+import { prisma } from "./prisma";
 
-const SESSION_COOKIE = "kolping_session_v3";
-const LEGACY_SESSION_COOKIES = ["kolping_session", "kolping_session_v2"] as const;
+const SESSION_COOKIE = "kolping_session_v4";
+const LEGACY_SESSION_COOKIES = [
+  "kolping_session",
+  "kolping_session_v2",
+  "kolping_session_v3",
+] as const;
 const SESSION_TTL_DAYS = 7;
 const SESSION_ISSUER = "kolping-ramsen";
-const SESSION_AUDIENCE = "redaktion-v3";
+const SESSION_AUDIENCE = "redaktion-v4";
 
 export type SessionPayload = {
   userId: string;
   role: "admin" | "redakteur";
   name: string;
+  credentialUpdatedAt: string;
 };
 
 function getKey() {
@@ -45,12 +52,14 @@ export async function decryptSession(token: string | undefined): Promise<Session
     if (
       typeof payload.userId === "string" &&
       typeof payload.name === "string" &&
+      typeof payload.credentialUpdatedAt === "string" &&
       (payload.role === "admin" || payload.role === "redakteur")
     ) {
       return {
         userId: payload.userId,
         name: payload.name,
         role: payload.role,
+        credentialUpdatedAt: payload.credentialUpdatedAt,
       };
     }
     return null;
@@ -81,7 +90,27 @@ export async function destroySession() {
 export async function getSession(): Promise<SessionPayload | null> {
   const cookieStore = await cookies();
   const token = cookieStore.get(SESSION_COOKIE)?.value;
-  return decryptSession(token);
+  const session = await decryptSession(token);
+  if (!session) return null;
+
+  // A signed token must not outlive the account or a credential/role change.
+  // `updatedAt` changes for password resets and all Prisma-managed user edits.
+  const user = await prisma.user.findUnique({ where: { id: session.userId } });
+  if (
+    !user ||
+    requiresPasswordReset(user) ||
+    user.updatedAt.toISOString() !== session.credentialUpdatedAt
+  ) {
+    return null;
+  }
+
+  const role = user.role === "admin" ? "admin" : "redakteur";
+  return {
+    userId: user.id,
+    name: user.name,
+    role,
+    credentialUpdatedAt: user.updatedAt.toISOString(),
+  };
 }
 
 export async function requireSession(): Promise<SessionPayload> {

@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 import { sendMail } from "@/lib/mailer";
 import { rateLimit } from "@/lib/rate-limit";
 import { headers } from "next/headers";
+import { SITE } from "@/lib/site";
+import { rateLimitKey } from "@/lib/client-ip";
+import { mailDeliveryFailureCode } from "@/lib/smtp-config";
 
 export const metadata: Metadata = {
   title: "Kontakt",
@@ -13,7 +16,12 @@ export const metadata: Metadata = {
 const contactSchema = z.object({
   name: z.string().min(2).max(120).trim(),
   email: z.email().max(160),
-  subject: z.string().min(2).max(160).trim(),
+  subject: z
+    .string()
+    .min(2)
+    .max(160)
+    .trim()
+    .refine((value) => !/[\r\n]/.test(value), "Ungültiger Betreff"),
   message: z.string().min(10).max(5000).trim(),
   consent: z.literal("on"),
   website: z.string().max(0).optional(),
@@ -22,8 +30,7 @@ const contactSchema = z.object({
 async function contactAction(formData: FormData) {
   "use server";
   const hdrs = await headers();
-  const ip = hdrs.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
-  const limited = rateLimit(`contact:${ip}`, 3, 10 * 60 * 1000);
+  const limited = rateLimit(rateLimitKey("contact", hdrs), 3, 10 * 60 * 1000);
   if (!limited.ok) redirect("/kontakt?error=rate");
 
   const parsed = contactSchema.safeParse({
@@ -38,12 +45,18 @@ async function contactAction(formData: FormData) {
   if (!parsed.success) redirect("/kontakt?error=invalid");
 
   const { name, email, subject, message } = parsed.data;
-  await sendMail({
-    to: process.env.CONTACT_TO ?? "info@kolping-ramsen.de",
-    subject: `[Kontakt] ${subject}`,
-    text: `Von: ${name} <${email}>\n\n${message}`,
-    replyTo: email,
-  });
+  try {
+    await sendMail({
+      to: process.env.CONTACT_TO ?? SITE.contactEmail,
+      subject: `[Kontakt] ${subject}`,
+      text: `Von: ${name} <${email}>\n\n${message}`,
+      replyTo: email,
+    });
+  } catch (error) {
+    // Only log a fixed category: SMTP errors may contain recipient PII.
+    console.error(`[contact] Mail delivery failed: ${mailDeliveryFailureCode(error)}`);
+    redirect("/kontakt?error=delivery");
+  }
   redirect("/kontakt?ok=1");
 }
 
@@ -74,6 +87,16 @@ export default async function ContactPage(
       {error === "rate" ? (
         <div className="rounded-md bg-red-50 border border-red-200 p-4 mb-6">
           Zu viele Anfragen. Bitte später erneut versuchen.
+        </div>
+      ) : null}
+      {error === "delivery" ? (
+        <div className="rounded-md bg-red-50 border border-red-200 p-4 mb-6">
+          Ihre Nachricht konnte derzeit nicht versendet werden. Bitte versuchen Sie es
+          später erneut oder schreiben Sie direkt an{" "}
+          <a className="underline" href={`mailto:${SITE.contactEmail}`}>
+            {SITE.contactEmail}
+          </a>
+          .
         </div>
       ) : null}
 

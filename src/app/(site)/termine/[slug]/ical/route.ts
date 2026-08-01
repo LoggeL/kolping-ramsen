@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { buildIcal } from "@/lib/ical";
 import { SITE } from "@/lib/site";
+import { civilDateKey } from "@/lib/event-time";
 
 export async function GET(
   _req: Request,
@@ -14,8 +15,12 @@ export async function GET(
   const ical = buildIcal([
     {
       uid: event.id,
-      start: event.startDate,
-      end: event.endDate,
+      startDate: civilDateKey(event.startDate),
+      endDate: event.endDate ? civilDateKey(event.endDate) : null,
+      startTime: event.startTime,
+      endTime: event.endTime,
+      allDay: event.allDay,
+      timeZone: event.timeZone,
       title: event.title,
       description: event.description,
       location: event.location,

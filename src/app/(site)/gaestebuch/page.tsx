@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { rateLimit } from "@/lib/rate-limit";
 import { newCaptcha, verifyCaptcha } from "@/lib/captcha";
 import { revalidatePath } from "next/cache";
+import { rateLimitKey } from "@/lib/client-ip";
 
 export const metadata: Metadata = {
   title: "Gästebuch",
@@ -24,8 +25,7 @@ const guestbookSchema = z.object({
 async function submitEntry(formData: FormData) {
   "use server";
   const hdrs = await headers();
-  const ip = hdrs.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
-  const limited = rateLimit(`guestbook:${ip}`, 2, 30 * 60 * 1000);
+  const limited = rateLimit(rateLimitKey("guestbook", hdrs), 2, 30 * 60 * 1000);
   if (!limited.ok) redirect("/gaestebuch?error=rate");
 
   const parsed = guestbookSchema.safeParse({

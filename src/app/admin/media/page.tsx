@@ -2,20 +2,19 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { getSession } from "@/lib/session";
-import { prisma } from "@/lib/prisma";
-import { scanMedia } from "@/lib/media-scan";
+import { listMediaFiles } from "@/lib/media-catalog";
 import {
   buildReferenceMap,
+  mediaReferenceKey,
   REFERENCE_KIND_LABEL,
 } from "@/lib/media-references";
 import {
-  uploadMediaFiles,
   updateMediaAlt,
-  renameMediaFile,
   deleteMediaFile,
 } from "./actions";
 import { CopyButton } from "@/components/admin/copy-button";
 import { IconExternal } from "@/components/admin/icons";
+import { MediaUploadForm } from "@/components/admin/media-upload-form";
 
 export const metadata = {
   title: "Mediathek",
@@ -45,15 +44,13 @@ export default async function AdminMediaPage(
   const onlyOrphans = filter === "orphans";
   const search = typeof sp.q === "string" ? sp.q.trim().toLowerCase() : "";
 
-  const [files, refMap, assets] = await Promise.all([
-    scanMedia(),
+  const [files, refMap] = await Promise.all([
+    listMediaFiles(),
     buildReferenceMap(),
-    prisma.mediaAsset.findMany({ select: { path: true, alt: true } }),
   ]);
-  const assetMap = new Map(assets.map((a) => [a.path, a]));
 
   const annotated = files.map((f) => {
-    const refs = refMap.get(("/" + f.relPath).toLowerCase()) ?? [];
+    const refs = refMap.get(mediaReferenceKey(f.url)) ?? [];
     return { file: f, refs, orphan: refs.length === 0 };
   });
   const filtered = annotated.filter(({ file, orphan }) => {
@@ -86,28 +83,7 @@ export default async function AdminMediaPage(
         className="border border-border rounded-md bg-surface p-4"
       >
         <h2 className="font-semibold mb-2">Bilder hochladen</h2>
-        <form
-          action={uploadMediaFiles}
-          className="flex flex-wrap items-center gap-3"
-        >
-          <input
-            type="file"
-            name="files"
-            multiple
-            required
-            accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
-            className="block text-sm"
-          />
-          <button
-            type="submit"
-            className="rounded-md bg-brand text-white px-4 py-2 text-sm font-medium hover:bg-brand-dark"
-          >
-            Hochladen
-          </button>
-          <p className="text-xs text-muted">
-            JPEG · PNG · WebP · GIF · AVIF — max. 10 MB pro Datei.
-          </p>
-        </form>
+        <MediaUploadForm />
       </section>
 
       <section className="space-y-3">
@@ -165,8 +141,7 @@ export default async function AdminMediaPage(
       ) : (
         <ul className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {filtered.map(({ file: f, refs, orphan }) => {
-            const meta = assetMap.get(f.relPath);
-            const altValue = meta?.alt ?? "";
+            const altValue = f.alt;
             return (
               <li
                 key={f.relPath}
@@ -198,25 +173,12 @@ export default async function AdminMediaPage(
                         dateStyle: "short",
                       }).format(f.mtime)}
                     </div>
+                    {f.width && f.height ? (
+                      <div className="text-muted">
+                        {f.width} × {f.height} px
+                      </div>
+                    ) : null}
                   </div>
-
-                  <form
-                    action={renameMediaFile.bind(null, f.relPath)}
-                    className="flex gap-1.5"
-                  >
-                    <input
-                      name="newName"
-                      defaultValue={f.filename}
-                      className="flex-1 min-w-0 border border-border rounded px-2 py-1 font-mono"
-                      aria-label="Neuer Dateiname"
-                    />
-                    <button
-                      type="submit"
-                      className="text-brand-dark border border-border rounded px-2 py-1 hover:bg-brand-soft shrink-0"
-                    >
-                      Umbenennen
-                    </button>
-                  </form>
 
                   <form
                     action={updateMediaAlt.bind(null, f.relPath)}
@@ -227,6 +189,13 @@ export default async function AdminMediaPage(
                       defaultValue={altValue}
                       placeholder="Alt-Text (Bildbeschreibung für Screenreader & SEO)"
                       className="w-full border border-border rounded px-2 py-1"
+                    />
+                    <textarea
+                      name="caption"
+                      defaultValue={f.caption ?? ""}
+                      placeholder="Optionale Bildunterschrift"
+                      rows={2}
+                      className="w-full resize-y border border-border rounded px-2 py-1"
                     />
                     <button
                       type="submit"
@@ -245,7 +214,9 @@ export default async function AdminMediaPage(
                     </div>
                     {refs.length === 0 ? (
                       <p className="text-muted italic">
-                        Nicht verlinkt — sicher zu löschen.
+                        {f.managed
+                          ? "Nicht verlinkt — kann gelöscht werden."
+                          : "Nicht verlinkt — gehört aber zum versionierten Website-Bestand."}
                       </p>
                     ) : (
                       <ul className="space-y-0.5 max-h-28 overflow-y-auto pr-1">
@@ -281,14 +252,18 @@ export default async function AdminMediaPage(
                     <CopyButton value={`![${altValue}](${f.url})`}>
                       Markdown kopieren
                     </CopyButton>
-                    <form action={deleteMediaFile.bind(null, f.relPath)}>
-                      <button
-                        type="submit"
-                        className="text-red-700 border border-red-200 rounded px-2 py-1 hover:bg-red-50"
-                      >
-                        Löschen
-                      </button>
-                    </form>
+                    {f.managed ? (
+                      <form action={deleteMediaFile.bind(null, f.relPath)}>
+                        <button
+                          type="submit"
+                          disabled={!orphan}
+                          title={!orphan ? "Das Bild wird noch verwendet" : undefined}
+                          className="text-red-700 border border-red-200 rounded px-2 py-1 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-40"
+                        >
+                          Löschen
+                        </button>
+                      </form>
+                    ) : null}
                   </div>
                 </div>
               </li>

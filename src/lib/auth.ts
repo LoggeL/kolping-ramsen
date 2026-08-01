@@ -2,6 +2,9 @@ import "server-only";
 import bcrypt from "bcryptjs";
 import { createHash, timingSafeEqual } from "node:crypto";
 import { prisma } from "./prisma";
+import { requiresPasswordReset } from "./credential-policy";
+
+export { requiresPasswordReset } from "./credential-policy";
 
 // SHA-256 fingerprints of passwords that were previously published with this
 // repository. Keeping fingerprints (rather than the plaintext values) lets us
@@ -9,13 +12,6 @@ import { prisma } from "./prisma";
 const REVOKED_PASSWORD_DIGESTS = [
   "0c9ad49edbc870c0897d394e6c501a244afd09d89de7809d4a069626d8ac683d",
 ] as const;
-
-// The original production account was created from the publicly committed
-// bootstrap database. Reject that account until its password has actually
-// been rotated. Prisma updates `updatedAt` when `admin:reset` changes the
-// password, so the lock releases without a separate feature flag.
-const COMPROMISED_ACCOUNT_EMAIL = "admin@kolping-ramsen.de";
-const COMPROMISED_ACCOUNT_CUTOFF = new Date("2026-08-01T15:10:00.000Z");
 
 function passwordDigest(password: string): Buffer {
   return createHash("sha256").update(password, "utf8").digest();
@@ -25,16 +21,6 @@ export function isRevokedPassword(password: string): boolean {
   const digest = passwordDigest(password);
   return REVOKED_PASSWORD_DIGESTS.some((candidate) =>
     timingSafeEqual(digest, Buffer.from(candidate, "hex")),
-  );
-}
-
-export function requiresPasswordReset(user: {
-  email: string;
-  updatedAt: Date;
-}): boolean {
-  return (
-    user.email.toLowerCase() === COMPROMISED_ACCOUNT_EMAIL &&
-    user.updatedAt < COMPROMISED_ACCOUNT_CUTOFF
   );
 }
 

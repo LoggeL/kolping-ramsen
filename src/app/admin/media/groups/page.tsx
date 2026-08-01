@@ -15,7 +15,11 @@ export default async function MediaGroupsList() {
   const groups = await prisma.mediaGroup.findMany({
     orderBy: { updatedAt: "desc" },
     include: {
-      items: { orderBy: { sortOrder: "asc" }, take: 4 },
+      items: {
+        orderBy: { sortOrder: "asc" },
+        take: 4,
+        include: { asset: { select: { path: true, alt: true } } },
+      },
       _count: { select: { items: true } },
     },
   });
@@ -100,8 +104,8 @@ export default async function MediaGroupsList() {
                         {item ? (
                           /* eslint-disable-next-line @next/next/no-img-element */
                           <img
-                            src={item.path}
-                            alt=""
+                            src={`/${item.asset.path}`}
+                            alt={item.alt ?? item.asset.alt}
                             loading="lazy"
                             className="w-full h-full object-cover"
                           />

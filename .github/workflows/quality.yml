@@ -1,0 +1,73 @@
+name: Quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      DATABASE_URL: file:./build-dev.db
+      SESSION_SECRET: ci-only-session-secret-with-more-than-32-characters
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm audit --omit=dev --audit-level=high
+      - name: Validate migrations on a fresh database
+        run: |
+          node -e "const Database = require('better-sqlite3'); new Database('ci-migrations.db').close()"
+          DATABASE_URL=file:./ci-migrations.db npm run db:deploy
+      - name: Compare committed and fresh database schemas
+        run: REFERENCE_DATABASE_URL=file:./ci-migrations.db npm run db:verify
+      - run: npm run check
+
+  container-smoke:
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - name: Build production container
+        run: docker build --tag kolping-ramsen-ci .
+      - name: Start production container
+        run: >-
+          docker run --detach --name kolping-ramsen-ci
+          --tmpfs /data:rw
+          --env SESSION_SECRET=ci-container-only-secret-with-more-than-32-characters
+          kolping-ramsen-ci
+      - name: Verify startup and public routes
+        run: |
+          ready=false
+          for attempt in {1..45}; do
+            if docker exec kolping-ramsen-ci node -e "fetch('http://127.0.0.1:3000/health/ready').then((response) => process.exit(response.ok ? 0 : 1)).catch(() => process.exit(1))"; then
+              ready=true
+              break
+            fi
+            sleep 2
+          done
+          if [ "$ready" != "true" ]; then
+            docker logs kolping-ramsen-ci
+            exit 1
+          fi
+          docker exec kolping-ramsen-ci node -e "Promise.all(['/','/sitemap.xml'].map((pathname) => fetch('http://127.0.0.1:3000' + pathname))).then((responses) => process.exit(responses.every((response) => response.ok) ? 0 : 1)).catch(() => process.exit(1))"
+      - name: Print logs after failure
+        if: failure()
+        run: docker logs kolping-ramsen-ci
+      - name: Stop production container
+        if: always()
+        run: docker rm --force kolping-ramsen-ci

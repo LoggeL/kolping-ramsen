@@ -6,6 +6,7 @@ import { SITE } from "@/lib/site";
 import { getSession } from "@/lib/session";
 import { Markdown } from "@/components/markdown";
 import { DraftBanner } from "@/components/draft-banner";
+import { serializeJsonLd } from "@/lib/json-ld";
 
 export async function generateMetadata(
   { params }: PageProps<"/aktuelles/[slug]">,
@@ -54,7 +55,7 @@ export default async function NewsDetailPage(
     <article className="mx-auto max-w-3xl px-4 py-12">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
       <Link href="/aktuelles" className="text-sm text-brand-dark hover:underline">
         ← Zurück zur Übersicht

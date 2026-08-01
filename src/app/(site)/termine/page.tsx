@@ -4,6 +4,13 @@ import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/session";
 import { TermineViews } from "@/components/termine-views";
 import { IconDownload } from "@/components/admin/icons";
+import {
+  civilDateKey,
+  EVENT_CATEGORIES,
+  EVENT_CATEGORY_VALUES,
+  parseCivilDate,
+  todayInTimeZone,
+} from "@/lib/event-time";
 
 export const metadata: Metadata = {
   title: "Termine",
@@ -12,23 +19,29 @@ export const metadata: Metadata = {
 
 const CATEGORIES = [
   { value: "alle", label: "Alle" },
-  { value: "jugend", label: "Jugend" },
-  { value: "familie", label: "Familie" },
-  { value: "verein", label: "Verein" },
+  ...EVENT_CATEGORIES,
 ];
 
 export default async function EventsPage(
   { searchParams }: PageProps<"/termine">,
 ) {
   const sp = await searchParams;
-  const filter = typeof sp.kategorie === "string" ? sp.kategorie : "alle";
+  const requestedFilter = typeof sp.kategorie === "string" ? sp.kategorie : "alle";
+  const filter = requestedFilter === "alle" || EVENT_CATEGORY_VALUES.includes(
+    requestedFilter as (typeof EVENT_CATEGORY_VALUES)[number],
+  ) ? requestedFilter : "alle";
+  const today = todayInTimeZone();
+  const todayDate = parseCivilDate(today);
 
   const session = await getSession();
   const events = await prisma.event.findMany({
     where: {
       ...(session ? {} : { published: true }),
       ...(filter !== "alle" ? { category: filter } : {}),
-      startDate: { gte: new Date() },
+      OR: [
+        { startDate: { gte: todayDate } },
+        { endDate: { gte: todayDate } },
+      ],
     },
     orderBy: { startDate: "asc" },
   });
@@ -37,8 +50,11 @@ export default async function EventsPage(
     id: e.id,
     slug: e.slug,
     title: e.title,
-    startDate: e.startDate.toISOString(),
-    endDate: e.endDate?.toISOString() ?? null,
+    startDate: civilDateKey(e.startDate),
+    endDate: e.endDate ? civilDateKey(e.endDate) : null,
+    startTime: e.startTime,
+    endTime: e.endTime,
+    allDay: e.allDay,
     location: e.location,
     category: e.category,
   }));
@@ -78,7 +94,7 @@ export default async function EventsPage(
         ))}
       </nav>
 
-      <TermineViews events={serialized} />
+      <TermineViews events={serialized} today={today} />
     </div>
   );
 }

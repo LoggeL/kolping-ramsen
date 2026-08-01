@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getSession } from "@/lib/session";
 import { EventForm } from "@/components/admin/event-form";
 import { createEvent } from "../actions";
+import { todayInTimeZone } from "@/lib/event-time";
 
 export default async function NewEventPage() {
   if (!(await getSession())) redirect("/admin/login");
@@ -13,7 +14,7 @@ export default async function NewEventPage() {
       <EventForm
         action={createEvent}
         submitLabel="Anlegen"
-        values={{ startDate: new Date().toISOString().slice(0, 16) }}
+        values={{ startDate: todayInTimeZone() }}
       />
     </div>
   );

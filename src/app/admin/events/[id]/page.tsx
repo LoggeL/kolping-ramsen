@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { EventForm } from "@/components/admin/event-form";
 import { OpenLiveLink } from "@/components/admin/open-live-link";
 import { updateEvent, deleteEvent } from "../actions";
+import { civilDateKey } from "@/lib/event-time";
 
 export default async function EditEventPage(
   { params }: PageProps<"/admin/events/[id]">,
@@ -27,8 +28,10 @@ export default async function EditEventPage(
         values={{
           title: item.title,
           slug: item.slug,
-          startDate: item.startDate.toISOString().slice(0, 16),
-          endDate: item.endDate?.toISOString().slice(0, 16) ?? "",
+          startDate: civilDateKey(item.startDate),
+          startTime: item.startTime,
+          endDate: item.endDate ? civilDateKey(item.endDate) : "",
+          endTime: item.endTime,
           location: item.location,
           description: item.description,
           category: item.category,

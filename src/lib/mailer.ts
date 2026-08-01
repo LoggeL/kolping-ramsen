@@ -1,20 +1,23 @@
 import "server-only";
 import nodemailer from "nodemailer";
+import { resolveSmtpConfig } from "./smtp-config";
 
-let cachedTransport: nodemailer.Transporter | null = null;
+let cachedTransport:
+  | { transport: nodemailer.Transporter; from: string }
+  | undefined;
 
 function getTransport() {
   if (cachedTransport) return cachedTransport;
-  const host = process.env.SMTP_HOST;
-  if (!host) return null;
-  cachedTransport = nodemailer.createTransport({
-    host,
-    port: Number(process.env.SMTP_PORT ?? 587),
-    secure: Number(process.env.SMTP_PORT ?? 587) === 465,
-    auth: process.env.SMTP_USER
-      ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
-      : undefined,
-  });
+  const config = resolveSmtpConfig(process.env);
+  cachedTransport = {
+    transport: nodemailer.createTransport({
+      host: config.host,
+      port: config.port,
+      secure: config.secure,
+      auth: config.auth,
+    }),
+    from: config.from,
+  };
   return cachedTransport;
 }
 
@@ -24,18 +27,12 @@ export async function sendMail(opts: {
   text: string;
   replyTo?: string;
 }) {
-  const transport = getTransport();
-  if (!transport) {
-    console.warn("[mailer] SMTP_HOST not configured — logging mail instead:");
-    console.warn(opts);
-    return { logged: true };
-  }
+  const { transport, from } = getTransport();
   await transport.sendMail({
-    from: process.env.SMTP_FROM ?? "noreply@kolping-ramsen.de",
+    from,
     to: opts.to,
     subject: opts.subject,
     text: opts.text,
     replyTo: opts.replyTo,
   });
-  return { logged: false };
 }

@@ -7,6 +7,13 @@ import { getSession } from "@/lib/session";
 import { Markdown } from "@/components/markdown";
 import { DraftBanner } from "@/components/draft-banner";
 import { IconCalendar, IconPin } from "@/components/admin/icons";
+import { serializeJsonLd } from "@/lib/json-ld";
+import {
+  civilDateKey,
+  eventDateTimeValue,
+  formatEventDateRange,
+  formatEventTime,
+} from "@/lib/event-time";
 
 export async function generateMetadata(
   { params }: PageProps<"/termine/[slug]">,
@@ -29,12 +36,29 @@ export default async function EventDetailPage(
   const session = await getSession();
   if (!event.published && !session) notFound();
 
+  const startDate = civilDateKey(event.startDate);
+  const endDate = event.endDate ? civilDateKey(event.endDate) : null;
+  const structuredStart = eventDateTimeValue({
+    date: startDate,
+    time: event.startTime,
+    allDay: event.allDay,
+    timeZone: event.timeZone,
+  });
+  const structuredEnd = event.endTime || (!event.allDay && endDate && event.startTime)
+    ? eventDateTimeValue({
+        date: endDate ?? startDate,
+        time: event.endTime ?? event.startTime,
+        allDay: false,
+        timeZone: event.timeZone,
+      })
+    : endDate ?? undefined;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Event",
     name: event.title,
-    startDate: event.startDate.toISOString(),
-    endDate: event.endDate?.toISOString(),
+    startDate: structuredStart,
+    endDate: structuredEnd,
     location: event.location
       ? { "@type": "Place", name: event.location }
       : undefined,
@@ -46,7 +70,7 @@ export default async function EventDetailPage(
     <article className="mx-auto max-w-3xl px-4 py-12">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
       <Link href="/termine" className="text-sm text-brand-dark hover:underline">
         ← Zurück zu allen Terminen
@@ -55,18 +79,18 @@ export default async function EventDetailPage(
       <header className="mt-4 mb-8">
         <h1 className="text-3xl md:text-4xl font-bold">{event.title}</h1>
         <div className="mt-3 text-muted">
-          <div className="inline-flex items-center gap-1.5">
-            <IconCalendar width={14} height={14} />
-            <time dateTime={event.startDate.toISOString()}>
-              {new Intl.DateTimeFormat("de-DE", {
-                dateStyle: "full",
-                timeStyle: "short",
-              }).format(event.startDate)}
+          <div className="flex items-start gap-1.5">
+            <IconCalendar width={14} height={14} aria-hidden="true" className="mt-1" />
+            <time dateTime={structuredStart}>
+              <span className="block">{formatEventDateRange(startDate, endDate)}</span>
+              <span className="block text-sm">
+                {formatEventTime(event.allDay, event.startTime, event.endTime)}
+              </span>
             </time>
           </div>
           {event.location ? (
             <div className="mt-1 inline-flex items-center gap-1.5">
-              <IconPin width={14} height={14} />
+              <IconPin width={14} height={14} aria-hidden="true" />
               {event.location}
             </div>
           ) : null}

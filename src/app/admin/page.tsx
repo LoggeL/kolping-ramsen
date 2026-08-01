@@ -2,7 +2,14 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
-import { scanMedia } from "@/lib/media-scan";
+import { listMediaFiles } from "@/lib/media-catalog";
+import {
+  civilDateKey,
+  formatCivilDate,
+  formatEventTime,
+  parseCivilDate,
+  todayInTimeZone,
+} from "@/lib/event-time";
 
 export default async function AdminDashboard() {
   const session = await getSession();
@@ -16,6 +23,7 @@ export default async function AdminDashboard() {
     now.getDate(),
   );
   const start7d = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const today = parseCivilDate(todayInTimeZone());
 
   const [
     newsTotal,
@@ -38,7 +46,9 @@ export default async function AdminDashboard() {
     prisma.news.count({ where: { published: true } }),
     prisma.news.count({ where: { createdAt: { gte: last30 } } }),
     prisma.event.count(),
-    prisma.event.count({ where: { startDate: { gte: now } } }),
+    prisma.event.count({
+      where: { OR: [{ startDate: { gte: today } }, { endDate: { gte: today } }] },
+    }),
     prisma.page.count(),
     prisma.page.count({ where: { published: true } }),
     prisma.guestbookEntry.count({ where: { approved: true } }),
@@ -49,10 +59,19 @@ export default async function AdminDashboard() {
       select: { id: true, slug: true, title: true, updatedAt: true, published: true },
     }),
     prisma.event.findMany({
-      where: { startDate: { gte: now } },
+      where: { OR: [{ startDate: { gte: today } }, { endDate: { gte: today } }] },
       orderBy: { startDate: "asc" },
       take: 5,
-      select: { id: true, slug: true, title: true, startDate: true, location: true },
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        startDate: true,
+        startTime: true,
+        endTime: true,
+        allDay: true,
+        location: true,
+      },
     }),
     prisma.guestbookEntry.findMany({
       where: { approved: false },
@@ -60,7 +79,7 @@ export default async function AdminDashboard() {
       take: 5,
       select: { id: true, name: true, message: true, createdAt: true },
     }),
-    scanMedia(),
+    listMediaFiles(),
     prisma.pageHit.count({ where: { createdAt: { gte: startOfToday } } }),
     prisma.pageHit.count({ where: { createdAt: { gte: start7d } } }),
   ]);
@@ -195,10 +214,9 @@ export default async function AdminDashboard() {
                     ) : null}
                   </Link>
                   <time className="text-xs text-muted shrink-0">
-                    {new Intl.DateTimeFormat("de-DE", {
-                      dateStyle: "short",
-                      timeStyle: "short",
-                    }).format(e.startDate)}
+                    {formatCivilDate(civilDateKey(e.startDate), { dateStyle: "short" })}
+                    {" · "}
+                    {formatEventTime(e.allDay, e.startTime, e.endTime)}
                   </time>
                 </li>
               ))}

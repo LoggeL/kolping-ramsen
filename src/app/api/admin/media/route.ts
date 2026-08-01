@@ -1,73 +1,66 @@
 import { NextResponse } from "next/server";
-import { mkdir, writeFile } from "node:fs/promises";
-import path from "node:path";
-import crypto from "node:crypto";
 import { revalidatePath } from "next/cache";
 import { getSession } from "@/lib/session";
-import { scanMedia } from "@/lib/media-scan";
-import { buildReferenceMap } from "@/lib/media-references";
+import { listMediaFiles } from "@/lib/media-catalog";
+import { buildReferenceMap, mediaReferenceKey } from "@/lib/media-references";
+import { storeMediaFiles } from "@/lib/media-library";
 import { prisma } from "@/lib/prisma";
+import { SITE_URL } from "@/lib/site-url";
+import { hasExactOrigin } from "@/lib/request-origin";
+import { rateLimit } from "@/lib/rate-limit";
+import { rateLimitKey } from "@/lib/client-ip";
+import {
+  readFormDataBody,
+  RequestBodyTooLargeError,
+} from "@/lib/request-body";
 
-const PUBLIC_DIR = path.join(process.cwd(), "public");
-const UPLOAD_LIBRARY_ABS = path.join(PUBLIC_DIR, "uploads", "library");
-const ALLOWED_MIME = new Set([
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-  "image/gif",
-  "image/avif",
-]);
-const ALLOWED_EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"]);
-const MAX_BYTES = 10 * 1024 * 1024;
-
-function slugifyBase(name: string) {
-  return (
-    name
-      .toLowerCase()
-      .replace(/[^a-z0-9-]+/g, "-")
-      .replace(/^-+|-+$/g, "")
-      .slice(0, 60) || "bild"
-  );
-}
+const MAX_MULTIPART_BODY_BYTES = 82 * 1024 * 1024;
 
 export async function GET() {
   const session = await getSession();
   if (!session) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
-  const [files, refMap, groupItems, groups] = await Promise.all([
-    scanMedia(),
+  const [files, referenceMap, groups] = await Promise.all([
+    listMediaFiles(),
     buildReferenceMap(),
-    prisma.mediaGroupItem.findMany({ select: { path: true } }),
     prisma.mediaGroup.findMany({
       orderBy: { updatedAt: "desc" },
       include: {
-        items: { orderBy: { sortOrder: "asc" }, take: 1 },
+        items: {
+          orderBy: { sortOrder: "asc" },
+          take: 1,
+          include: { asset: { select: { path: true, alt: true } } },
+        },
         _count: { select: { items: true } },
       },
     }),
   ]);
-  const inGroup = new Set(groupItems.map((i) => i.path.toLowerCase()));
-
   return NextResponse.json({
-    files: files.map((f) => {
-      const key = f.url.toLowerCase();
-      const refs = refMap.get(key) ?? [];
-      const orphan = refs.length === 0 && !inGroup.has(key);
+    files: files.map((file) => {
+      const refs = referenceMap.get(mediaReferenceKey(file.url)) ?? [];
       return {
-        url: f.url,
-        filename: f.filename,
-        size: f.size,
-        mtime: f.mtime.toISOString(),
-        orphan,
+        id: file.id,
+        url: file.url,
+        filename: file.filename,
+        size: file.size,
+        mtime: file.mtime.toISOString(),
+        orphan: refs.length === 0,
+        alt: file.alt,
+        width: file.width,
+        height: file.height,
+        mimeType: file.mimeType,
       };
     }),
-    groups: groups.map((g) => ({
-      id: g.id,
-      slug: g.slug,
-      name: g.name,
-      itemCount: g._count.items,
-      thumb: g.items[0]?.path ?? null,
+    groups: groups.map((group) => ({
+      id: group.id,
+      slug: group.slug,
+      name: group.name,
+      itemCount: group._count.items,
+      thumb: group.items[0] ? `/${group.items[0].asset.path}` : null,
+      thumbAlt: group.items[0]
+        ? group.items[0].alt ?? group.items[0].asset.alt
+        : "",
     })),
   });
 }
@@ -77,50 +70,41 @@ export async function POST(request: Request) {
   if (!session) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
+  const expectedOrigin =
+    process.env.NODE_ENV === "production"
+      ? SITE_URL
+      : new URL(request.url).origin;
+  if (!hasExactOrigin(request, expectedOrigin)) {
+    return NextResponse.json({ error: "forbidden" }, { status: 403 });
+  }
+  const limited = rateLimit(
+    `${rateLimitKey("admin-media-upload", request.headers)}:${session.userId}`,
+    10,
+    10 * 60 * 1000,
+  );
+  if (!limited.ok) {
+    return NextResponse.json(
+      { error: "Zu viele Uploads. Bitte später erneut versuchen." },
+      { status: 429, headers: { "Retry-After": String(limited.retryIn) } },
+    );
+  }
   try {
-    const formData = await request.formData();
+    const formData = await readFormDataBody(request, MAX_MULTIPART_BODY_BYTES);
     const files = formData
       .getAll("files")
-      .filter((f): f is File => f instanceof File && f.size > 0);
-    if (files.length === 0) {
-      return NextResponse.json({ error: "Keine Dateien" }, { status: 400 });
-    }
-    await mkdir(UPLOAD_LIBRARY_ABS, { recursive: true });
-    const saved: { url: string; filename: string }[] = [];
-    for (const file of files) {
-      if (!ALLOWED_MIME.has(file.type)) {
-        return NextResponse.json(
-          { error: `Dateityp nicht erlaubt: ${file.type}` },
-          { status: 400 },
-        );
-      }
-      if (file.size > MAX_BYTES) {
-        return NextResponse.json(
-          { error: `Datei größer als 10 MB: ${file.name}` },
-          { status: 400 },
-        );
-      }
-      const ext = path.extname(file.name).toLowerCase();
-      if (!ALLOWED_EXT.has(ext)) {
-        return NextResponse.json(
-          { error: `Dateiendung nicht erlaubt: ${ext}` },
-          { status: 400 },
-        );
-      }
-      const base = slugifyBase(path.basename(file.name, ext));
-      const safeName = `${base}-${Date.now()}-${crypto
-        .randomBytes(3)
-        .toString("hex")}${ext}`;
-      const abs = path.join(UPLOAD_LIBRARY_ABS, safeName);
-      await writeFile(abs, Buffer.from(await file.arrayBuffer()));
-      const rel = path.relative(PUBLIC_DIR, abs).replace(/\\/g, "/");
-      await prisma.mediaAsset.create({ data: { path: rel, alt: "" } });
-      saved.push({ url: "/" + rel, filename: safeName });
-    }
+      .filter((file): file is File => file instanceof File && file.size > 0);
+    const saved = await storeMediaFiles(files);
     revalidatePath("/admin/media");
+    revalidatePath("/", "layout");
     return NextResponse.json({ ok: true, saved });
-  } catch (e) {
-    const msg = e instanceof Error ? e.message : "Upload fehlgeschlagen";
-    return NextResponse.json({ error: msg }, { status: 400 });
+  } catch (error) {
+    if (error instanceof RequestBodyTooLargeError) {
+      return NextResponse.json(
+        { error: "Upload größer als 80 MB" },
+        { status: 413 },
+      );
+    }
+    const message = error instanceof Error ? error.message : "Upload fehlgeschlagen";
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 }

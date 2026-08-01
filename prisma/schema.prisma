@@ -65,8 +65,13 @@ model Event {
   id          String   @id @default(cuid())
   slug        String   @unique
   title       String
+  /// Civil calendar date. Stored at UTC midnight; never treat it as an instant.
   startDate   DateTime
   endDate     DateTime?
+  startTime   String?
+  endTime     String?
+  allDay      Boolean  @default(true)
+  timeZone    String   @default("Europe/Berlin")
   location    String?
   description String
   category    String   @default("alle")
@@ -98,19 +103,36 @@ model MediaGroupItem {
   id        String     @id @default(cuid())
   groupId   String
   group     MediaGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  path      String
+  assetId   String
+  asset     MediaAsset @relation(fields: [assetId], references: [id], onDelete: Restrict)
+  alt       String?
+  caption   String?
   sortOrder Int        @default(0)
   createdAt DateTime   @default(now())
 
   @@index([groupId])
+  @@index([assetId])
 }
 
 model MediaAsset {
-  id        String   @id @default(cuid())
-  path      String   @unique
-  alt       String   @default("")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String   @id @default(cuid())
+  /// Public URL path without a leading slash. This remains stable after upload.
+  path         String   @unique
+  originalName String?
+  mimeType     String?
+  width        Int?
+  height       Int?
+  sizeBytes    Int?
+  sha256       String?
+  alt          String   @default("")
+  caption      String?
+  credit       String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  groupItems MediaGroupItem[]
+
+  @@index([sha256])
 }
 
 model PageHit {

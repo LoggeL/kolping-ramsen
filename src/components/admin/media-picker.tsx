@@ -4,13 +4,25 @@ import { useEffect, useRef, useState } from "react";
 import { IconClose, IconUpload } from "./icons";
 
 type MediaFile = {
+  id: string | null;
   url: string;
   filename: string;
   size: number;
   mtime: string;
   orphan: boolean;
+  alt: string;
+  width: number | null;
+  height: number | null;
+  mimeType: string | null;
 };
-type Group = { id: string; slug: string; name: string; itemCount: number; thumb: string | null };
+type Group = {
+  id: string;
+  slug: string;
+  name: string;
+  itemCount: number;
+  thumb: string | null;
+  thumbAlt: string;
+};
 
 type Tab = "files" | "groups";
 
@@ -98,10 +110,13 @@ export function MediaPicker({
     for (const f of Array.from(input.files)) fd.append("files", f);
     try {
       const r = await fetch("/api/admin/media", { method: "POST", body: fd });
-      if (!r.ok) throw new Error(`${r.status}`);
+      if (!r.ok) {
+        const body = await r.json().catch(() => null) as { error?: string } | null;
+        throw new Error(body?.error ?? `Upload fehlgeschlagen (${r.status})`);
+      }
       await load();
-    } catch {
-      setErr("Upload fehlgeschlagen.");
+    } catch (error) {
+      setErr(error instanceof Error ? error.message : "Upload fehlgeschlagen.");
     } finally {
       setUploading(false);
       input.value = "";
@@ -187,7 +202,7 @@ export function MediaPicker({
                 <input
                   type="file"
                   multiple
-                  accept="image/*"
+                  accept="image/jpeg,image/png,image/webp,image/avif"
                   className="hidden"
                   onChange={handleUpload}
                   disabled={uploading}
@@ -215,7 +230,7 @@ export function MediaPicker({
                         onPick({
                           kind: "image",
                           url: f.url,
-                          alt: f.filename.replace(/\.[^.]+$/, ""),
+                          alt: f.alt,
                         })
                       }
                       className="group block w-full text-left border border-border rounded-md overflow-hidden bg-background hover:border-brand transition"
@@ -224,7 +239,7 @@ export function MediaPicker({
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={f.url}
-                          alt=""
+                          alt={f.alt}
                           loading="lazy"
                           className="w-full h-full object-cover group-hover:scale-105 transition"
                         />
@@ -280,7 +295,7 @@ export function MediaPicker({
                         /* eslint-disable-next-line @next/next/no-img-element */
                         <img
                           src={g.thumb}
-                          alt=""
+                          alt={g.thumbAlt}
                           loading="lazy"
                           className="w-full h-full object-cover group-hover:scale-105 transition"
                         />

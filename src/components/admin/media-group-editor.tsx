@@ -22,7 +22,13 @@ import { MediaPicker } from "./media-picker";
 import { IconPlus, IconClose } from "./icons";
 import { addItems, removeItem, reorderItems } from "@/app/admin/media/groups/actions";
 
-type Item = { id: string; path: string; sortOrder: number };
+type Item = {
+  id: string;
+  path: string;
+  alt: string;
+  caption: string | null;
+  sortOrder: number;
+};
 
 export function MediaGroupEditor({
   group,
@@ -57,10 +63,15 @@ export function MediaGroupEditor({
     const from = items.findIndex((i) => i.id === active.id);
     const to = items.findIndex((i) => i.id === over.id);
     if (from < 0 || to < 0) return;
+    const previous = items;
     const next = arrayMove(items, from, to);
     setItems(next);
     startTransition(async () => {
-      await reorderItems(group.id, next.map((i) => i.id));
+      try {
+        await reorderItems(group.id, next.map((i) => i.id));
+      } catch {
+        setItems(previous);
+      }
     });
   }
 
@@ -74,22 +85,16 @@ export function MediaGroupEditor({
     const fd = new FormData();
     fd.set("paths", JSON.stringify([url]));
     startTransition(async () => {
-      await addItems(group.id, fd);
-      setItems((prev) => [
-        ...prev,
-        {
-          id: `tmp:${Date.now()}:${url}`,
-          path: url,
-          sortOrder: (prev[prev.length - 1]?.sortOrder ?? 0) + 10,
-        },
-      ]);
+      const added = await addItems(group.id, fd);
+      setItems((previous) => [...previous, ...added]);
+      setPickerOpen(false);
     });
   }
 
   async function handleRemove(itemId: string) {
-    setItems((prev) => prev.filter((i) => i.id !== itemId));
     startTransition(async () => {
-      if (!itemId.startsWith("tmp:")) await removeItem(itemId);
+      await removeItem(itemId);
+      setItems((previous) => previous.filter((item) => item.id !== itemId));
     });
   }
 
@@ -197,7 +202,7 @@ function ItemTile({
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={item.path}
-            alt=""
+            alt={item.alt}
             loading="lazy"
             className="w-full h-full object-cover"
           />

@@ -5,6 +5,14 @@ import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 import bcrypt from "bcryptjs";
 import TurndownService from "turndown";
+import {
+  EVENT_TIME_ZONE,
+  inferEventCategory,
+  inferEventTime,
+  parseCivilDate,
+  type EventCategory,
+} from "../src/lib/event-time";
+import { legacySourceRedirectPath } from "../src/lib/legacy-routing";
 
 const turndown = new TurndownService({
   headingStyle: "atx",
@@ -28,6 +36,20 @@ function toMd(s: string | null | undefined): string {
   return md.replace(/\n{3,}/g, "\n\n").trim();
 }
 
+function repairKnownLegacyPageHtml(slug: string, source: string): string {
+  let repaired = source.replace(
+    /(<img\b[^>]*Engagementpreis_Verleihung_02a\.png[^>]*>)0(?=<\/p>)/giu,
+    "$1",
+  );
+  if (slug === "vereinsbereiche/vorstandschaft") {
+    repaired = repaired.replace(
+      /<p[^>]*>\s*<span[^>]*>Jonas Berst, Email:[\s\S]*?<\/p>/iu,
+      "<p>Jonas Berst &amp; Nele Rörig – Kontakt über kolping-ramsen(at)gmx.de</p>",
+    );
+  }
+  return repaired;
+}
+
 const url = (process.env.DATABASE_URL ?? "file:./dev.db").replace(/^file:/, "");
 const prisma = new PrismaClient({ adapter: new PrismaBetterSqlite3({ url }) });
 
@@ -47,6 +69,7 @@ type NewsRec = {
   date: string;
   teaser: string;
   content: string;
+  published?: boolean;
   coverImage?: string | null;
   sourceUrl?: string;
 };
@@ -58,6 +81,8 @@ type EventRec = {
   location?: string | null;
   description: string;
   category?: string;
+  startTime?: string | null;
+  endTime?: string | null;
 };
 
 const NAV_TITLES: Record<string, string> = {
@@ -137,17 +162,15 @@ async function seedPages(authorId: string) {
     const slug = rec.slug ?? "";
     if (SKIP_PAGE_SLUGS.has(slug)) { skip++; continue; }
     const title = NAV_TITLES[slug] ?? rec.title ?? slug;
-    const metaDesc = metaDescFrom(rec.content, rec.metaDesc);
-    const contentMd = toMd(rec.content);
+    const sourceHtml = repairKnownLegacyPageHtml(slug, rec.content);
+    const metaDesc = metaDescFrom(sourceHtml, rec.metaDesc);
+    const contentMd = toMd(sourceHtml);
 
     await prisma.page.upsert({
       where: { slug },
-      update: {
-        title,
-        content: contentMd,
-        metaDesc: metaDesc ?? undefined,
-        published: true,
-      },
+      // The database becomes the editorial source of truth after import.
+      // Re-running the seed must never overwrite later CMS changes.
+      update: {},
       create: {
         slug,
         title,
@@ -159,15 +182,14 @@ async function seedPages(authorId: string) {
     });
 
     if (rec.sourceUrl) {
-      try {
-        const src = new URL(rec.sourceUrl);
-        const fromPath = src.pathname + src.search;
+      const fromPath = legacySourceRedirectPath(rec.sourceUrl);
+      if (fromPath) {
         await prisma.redirect.upsert({
           where: { fromPath },
-          update: { toPath: "/" + slug },
+          update: {},
           create: { fromPath, toPath: "/" + slug },
         });
-      } catch { /* ignore bad URLs */ }
+      }
     }
     ok++;
   }
@@ -183,14 +205,9 @@ async function seedNews(authorId: string) {
     const contentMd = toMd(rec.content);
     await prisma.news.upsert({
       where: { slug: rec.slug },
-      update: {
-        title: rec.title,
-        date,
-        teaser: rec.teaser,
-        content: contentMd,
-        coverImage: rec.coverImage ?? null,
-        published: true,
-      },
+      // The database becomes the editorial source of truth after import.
+      // Re-running the seed must never overwrite later CMS changes.
+      update: {},
       create: {
         slug: rec.slug,
         title: rec.title,
@@ -198,7 +215,7 @@ async function seedNews(authorId: string) {
         teaser: rec.teaser,
         content: contentMd,
         coverImage: rec.coverImage ?? null,
-        published: true,
+        published: rec.published ?? true,
         authorId,
       },
     });
@@ -211,29 +228,39 @@ async function seedEvents(authorId: string) {
   const items = readJson<EventRec>("events.json");
   let ok = 0;
   for (const rec of items) {
-    const start = new Date(rec.startDate);
-    if (isNaN(start.getTime())) continue;
-    const end = rec.endDate ? new Date(rec.endDate) : null;
+    let start: Date;
+    let end: Date | null;
+    try {
+      start = parseCivilDate(rec.startDate);
+      end = rec.endDate ? parseCivilDate(rec.endDate) : null;
+    } catch {
+      continue;
+    }
+    const inferredTime = inferEventTime(rec.description);
+    const startTime = rec.startTime ?? inferredTime.startTime;
+    const endTime = rec.endTime ?? inferredTime.endTime;
+    const category = rec.category && rec.category !== "alle"
+      ? rec.category as EventCategory
+      : inferEventCategory(rec.title, rec.description);
+    const published = !rec.description.includes("?????");
     await prisma.event.upsert({
       where: { slug: rec.slug },
-      update: {
-        title: rec.title,
-        startDate: start,
-        endDate: end,
-        location: rec.location ?? null,
-        description: rec.description,
-        category: rec.category ?? "alle",
-        published: true,
-      },
+      // The database becomes the editorial source of truth after import.
+      // Re-running the seed must never overwrite later CMS changes.
+      update: {},
       create: {
         slug: rec.slug,
         title: rec.title,
         startDate: start,
         endDate: end,
+        startTime,
+        endTime,
+        allDay: startTime === null,
+        timeZone: EVENT_TIME_ZONE,
         location: rec.location ?? null,
         description: rec.description,
-        category: rec.category ?? "alle",
-        published: true,
+        category,
+        published,
         authorId,
       },
     });

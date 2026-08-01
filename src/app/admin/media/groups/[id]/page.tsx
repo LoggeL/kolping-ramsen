@@ -17,7 +17,12 @@ export default async function MediaGroupDetail(
   const { id } = await params;
   const group = await prisma.mediaGroup.findUnique({
     where: { id },
-    include: { items: { orderBy: { sortOrder: "asc" } } },
+    include: {
+      items: {
+        orderBy: { sortOrder: "asc" },
+        include: { asset: { select: { path: true, alt: true } } },
+      },
+    },
   });
   if (!group) notFound();
 
@@ -69,7 +74,9 @@ export default async function MediaGroupDetail(
           name: group.name,
           items: group.items.map((i) => ({
             id: i.id,
-            path: i.path,
+            path: `/${i.asset.path}`,
+            alt: i.alt ?? i.asset.alt,
+            caption: i.caption,
             sortOrder: i.sortOrder,
           })),
         }}

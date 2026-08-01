@@ -1,6 +1,11 @@
 import type { MetadataRoute } from "next";
 import { prisma } from "@/lib/prisma";
-import { SITE } from "@/lib/site";
+import { SITE, SITE_SECTIONS } from "@/lib/site";
+import { uniqueSitemapEntries } from "@/lib/sitemap";
+
+// Metadata routes are cached by default. The sitemap must read the persistent
+// production database on every request so CMS changes appear without a deploy.
+export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = SITE.url;
@@ -10,9 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/termine",
     "/gaestebuch",
     "/kontakt",
-    "/mitglied-werden",
-    "/impressum",
-    "/datenschutz",
+    ...Object.values(SITE_SECTIONS).map((section) => section.href),
   ].map((p) => ({ url: `${base}${p}`, changeFrequency: "weekly", priority: p === "" ? 1 : 0.7 }));
 
   const [news, events, pages] = await Promise.all([
@@ -42,5 +45,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   ];
 
-  return [...staticRoutes, ...dynamicRoutes];
+  return uniqueSitemapEntries([...staticRoutes, ...dynamicRoutes]);
 }

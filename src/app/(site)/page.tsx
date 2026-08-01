@@ -3,6 +3,13 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/session";
+import {
+  civilDateKey,
+  formatCivilDate,
+  formatEventTime,
+  parseCivilDate,
+  todayInTimeZone,
+} from "@/lib/event-time";
 
 export default function Page() {
   return (
@@ -116,10 +123,14 @@ async function LatestNews() {
 
 async function UpcomingEvents() {
   const session = await getSession();
+  const today = parseCivilDate(todayInTimeZone());
   const events = await prisma.event.findMany({
     where: {
       ...(session ? {} : { published: true }),
-      startDate: { gte: new Date() },
+      OR: [
+        { startDate: { gte: today } },
+        { endDate: { gte: today } },
+      ],
     },
     orderBy: { startDate: "asc" },
     take: 5,
@@ -130,9 +141,9 @@ async function UpcomingEvents() {
   return (
     <ul className="divide-y divide-rule border-y border-rule">
       {events.map((e) => {
-        const day = new Intl.DateTimeFormat("de-DE", { day: "2-digit" }).format(e.startDate);
-        const month = new Intl.DateTimeFormat("de-DE", { month: "short" })
-          .format(e.startDate)
+        const date = civilDateKey(e.startDate);
+        const day = date.slice(8);
+        const month = formatCivilDate(date, { month: "short" })
           .replace(".", "");
         return (
           <li key={e.id} className="py-4 flex gap-5 items-start">
@@ -154,6 +165,9 @@ async function UpcomingEvents() {
               {e.location ? (
                 <div className="text-xs text-muted mt-1 italic">{e.location}</div>
               ) : null}
+              <div className="mt-1 text-xs text-muted">
+                {formatEventTime(e.allDay, e.startTime, e.endTime)}
+              </div>
             </div>
           </li>
         );

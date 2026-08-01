@@ -4,6 +4,7 @@ import { getSession } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 import { firstImage } from "@/lib/extract-image";
 import { AdminThumb } from "@/components/admin/admin-thumb";
+import { civilDateKey, formatCivilDate, formatEventTime } from "@/lib/event-time";
 
 export default async function AdminEventsList() {
   if (!(await getSession())) redirect("/admin/login");
@@ -41,7 +42,10 @@ export default async function AdminEventsList() {
                   </td>
                   <td className="px-3 py-2">{e.title}</td>
                   <td className="px-3 py-2">
-                    {new Intl.DateTimeFormat("de-DE", { dateStyle: "short", timeStyle: "short" }).format(e.startDate)}
+                    {formatCivilDate(civilDateKey(e.startDate), { dateStyle: "short" })}
+                    <span className="block text-xs text-muted">
+                      {formatEventTime(e.allDay, e.startTime, e.endTime)}
+                    </span>
                   </td>
                   <td className="px-3 py-2">{e.category}</td>
                   <td className="px-3 py-2">

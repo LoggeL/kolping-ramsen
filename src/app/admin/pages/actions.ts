@@ -26,12 +26,25 @@ function pickSlug(slug: string | undefined, title: string, parent?: string) {
   return own;
 }
 
+async function pickGallerySlug(value: string | undefined): Promise<string | null> {
+  if (!value?.trim()) return null;
+  const gallerySlug = slugify(value);
+  if (!gallerySlug) throw new Error("Ungültige Galerie");
+  const gallery = await prisma.mediaGroup.findUnique({
+    where: { slug: gallerySlug },
+    select: { id: true },
+  });
+  if (!gallery) throw new Error("Galerie nicht gefunden");
+  return gallerySlug;
+}
+
 export async function createPage(formData: FormData) {
   const session = await requireSession();
   const parsed = pageSchema.safeParse(Object.fromEntries(formData));
   if (!parsed.success) throw new Error("Validierung fehlgeschlagen");
   const data = parsed.data;
   const slug = pickSlug(data.slug, data.title, data.parent);
+  const gallerySlug = await pickGallerySlug(data.gallerySlug);
   await prisma.page.create({
     data: {
       title: data.title,
@@ -42,7 +55,7 @@ export async function createPage(formData: FormData) {
       parent: data.parent || null,
       sortOrder: data.sortOrder ? Number(data.sortOrder) : 0,
       published: data.published === "on",
-      gallerySlug: data.gallerySlug ? data.gallerySlug.trim() || null : null,
+      gallerySlug,
       authorId: session.userId,
     },
   });
@@ -56,6 +69,7 @@ export async function updatePage(id: string, formData: FormData) {
   if (!parsed.success) throw new Error("Validierung fehlgeschlagen");
   const data = parsed.data;
   const slug = pickSlug(data.slug, data.title, data.parent);
+  const gallerySlug = await pickGallerySlug(data.gallerySlug);
   await prisma.page.update({
     where: { id },
     data: {
@@ -67,7 +81,7 @@ export async function updatePage(id: string, formData: FormData) {
       parent: data.parent || null,
       sortOrder: data.sortOrder ? Number(data.sortOrder) : 0,
       published: data.published === "on",
-      gallerySlug: data.gallerySlug ? data.gallerySlug.trim() || null : null,
+      gallerySlug,
     },
   });
   revalidatePath(`/${slug}`);

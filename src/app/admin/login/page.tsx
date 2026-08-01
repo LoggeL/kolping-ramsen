@@ -3,6 +3,7 @@ import { authenticate } from "@/lib/auth";
 import { createSession, getSession } from "@/lib/session";
 import { rateLimit } from "@/lib/rate-limit";
 import { headers } from "next/headers";
+import { rateLimitKey } from "@/lib/client-ip";
 
 export const metadata = {
   title: "Anmelden",
@@ -15,8 +16,7 @@ async function loginAction(formData: FormData) {
   const password = String(formData.get("password") ?? "");
 
   const hdrs = await headers();
-  const ip = hdrs.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
-  const limited = rateLimit(`login:${ip}`, 5, 5 * 60 * 1000);
+  const limited = rateLimit(rateLimitKey("login", hdrs), 5, 5 * 60 * 1000);
   if (!limited.ok) {
     redirect(`/admin/login?error=rate&retry=${limited.retryIn}`);
   }
@@ -34,6 +34,7 @@ async function loginAction(formData: FormData) {
     userId: user.id,
     name: user.name,
     role: user.role === "admin" ? "admin" : "redakteur",
+    credentialUpdatedAt: user.updatedAt.toISOString(),
   });
   redirect("/admin");
 }

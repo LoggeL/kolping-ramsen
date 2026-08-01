@@ -1,12 +1,19 @@
 import "server-only";
 import { prisma } from "@/lib/prisma";
+import {
+  extractImageUrls,
+  mediaReferenceKey,
+} from "@/lib/media-paths";
+
+export { extractImageUrls, mediaReferenceKey } from "@/lib/media-paths";
 
 export type MediaReferenceKind =
   | "news-cover"
   | "news-content"
   | "page"
   | "event"
-  | "group";
+  | "group"
+  | "site";
 
 export type MediaReference = {
   kind: MediaReferenceKind;
@@ -14,16 +21,6 @@ export type MediaReference = {
   href: string;
   adminHref: string;
 };
-
-const URL_REGEX =
-  /\/(?:uploads|images)\/[A-Za-z0-9._\-/]+\.(?:jpg|jpeg|png|webp|gif|avif|svg)/gi;
-
-export function extractImageUrls(content: string | null | undefined): string[] {
-  if (!content) return [];
-  const out = new Set<string>();
-  for (const m of content.matchAll(URL_REGEX)) out.add(m[0]);
-  return [...out];
-}
 
 export async function buildReferenceMap(): Promise<Map<string, MediaReference[]>> {
   const [news, pages, events, groupItems] = await Promise.all([
@@ -38,7 +35,7 @@ export async function buildReferenceMap(): Promise<Map<string, MediaReference[]>
     }),
     prisma.mediaGroupItem.findMany({
       select: {
-        path: true,
+        asset: { select: { path: true } },
         group: { select: { id: true, slug: true, name: true } },
       },
     }),
@@ -46,7 +43,7 @@ export async function buildReferenceMap(): Promise<Map<string, MediaReference[]>
 
   const map = new Map<string, MediaReference[]>();
   const push = (rawUrl: string, ref: MediaReference) => {
-    const key = rawUrl.toLowerCase();
+    const key = mediaReferenceKey(rawUrl);
     const arr = map.get(key);
     if (arr) {
       const dup = arr.some(
@@ -97,13 +94,19 @@ export async function buildReferenceMap(): Promise<Map<string, MediaReference[]>
     }
   }
   for (const item of groupItems) {
-    push(item.path, {
+    push(`/${item.asset.path}`, {
       kind: "group",
       label: `Galerie · ${item.group.name}`,
       href: `/admin/media/groups/${item.group.id}`,
       adminHref: `/admin/media/groups/${item.group.id}`,
     });
   }
+  push("/images/ramsen-scenic.jpg", {
+    kind: "site",
+    label: "Startseiten-Hero",
+    href: "/",
+    adminHref: "/",
+  });
 
   return map;
 }
@@ -114,4 +117,5 @@ export const REFERENCE_KIND_LABEL: Record<MediaReferenceKind, string> = {
   page: "Seite",
   event: "Termin",
   group: "Galerie",
+  site: "Website",
 };

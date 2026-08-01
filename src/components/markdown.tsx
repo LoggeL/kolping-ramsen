@@ -1,5 +1,6 @@
 import { renderMarkdown } from "@/lib/markdown";
 import { expandGalleryEmbeds } from "@/lib/gallery-embed";
+import { MarkdownContent } from "./markdown-content";
 
 export async function Markdown({
   source,
@@ -10,5 +11,5 @@ export async function Markdown({
 }) {
   const expanded = await expandGalleryEmbeds(source ?? "");
   const html = renderMarkdown(expanded);
-  return <div className={className} dangerouslySetInnerHTML={{ __html: html }} />;
+  return <MarkdownContent html={html} className={className} />;
 }
