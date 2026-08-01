@@ -10,7 +10,8 @@ Kurzanleitung für Vorstand und Redaktion. Die Website lebt von aktuellen Inhalt
 
 Nach 7 Tagen wird man automatisch abgemeldet. Bei 5 Fehlversuchen wird die IP für 5 Minuten gesperrt.
 
-> **Wichtig**: Das initiale Passwort `ChangeMe!2026` sofort beim ersten Login ändern (siehe Abschnitt 7).
+> **Wichtig**: Es gibt kein Standardpasswort. Der technische Ansprechpartner
+> richtet das initiale Admin-Passwort über die geschützte Server-Konfiguration ein.
 
 ## 2. Dashboard
 

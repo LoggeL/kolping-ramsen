@@ -32,7 +32,6 @@ async function loginAction(formData: FormData) {
 
   await createSession({
     userId: user.id,
-    email: user.email,
     name: user.name,
     role: user.role === "admin" ? "admin" : "redakteur",
   });

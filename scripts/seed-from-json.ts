@@ -101,19 +101,26 @@ function metaDescFrom(html: string, explicit?: string): string | null {
 
 async function ensureAdmin() {
   const adminEmail = process.env.SEED_ADMIN_EMAIL ?? "admin@kolping-ramsen.de";
-  const adminPassword = process.env.SEED_ADMIN_PASSWORD ?? "ChangeMe!2026";
-  const passwordHash = await bcrypt.hash(adminPassword, 12);
-  const admin = await prisma.user.upsert({
+  const existingAdmin = await prisma.user.findUnique({
     where: { email: adminEmail.toLowerCase() },
-    update: {},
-    create: {
+  });
+  if (existingAdmin) return existingAdmin;
+
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD;
+  if (!adminPassword || adminPassword.length < 14) {
+    throw new Error(
+      "SEED_ADMIN_PASSWORD (at least 14 characters) is required when creating the initial admin user.",
+    );
+  }
+
+  return prisma.user.create({
+    data: {
       email: adminEmail.toLowerCase(),
       name: "Administrator",
-      passwordHash,
+      passwordHash: await bcrypt.hash(adminPassword, 12),
       role: "admin",
     },
   });
-  return admin;
 }
 
 async function seedPages(authorId: string) {

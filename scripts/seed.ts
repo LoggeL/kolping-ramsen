@@ -8,24 +8,31 @@ const prisma = new PrismaClient({ adapter: new PrismaBetterSqlite3({ url }) });
 
 async function main() {
   const adminEmail = process.env.SEED_ADMIN_EMAIL ?? "admin@kolping-ramsen.de";
-  const adminPassword = process.env.SEED_ADMIN_PASSWORD ?? "ChangeMe!2026";
-
-  const passwordHash = await bcrypt.hash(adminPassword, 12);
-
-  const admin = await prisma.user.upsert({
+  const existingAdmin = await prisma.user.findUnique({
     where: { email: adminEmail.toLowerCase() },
-    update: {},
-    create: {
+  });
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD;
+
+  if (!existingAdmin && !adminPassword) {
+    throw new Error(
+      "SEED_ADMIN_PASSWORD is required when creating the initial admin user.",
+    );
+  }
+  if (adminPassword && adminPassword.length < 14) {
+    throw new Error("SEED_ADMIN_PASSWORD must contain at least 14 characters.");
+  }
+
+  const admin = existingAdmin ?? await prisma.user.create({
+    data: {
       email: adminEmail.toLowerCase(),
       name: "Administrator",
-      passwordHash,
+      passwordHash: await bcrypt.hash(adminPassword!, 12),
       role: "admin",
     },
   });
 
   console.log(`✓ Admin user: ${admin.email}`);
-  console.log(`  Password: ${adminPassword}`);
-  console.log("  Bitte nach erstem Login ändern!");
+  console.log(existingAdmin ? "  Existing account retained." : "  Account created.");
 
   const newsCount = await prisma.news.count();
   if (newsCount === 0) {

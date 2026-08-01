@@ -44,7 +44,8 @@ npm run seed               # Admin-User + Demo-Inhalte
 npm run dev                # http://localhost:3000
 ```
 
-Login: `admin@kolping-ramsen.de` / `ChangeMe!2026` — **bitte sofort ändern**.
+Beim erstmaligen Seed muss `SEED_ADMIN_PASSWORD` explizit gesetzt sein. Es gibt
+kein Standardpasswort.
 
 ---
 
@@ -53,6 +54,8 @@ Login: `admin@kolping-ramsen.de` / `ChangeMe!2026` — **bitte sofort ändern**.
 ```dotenv
 DATABASE_URL="file:./dev.db"
 SESSION_SECRET="<32+ Zeichen Zufallswert>"
+SEED_ADMIN_EMAIL="admin@kolping-ramsen.de"
+SEED_ADMIN_PASSWORD="<mindestens 14 Zeichen; nur beim ersten Seed>"
 
 SMTP_HOST=""
 SMTP_PORT="587"
@@ -66,6 +69,16 @@ CONTACT_TO="info@kolping-ramsen.de"
 
 ```bash
 node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+```
+
+Ein bestehendes Admin-Passwort wird direkt im laufenden Container zurückgesetzt,
+ohne es in Logs oder der Shell-History auszugeben:
+
+```bash
+read -s ADMIN_PASSWORD
+export ADMIN_PASSWORD
+ADMIN_EMAIL="admin@kolping-ramsen.de" npm run admin:reset
+unset ADMIN_PASSWORD
 ```
 
 Wenn `SMTP_HOST` leer ist, werden Mails nur in die Konsole geloggt — praktisch für die Entwicklung.

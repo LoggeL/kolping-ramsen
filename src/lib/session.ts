@@ -2,12 +2,14 @@ import "server-only";
 import { SignJWT, jwtVerify, type JWTPayload } from "jose";
 import { cookies } from "next/headers";
 
-const SESSION_COOKIE = "kolping_session";
+const SESSION_COOKIE = "kolping_session_v2";
+const LEGACY_SESSION_COOKIES = ["kolping_session"] as const;
 const SESSION_TTL_DAYS = 7;
+const SESSION_ISSUER = "kolping-ramsen";
+const SESSION_AUDIENCE = "redaktion-v2";
 
 export type SessionPayload = {
   userId: string;
-  email: string;
   role: "admin" | "redakteur";
   name: string;
 };
@@ -25,6 +27,8 @@ function getKey() {
 export async function encryptSession(payload: SessionPayload): Promise<string> {
   return new SignJWT(payload as unknown as JWTPayload)
     .setProtectedHeader({ alg: "HS256" })
+    .setIssuer(SESSION_ISSUER)
+    .setAudience(SESSION_AUDIENCE)
     .setIssuedAt()
     .setExpirationTime(`${SESSION_TTL_DAYS}d`)
     .sign(getKey());
@@ -33,16 +37,18 @@ export async function encryptSession(payload: SessionPayload): Promise<string> {
 export async function decryptSession(token: string | undefined): Promise<SessionPayload | null> {
   if (!token) return null;
   try {
-    const { payload } = await jwtVerify(token, getKey(), { algorithms: ["HS256"] });
+    const { payload } = await jwtVerify(token, getKey(), {
+      algorithms: ["HS256"],
+      issuer: SESSION_ISSUER,
+      audience: SESSION_AUDIENCE,
+    });
     if (
       typeof payload.userId === "string" &&
-      typeof payload.email === "string" &&
       typeof payload.name === "string" &&
       (payload.role === "admin" || payload.role === "redakteur")
     ) {
       return {
         userId: payload.userId,
-        email: payload.email,
         name: payload.name,
         role: payload.role,
       };
@@ -62,12 +68,14 @@ export async function createSession(payload: SessionPayload) {
     sameSite: "lax",
     path: "/",
     maxAge: SESSION_TTL_DAYS * 24 * 60 * 60,
+    priority: "high",
   });
 }
 
 export async function destroySession() {
   const cookieStore = await cookies();
   cookieStore.delete(SESSION_COOKIE);
+  for (const cookie of LEGACY_SESSION_COOKIES) cookieStore.delete(cookie);
 }
 
 export async function getSession(): Promise<SessionPayload | null> {
