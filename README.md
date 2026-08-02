@@ -285,7 +285,7 @@ Startseite und Sitemap.
 | `npm run media:sync` | Dateisystem und `MediaAsset`-Katalog abgleichen |
 | `npm run seed` | Initiales Admin-Konto anlegen; Beispiel-News höchstens als Entwurf |
 | `npm run admin:reset` | Passwort eines vorhandenen Kontos sicher zurücksetzen |
-| `npm run scrape` | Alte Joomla-Seiten als zu prüfende Entwürfe importieren |
+| `npm run scrape` | Versiegelten Joomla-Snapshot und Vergleich erzeugen (schreibt nicht direkt ins CMS) |
 
 ## Deployment mit Docker und Dokploy
 
@@ -351,7 +351,8 @@ kolping-ramsen/
 │   ├── sync-media-assets.mjs# Aufbau/Aktualisierung des Medienkatalogs
 │   ├── verify-database.mjs   # Integrität, Migrationen und Schemas prüfen
 │   ├── seed-admin.mjs        # Bewusste Konto-Erstinitialisierung
-│   └── scrape.ts            # Legacy-Joomla-Import
+│   ├── migrate-legacy.ts    # Deterministischer Joomla-Capture und Read-only-Vergleich
+│   └── stage-legacy-content.ts # Digest-freigegebene, geguardete Datenmigration
 └── src/
     ├── app/                 # Öffentliches Frontend, Admin, API und Health
     ├── components/          # Navigation, Lightbox, Redaktions-UI

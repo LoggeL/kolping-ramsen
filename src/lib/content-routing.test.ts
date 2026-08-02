@@ -6,13 +6,14 @@ import {
   legacySourceRedirectPath,
   normalizeInternalPathname,
   normalizedLegacyRequestKeys,
+  parseStructuredContentPath,
   redirectDestinationCandidates,
 } from "./legacy-routing";
 import {
   cleanLegacyMetaDescription,
   preparePublicMarkdown,
 } from "./public-content";
-import { MAIN_NAV, SITE_SECTIONS } from "./site";
+import { MAIN_NAV, SITE, SITE_SECTIONS } from "./site";
 import { uniqueSitemapEntries } from "./sitemap";
 
 test("normalizes legacy paths and query order", () => {
@@ -47,6 +48,13 @@ test("keeps native and operational routes outside CMS resolution", () => {
   assert.equal(isReservedContentSlug("admin/pages"), true);
   assert.equal(isReservedContentSlug("uploads/library/image.webp"), true);
   assert.equal(isReservedContentSlug("ueber-uns/pfarrheim"), false);
+});
+
+test("recognizes exact published news and event redirect destinations", () => {
+  assert.deepEqual(parseStructuredContentPath("/aktuelles/ein-beitrag"), { kind: "news", slug: "ein-beitrag" });
+  assert.deepEqual(parseStructuredContentPath("/termine/ein-termin?print=1"), { kind: "event", slug: "ein-termin" });
+  assert.equal(parseStructuredContentPath("/aktuelles"), null);
+  assert.equal(parseStructuredContentPath("/termine/ein-termin/ical"), null);
 });
 
 test("prefers a normalized query redirect and falls back to its pathname", () => {
@@ -144,6 +152,16 @@ test("central section data powers overview routes and navigation", () => {
   ]);
   assert.ok(SITE_SECTIONS.galerien.links.length > 0);
   assert.ok(MAIN_NAV.some((item) => item.href === "/galerien"));
+  assert.equal(
+    MAIN_NAV.some((item) => item.href === "/mitglied-werden"),
+    false,
+  );
+  assert.deepEqual(SITE.leadershipTeam, [
+    "Bettina Schach",
+    "Heiko Schmitt-Sattler",
+    "Sebastian Sattler",
+  ]);
+  assert.equal(SITE.venue.street, "Klosterhof 7");
 });
 
 test("deduplicates sitemap URLs while preserving useful metadata", () => {

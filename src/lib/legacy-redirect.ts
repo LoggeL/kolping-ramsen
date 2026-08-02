@@ -6,6 +6,7 @@ import {
   isReservedContentSlug,
   matchingLegacyRedirects,
   normalizeInternalPathname,
+  parseStructuredContentPath,
   redirectDestinationCandidates,
   type LegacySearchParams,
   type RedirectEntryLike,
@@ -50,6 +51,25 @@ async function resolveRedirectTarget(
   const publishedPaths = new Set(
     publishedPages.map((page) => `/${page.slug}`),
   );
+  const structured = candidates.map((candidate) => ({ candidate, parsed: parseStructuredContentPath(candidate) }));
+  const [publishedNews, publishedEvents] = await Promise.all([
+    prisma.news.findMany({
+      where: {
+        slug: { in: structured.flatMap(({ parsed }) => parsed?.kind === "news" ? [parsed.slug] : []) },
+        published: true,
+      },
+      select: { slug: true },
+    }),
+    prisma.event.findMany({
+      where: {
+        slug: { in: structured.flatMap(({ parsed }) => parsed?.kind === "event" ? [parsed.slug] : []) },
+        published: true,
+      },
+      select: { slug: true },
+    }),
+  ]);
+  for (const item of publishedNews) publishedPaths.add(`/aktuelles/${item.slug}`);
+  for (const item of publishedEvents) publishedPaths.add(`/termine/${item.slug}`);
 
   for (const [index, candidate] of candidates.entries()) {
     if (isNativeSitePath(candidate) || publishedPaths.has(candidate)) {

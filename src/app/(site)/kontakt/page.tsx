@@ -74,6 +74,41 @@ export default async function ContactPage(
         Sie haben Fragen, Anregungen oder möchten Mitglied werden? Schreiben Sie uns.
       </p>
 
+      <section
+        aria-labelledby="contact-details-title"
+        className="mb-10 border border-border bg-surface p-5 sm:p-6"
+      >
+        <h2 id="contact-details-title" className="font-serif text-2xl font-semibold">
+          Direkter Kontakt
+        </h2>
+        <div className="mt-5 grid gap-6 sm:grid-cols-2">
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-muted">
+              Leitungsteam
+            </h3>
+            <ul className="mt-2 space-y-1 font-serif">
+              {SITE.leadershipTeam.map((name) => <li key={name}>{name}</li>)}
+            </ul>
+            <a
+              className="mt-3 inline-flex min-h-10 items-center text-brand-dark underline underline-offset-4"
+              href={`mailto:${SITE.contactEmail}`}
+            >
+              {SITE.contactEmail}
+            </a>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-muted">
+              Pfarrheim
+            </h3>
+            <address className="mt-2 font-serif not-italic leading-relaxed">
+              {SITE.venue.name}<br />
+              {SITE.venue.street}<br />
+              {SITE.venue.locality}
+            </address>
+          </div>
+        </div>
+      </section>
+
       {ok ? (
         <div className="rounded-md bg-green-50 border border-green-200 p-4 mb-6">
           Vielen Dank! Ihre Nachricht wurde versendet.

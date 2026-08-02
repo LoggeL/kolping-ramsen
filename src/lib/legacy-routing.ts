@@ -8,6 +8,11 @@ export type RedirectEntryLike = {
   toPath: string;
 };
 
+export type StructuredContentPath = Readonly<{
+  kind: "news" | "event";
+  slug: string;
+}>;
+
 const RESERVED_CONTENT_SEGMENTS = new Set([
   "admin",
   "aktuelles",
@@ -108,6 +113,14 @@ export function normalizeStoredLegacyPath(value: string): string | null {
   } catch {
     return null;
   }
+}
+
+export function parseStructuredContentPath(value: string): StructuredContentPath | null {
+  const pathname = normalizeInternalPathname(value);
+  if (!pathname) return null;
+  const match = pathname.match(/^\/(aktuelles|termine)\/([^/]+)$/u);
+  if (!match) return null;
+  return { kind: match[1] === "aktuelles" ? "news" : "event", slug: match[2] };
 }
 
 export function matchingLegacyRedirects<T extends RedirectEntryLike>(

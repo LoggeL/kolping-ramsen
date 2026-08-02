@@ -19,6 +19,47 @@ test("markdown image runs become one lazy, accessible gallery", () => {
   assert.equal(html.match(/data-lightbox-trigger/g)?.length, 3);
 });
 
+test("gallery grouping never crosses headings or article text", () => {
+  const html = renderMarkdown([
+    "## Erster Programmpunkt",
+    "",
+    "![Erstes Bild](/images/one.jpg)",
+    "",
+    "## Zweiter Programmpunkt",
+    "",
+    "Der zweite Abschnitt bleibt vollständig sichtbar.",
+    "",
+    "![Zweites Bild](/images/two.jpg)",
+    "",
+    "## Dritter Programmpunkt",
+    "",
+    "![Drittes Bild](/images/three.jpg)",
+  ].join("\n"));
+
+  assert.equal(html.match(/<h2>/g)?.length, 3);
+  assert.match(html, /Zweiter Programmpunkt/u);
+  assert.match(html, /Der zweite Abschnitt bleibt vollständig sichtbar\./u);
+  assert.doesNotMatch(html, /class="md-image-series"/u);
+});
+
+test("a paragraph directly after an image remains article text", () => {
+  const introduction =
+    "Dieser einleitende Absatz gehört zum Bericht und darf weder als Bildunterschrift noch als Teil einer Galerie verkleinert werden.";
+  const html = renderMarkdown([
+    "![Logo](/images/logo.jpg)",
+    "",
+    introduction,
+    "",
+    "![Aktion eins](/images/one.jpg)",
+    "",
+    "![Aktion zwei](/images/two.jpg)",
+  ].join("\n"));
+
+  assert.match(html, new RegExp(`<p>${introduction}</p>`, "u"));
+  assert.doesNotMatch(html, /<figcaption/u);
+  assert.doesNotMatch(html, /class="md-image-series"/u);
+});
+
 test("markdown rendering strips executable URLs and scripts", () => {
   const html = renderMarkdown([
     '<script>globalThis.compromised = true</script>',

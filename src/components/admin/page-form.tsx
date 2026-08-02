@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { MarkdownEditor } from "./markdown-editor";
 import type { ParentOption } from "@/lib/page-tree";
+import { todayInTimeZone } from "@/lib/event-time";
 
 type PageFormValues = {
   title?: string;
@@ -12,6 +13,7 @@ type PageFormValues = {
   metaTitle?: string | null;
   metaDesc?: string | null;
   sortOrder?: number;
+  archiveDate?: string | null;
   published?: boolean;
   gallerySlug?: string | null;
 };
@@ -60,6 +62,9 @@ export function PageForm({
   }, [slug, title]);
 
   const fullSlug = parent ? `${parent}/${effectiveLeaf}` : effectiveLeaf;
+  const initialArchiveDate = values && "archiveDate" in values
+    ? values.archiveDate ?? ""
+    : todayInTimeZone();
 
   return (
     <form action={action} className="space-y-4">
@@ -165,6 +170,21 @@ export function PageForm({
         </select>
         <p className="text-xs text-muted mt-1">
           Wird unter dem Inhalt als Bildergalerie angezeigt.
+        </p>
+      </div>
+
+      <div className="max-w-xs">
+        <label className="block text-sm font-medium mb-1">
+          Beitragsdatum
+        </label>
+        <input
+          type="date"
+          name="archiveDate"
+          defaultValue={initialArchiveDate}
+          className="w-full border border-border rounded-md px-3 py-2"
+        />
+        <p className="text-xs text-muted mt-1">
+          Bestimmt die chronologische Reihenfolge in öffentlichen Archiven; die Drag-&amp;-Drop-Reihenfolge bleibt davon unabhängig.
         </p>
       </div>
 

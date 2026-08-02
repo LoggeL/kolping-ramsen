@@ -30,6 +30,8 @@ model Page {
   metaDesc    String?
   parent      String?
   sortOrder   Int      @default(0)
+  /// Date used to order chronological archive children independently of manual navigation order.
+  archiveDate DateTime?
   published   Boolean  @default(true)
   gallerySlug String?
   createdAt   DateTime @default(now())
@@ -40,6 +42,7 @@ model Page {
 
   @@index([slug])
   @@index([parent])
+  @@index([parent, archiveDate])
 }
 
 model News {
@@ -162,4 +165,20 @@ model Redirect {
   createdAt DateTime @default(now())
 
   @@index([fromPath])
+}
+
+/// Provenance for content created or guardedly cleaned by the legacy migration.
+/// The digests make future source/editorial divergence explicit.
+model LegacyContentRevision {
+  id                   String   @id
+  sourceKey            String   @unique
+  targetKind           String
+  targetKey            String
+  sourceDigest         String
+  appliedContentDigest String
+  snapshotDigest       String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([targetKind, targetKey])
 }

@@ -1,0 +1,1309 @@
+{
+  "schemaVersion": 1,
+  "origin": "https://kolping-ramsen.de",
+  "routes": [
+    {
+      "sourcePath": "/index.php",
+      "targetPath": "/",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/aktuelles",
+      "targetPath": "/aktuelles",
+      "kind": "news",
+      "collection": true
+    },
+    {
+      "sourcePath": "/index.php/component/content/article/datenschutzerklaerung",
+      "targetPath": "/datenschutz",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/gaestebuch",
+      "targetPath": "/gaestebuch",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/kontakt/impressum",
+      "targetPath": "/impressum",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/kontakt/kontakt",
+      "targetPath": "/kontakt",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/mitglied-werden",
+      "targetPath": "/mitglied-werden",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/rueckblick",
+      "targetPath": "/rueckblick",
+      "kind": "page",
+      "collection": true
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/ehrungen",
+      "targetPath": "/rueckblick/ehrungen",
+      "kind": "page",
+      "collection": true
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/familienkreis",
+      "targetPath": "/rueckblick/familienkreis",
+      "kind": "page",
+      "collection": true
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "targetPath": "/rueckblick/jahresprogramm",
+      "kind": "page",
+      "collection": true
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm/ebiketour-im-september",
+      "targetPath": "/rueckblick/jahresprogramm/ebiketour-im-september",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm/familienzeltlager-geiselberg-2025",
+      "targetPath": "/rueckblick/jahresprogramm/familienzeltlager-geiselberg-2025",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm/ramser-kerwe-2025",
+      "targetPath": "/rueckblick/jahresprogramm/ramser-kerwe-2025",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm/turmuhrenmuseum-2025",
+      "targetPath": "/rueckblick/jahresprogramm/turmuhrenmuseum-2025",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jugend",
+      "targetPath": "/rueckblick/jugendaktivitaeten",
+      "kind": "page",
+      "collection": true
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "targetPath": "/rueckblick/presse",
+      "kind": "page",
+      "collection": true
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse/kirchner-hans",
+      "targetPath": "/rueckblick/presse/kirchner-hans",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse/kreativbuehne-2024",
+      "targetPath": "/rueckblick/presse/kreativbuehne-2024",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse/kreativtheater2024-02",
+      "targetPath": "/rueckblick/presse/kreativtheater2024-02",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse/prunksitzung-presse-2025",
+      "targetPath": "/rueckblick/presse/prunksitzung-presse-2025",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/prunksitzung",
+      "targetPath": "/rueckblick/prunksitzung",
+      "kind": "page",
+      "collection": true
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/prunksitzung/55-prunksitzung",
+      "targetPath": "/rueckblick/prunksitzung/55-prunksitzung",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/prunksitzung/digiprunk2022",
+      "targetPath": "/rueckblick/prunksitzung/digiprunk2022",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/prunksitzung/prunk2020",
+      "targetPath": "/rueckblick/prunksitzung/prunk2020",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/prunksitzung/prunksitzung2021",
+      "targetPath": "/rueckblick/prunksitzung/prunksitzung2021",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/reisen",
+      "targetPath": "/rueckblick/reisen",
+      "kind": "page",
+      "collection": true
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/reisen/rumaenien-2018",
+      "targetPath": "/rueckblick/reisen/rumaenien-2018",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/staedtereisen",
+      "targetPath": "/rueckblick/staedtereisen",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/trachtengruppe",
+      "targetPath": "/rueckblick/trachtengruppe",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/termine",
+      "targetPath": "/termine",
+      "kind": "event",
+      "collection": true
+    },
+    {
+      "sourcePath": "/index.php/ueber-uns",
+      "targetPath": "/ueber-uns",
+      "kind": "page",
+      "collection": true
+    },
+    {
+      "sourcePath": "/index.php/ueber-uns/adolf-kolping",
+      "targetPath": "/ueber-uns/adolf-kolping",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/ueber-uns/geschichte-pfarrheim",
+      "targetPath": "/ueber-uns/pfarrheim",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/ueber-uns/kolpingsfamilie-ramsen",
+      "targetPath": "/ueber-uns/kolpingsfamilie-ramsen",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/ueber-uns/relevante-vereinsdaten",
+      "targetPath": "/ueber-uns/vereinsdaten",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/vereinsbereiche",
+      "targetPath": "/vereinsbereiche",
+      "kind": "page",
+      "collection": true
+    },
+    {
+      "sourcePath": "/index.php/vereinsbereiche/familienkreis",
+      "targetPath": "/vereinsbereiche/familienkreis",
+      "kind": "page",
+      "collection": true
+    },
+    {
+      "sourcePath": "/index.php/vereinsbereiche/familienkreis/10-jahre-familienkreis-2009-2019",
+      "targetPath": "/rueckblick/familienkreis/10-jahre-familienkreis-2009-2019",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/vereinsbereiche/familienkreis/familienkreis",
+      "targetPath": "/rueckblick/familienkreis/familienfreizeit-2024",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/vereinsbereiche/familienkreis/familienkreis-1-0-wanderte-05-2019",
+      "targetPath": "/rueckblick/familienkreis/familienkreis-wanderung-2019",
+      "kind": "page",
+      "title": "Familienkreis-Wanderung 2019"
+    },
+    {
+      "sourcePath": "/index.php/vereinsbereiche/familienkreis/strassburg",
+      "targetPath": "/rueckblick/familienkreis/strassburg-2019",
+      "kind": "page",
+      "title": "Straßburg 2019"
+    },
+    {
+      "sourcePath": "/index.php/vereinsbereiche/jugendgruppe",
+      "targetPath": "/vereinsbereiche/jugendgruppe",
+      "kind": "page",
+      "collection": true
+    },
+    {
+      "sourcePath": "/index.php/vereinsbereiche/jugendgruppe/einweihung-barfusspfad-2024",
+      "targetPath": "/rueckblick/jugendaktivitaeten/einweihung-barfusspfad-2024",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/vereinsbereiche/jugendgruppe/nexus-2024-open-air",
+      "targetPath": "/rueckblick/jugendaktivitaeten/nexus-2024-open-air",
+      "kind": "page",
+      "title": "Open-Air-Theater „NEXUS“ 2024"
+    },
+    {
+      "sourcePath": "/index.php/vereinsbereiche/jugendgruppe/sommerferienbetreuung-2024",
+      "targetPath": "/rueckblick/jugendaktivitaeten/sommerferienbetreuung-2024",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/vereinsbereiche/jugendgruppe/winterstueck-der-theatergruppe",
+      "targetPath": "/rueckblick/jugendaktivitaeten/winterstueck-der-theatergruppe-2024",
+      "kind": "page",
+      "title": "Winterstück der Theatergruppe 2024"
+    },
+    {
+      "sourcePath": "/index.php/vereinsbereiche/kolpingskapelle",
+      "targetPath": "/vereinsbereiche/kolpingskapelle",
+      "kind": "page",
+      "collection": true
+    },
+    {
+      "sourcePath": "/index.php/vereinsbereiche/vorstandschaft",
+      "targetPath": "/vereinsbereiche/vorstandschaft",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/index.php/vereinsbereiche/zeltlager",
+      "targetPath": "/vereinsbereiche/zeltlager",
+      "kind": "page"
+    },
+    {
+      "sourcePath": "/ueber-uns/geschichte-pfarrheim",
+      "targetPath": "/ueber-uns/pfarrheim",
+      "kind": "page"
+    }
+  ],
+  "recordOverrides": [
+    {
+      "sourcePath": "/index.php/rueckblick/ehrungen",
+      "publishedDate": "2022-05-28",
+      "detectedTitle": "Sebastian Sattler führte gekonnt durch das Programm im gut gefüllten Festzelt.",
+      "title": "Mitgliederehrungen für 2020, 2021 und 2022",
+      "targetPath": "/rueckblick/ehrungen/2022-05-28-mitgliederehrungen-2020-2021-2022",
+      "reason": "Der bisherige Satz war eine Bildunterschrift; die eigentliche Beitragsüberschrift benennt die Mitgliederehrungen."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/ehrungen",
+      "publishedDate": "2025-10-03",
+      "detectedTitle": "Urkunde 2025",
+      "title": "Stadtradeln 2025: Bronze für die Kolpingbiker Ramsen",
+      "targetPath": "/rueckblick/ehrungen/2025-10-03-stadtradeln-2025-bronze-fuer-die-kolpingbiker-ramsen",
+      "reason": "Der Bilddateiname wird durch den aus Urkunde und Beitrag hervorgehenden Anlass ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/familienkreis",
+      "sourceAliases": ["/index.php/vereinsbereiche/familienkreis"],
+      "publishedDate": "2025-01-21",
+      "detectedTitle": "Junge Familien Kolping",
+      "title": "Erstes Treffen junger Familien 2025",
+      "targetPath": "/rueckblick/familienkreis/2025-01-21-erstes-treffen-junger-familien",
+      "reason": "Der konkrete Anlass ist aussagekräftiger als der Bilddateiname."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/familienkreis",
+      "sourceAliases": ["/index.php/vereinsbereiche/familienkreis"],
+      "publishedDate": "2026-03-08",
+      "detectedTitle": "Familienkreis 1: Kontakt vom 8. März 2026",
+      "title": "Osterbastelaktion 2026",
+      "targetPath": "/rueckblick/familienkreis/2026-03-08-osterbastelaktion-2026",
+      "reason": "Die Telefonnummer im Quellheading ist kein Titel; das Plakat beschreibt eine Osterbastelaktion."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2020-07-15",
+      "detectedTitle": "Sing mal wieder 2020 05",
+      "title": "Sommer-Sonderprogramm 2020",
+      "targetPath": "/rueckblick/jahresprogramm/2020-07-15-sommer-sonderprogramm-2020",
+      "reason": "Der Beitrag umfasst mehrere Sommeraktionen; der erste Bilddateiname war irreführend."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2020-08-29",
+      "detectedTitle": "Die Kolpingjugend präsentierte:",
+      "title": "Open-Air-Theater „Der Kristall der Träume“ 2020",
+      "targetPath": "/rueckblick/jahresprogramm/2020-08-29-open-air-theater-der-kristall-der-traeume",
+      "reason": "Der vollständige Stücktitel aus dem Beitrag ersetzt den abgebrochenen Satz."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2021-05-09",
+      "detectedTitle": "Ein Dankeschön galt allen Helfern und der Organistin Anette Probst.",
+      "title": "Kolpinggedenktag 2021",
+      "targetPath": "/rueckblick/jahresprogramm/2021-05-09-kolpinggedenktag-2021",
+      "reason": "Eine Bildunterschrift wird durch den im Beitrag beschriebenen Anlass ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2023-01-16",
+      "detectedTitle": "Generalversammlung23",
+      "title": "Mitgliederversammlung 2023",
+      "targetPath": "/rueckblick/jahresprogramm/2023-01-16-mitgliederversammlung-2023",
+      "reason": "Der technische Bildname wird zu einem lesbaren Veranstaltungstitel normalisiert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2023-05-31",
+      "detectedTitle": "20230625 Bezirksmitbringgrillfest S1 A5",
+      "title": "Familientag und Mitbringgrillfest 2023",
+      "targetPath": "/rueckblick/jahresprogramm/2023-05-31-familientag-und-mitbringgrillfest-2023",
+      "reason": "Der technische Scan-Dateiname wird durch den in Bildern und Text dokumentierten Anlass ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2023-07-06",
+      "detectedTitle": "Zeltlager 01",
+      "title": "Familienzeltlager 2023 in Deudesfeld",
+      "targetPath": "/rueckblick/jahresprogramm/2023-07-06-familienzeltlager-2023-in-deudesfeld",
+      "reason": "Die klare Beitragsüberschrift ersetzt den ersten Bilddateinamen."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2024-10-23",
+      "detectedTitle": "Jesus",
+      "title": "Jesus von Nazareth – zwischen Glaubenstradition und historischen Fakten",
+      "targetPath": "/rueckblick/jahresprogramm/2024-10-23-jesus-von-nazareth-vortrag",
+      "reason": "Der vollständige Vortragstitel ersetzt den generischen Bildnamen."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2025-03-01",
+      "detectedTitle": "Generalversammlung 2025 Homepage",
+      "title": "Mitgliederversammlung 2025",
+      "targetPath": "/rueckblick/jahresprogramm/2025-03-01-mitgliederversammlung-2025",
+      "reason": "Ein redaktioneller Titel ersetzt den internen Dateinamenzusatz."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2025-04-22",
+      "detectedTitle": "Grotte",
+      "title": "Bezirksmaiandacht 2025 an der Mariengrotte",
+      "targetPath": "/rueckblick/jahresprogramm/2025-04-22-bezirksmaiandacht-2025",
+      "reason": "Die Beitragsüberschrift benennt den Anlass präziser als der Bilddateiname."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2025-04-28",
+      "detectedTitle": "Plakat Waldfest 2025",
+      "title": "Waldfest 2025",
+      "targetPath": "/rueckblick/jahresprogramm/2025-04-28-waldfest-2025",
+      "reason": "Der Inhaltsname wird vom technischen Medientyp getrennt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2025-05-04",
+      "detectedTitle": "Bei diesem Jubiläum waren auch Jugendliche aus unserer Kolpingsfamilie dabei.",
+      "title": "175 Jahre Kolping – Jubiläum in Köln 2025",
+      "targetPath": "/rueckblick/jahresprogramm/2025-05-04-175-jahre-kolping-in-koeln",
+      "reason": "Eine Bildunterschrift wird durch den dokumentierten Jubiläumsanlass ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jugend",
+      "sourceAliases": ["/index.php/vereinsbereiche/jugendgruppe"],
+      "publishedDate": "2019-07-03",
+      "detectedTitle": "Eine gelungene Aktion der Ramser Kolpingjugend.",
+      "title": "72-Stunden-Aktion der Kolpingjugend 2019",
+      "targetPath": "/rueckblick/jugendaktivitaeten/2019-07-03-72-stunden-aktion-der-kolpingjugend",
+      "reason": "Der konkrete Projektname ersetzt eine unspezifische Bildunterschrift."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jugend",
+      "sourceAliases": ["/index.php/vereinsbereiche/jugendgruppe"],
+      "publishedDate": "2019-09-26",
+      "detectedTitle": "Theater 2018 1",
+      "title": "Open-Air-Theater „Bluttribut“ 2018",
+      "targetPath": "/rueckblick/jugendaktivitaeten/2019-09-26-open-air-theater-bluttribut-2018",
+      "reason": "Der Stücktitel aus der Beitragsüberschrift ersetzt den ersten Bilddateinamen."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jugend",
+      "sourceAliases": ["/index.php/vereinsbereiche/jugendgruppe"],
+      "publishedDate": "2021-03-07",
+      "detectedTitle": "Zehn Gruppen beteiligten sich an diesem Quiz.",
+      "title": "Digitaler Quizabend der Kolpingjugend 2021",
+      "targetPath": "/rueckblick/jugendaktivitaeten/2021-03-07-digitaler-quizabend-der-kolpingjugend",
+      "reason": "Eine Bildunterschrift wird durch den eigentlichen Veranstaltungsnamen ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jugend",
+      "sourceAliases": ["/index.php/vereinsbereiche/jugendgruppe"],
+      "publishedDate": "2026-03-02",
+      "detectedTitle": "Begründung:",
+      "title": "Jugend-Engagement-Preis Rheinland-Pfalz 2025/2026",
+      "targetPath": "/rueckblick/jugendaktivitaeten/2026-03-02-jugend-engagement-preis-rheinland-pfalz",
+      "reason": "Eine Zwischenüberschrift wird durch den ausgezeichneten Anlass ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/prunksitzung",
+      "publishedDate": "2023-02-13",
+      "detectedTitle": "Prunksitzung 23 01",
+      "title": "Prunksitzung 2023",
+      "targetPath": "/rueckblick/prunksitzung/2023-02-13-prunksitzung-2023",
+      "reason": "Der erste Bilddateiname wird durch den Veranstaltungstitel ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/prunksitzung",
+      "publishedDate": "2024-12-29",
+      "detectedTitle": "Der Elferrat mit Präsident Anton Rikart",
+      "title": "Prunksitzung 2025",
+      "targetPath": "/rueckblick/prunksitzung/2024-12-29-prunksitzung-2025",
+      "reason": "Eine Bildunterschrift wird durch den inhaltlichen Anlass ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/prunksitzung/prunksitzung2021",
+      "publishedDate": "2021-02-07",
+      "detectedTitle": "Hier könnt ihr den Film noch einmal anschauen.",
+      "title": "Digitale Ramser Fastnacht 2021",
+      "targetPath": "/rueckblick/prunksitzung/prunksitzung2021",
+      "reason": "Ein Handlungsaufruf wird durch den Titel des Corona-Fastnachtsbeitrags ersetzt; der bestehende kanonische Slug bleibt erhalten."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/prunksitzung",
+      "publishedDate": "2026-01-04",
+      "detectedTitle": "Plakat neu 26",
+      "title": "Prunksitzung 2026",
+      "targetPath": "/rueckblick/prunksitzung/2026-01-04-prunksitzung-2026",
+      "reason": "Der technische Bilddateiname wird durch den Veranstaltungstitel ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/vereinsbereiche/kolpingskapelle",
+      "publishedDate": "2026-02-08",
+      "detectedTitle": "Plakat Konzert 2",
+      "title": "Kolpingskapelle Ramsen in Concert 2026",
+      "targetPath": "/vereinsbereiche/kolpingskapelle/2026-02-08-kolpingskapelle-ramsen-in-concert-2026",
+      "reason": "Der erste Bilddateiname wird durch den auf dem Plakat dokumentierten Konzerttitel ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2020-11-29",
+      "detectedTitle": "Wir machten unser Gelände und das Pfarrheim winterfest.",
+      "title": "Arbeitseinsatz 2020",
+      "targetPath": "/rueckblick/jahresprogramm/2020-11-29-arbeitseinsatz-2020",
+      "reason": "Eine Bildunterschrift wird durch den dokumentierten Arbeitseinsatz ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2024-06-26",
+      "detectedTitle": "Unser Ehrenpräses Pfr. Werner Kilan ist verstorben.",
+      "title": "Nachruf auf Ehrenpräses Pfarrer Werner Kilian",
+      "targetPath": "/rueckblick/jahresprogramm/2024-06-26-nachruf-auf-ehrenpraeses-werner-kilian",
+      "reason": "Der redaktionelle Titel korrigiert den Namensfehler und benennt den Nachruf."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2024-08-24",
+      "detectedTitle": "Ein voller Erfolg war die Premiere 2024 mit dem Stück \"NEXUS\".",
+      "title": "Premiere von NEXUS 2024",
+      "targetPath": "/rueckblick/jahresprogramm/2024-08-24-premiere-von-nexus-2024",
+      "reason": "Eine Bildunterschrift wird zu einem knappen, eindeutigen Beitragstitel."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2025-10-05",
+      "detectedTitle": "Gute Stimmung beim Wiesenfest 2025 durch unsere Blaskapelle.",
+      "title": "Wiesenfest 2025",
+      "targetPath": "/rueckblick/jahresprogramm/2025-10-05-wiesenfest-2025",
+      "reason": "Eine Bildunterschrift wird durch den eigentlichen Veranstaltungsnamen ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-08-21",
+      "detectedTitle": "Vorbericht 2019",
+      "title": "Open-Air-Theater „Dystopia“ 2019 – Vorbericht",
+      "targetPath": "/rueckblick/presse/2019-08-21-open-air-theater-dystopia-vorbericht",
+      "reason": "Der Scan-Dateiname wird durch die erkennbare Presseüberschrift ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-08-26",
+      "detectedTitle": "Rheinpfalz 26.08.2019",
+      "title": "Open-Air-Theater „Dystopia“ 2019 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2019-08-26-open-air-theater-dystopia-pressebericht",
+      "reason": "Der Scan-Dateiname wird durch die erkennbare Presseüberschrift ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-09-26",
+      "detectedTitle": "2017 2 Vorbericht Theater",
+      "title": "Open-Air-Theater „Verrat im Kloster“ 2017 – Vorbericht",
+      "targetPath": "/rueckblick/presse/2019-09-26-open-air-theater-verrat-im-kloster-vorbericht",
+      "reason": "Der Scan-Dateiname wird durch die erkennbare Presseüberschrift ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-09-26",
+      "detectedTitle": "2017 3 Bericht Theater",
+      "title": "Open-Air-Theater „Verrat im Kloster“ 2017 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2019-09-26-open-air-theater-verrat-im-kloster-pressebericht",
+      "reason": "Der Scan-Dateiname wird durch die erkennbare Presseüberschrift ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-09-26",
+      "detectedTitle": "2018 2 Neuwahlen Leitungsteam page0001",
+      "title": "Neuwahlen des Leitungsteams 2018 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2019-09-26-neuwahlen-des-leitungsteams-2018-pressebericht",
+      "reason": "Der technische Scan-Dateiname wird durch das Berichtsthema ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-09-26",
+      "detectedTitle": "2018 3 Jubiläum 65 Jahre page0001",
+      "title": "65 Jahre Kolpingsfamilie Ramsen – Jubiläumsbericht 2018",
+      "targetPath": "/rueckblick/presse/2019-09-26-65-jahre-kolpingsfamilie-ramsen-jubilaeumsbericht",
+      "reason": "Der technische Scan-Dateiname wird durch das Berichtsthema ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-09-26",
+      "detectedTitle": "2019 9 Kerweumzug",
+      "title": "Kerweumzug 2019 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2019-09-26-kerweumzug-2019-pressebericht",
+      "reason": "Der Scan-Dateiname wird durch das Berichtsthema ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-09-26",
+      "detectedTitle": "Anton Rikart",
+      "title": "Anton Rikart übernimmt das Ruder",
+      "targetPath": "/rueckblick/presse/2019-09-26-anton-rikart-uebernimmt-das-ruder",
+      "reason": "Der Name des Scans wird durch die erkennbare Artikelüberschrift ergänzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-09-26",
+      "detectedTitle": "Bericht 72 Stunden",
+      "title": "72-Stunden-Aktion der Kolpingjugend 2019 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2019-09-26-72-stunden-aktion-der-kolpingjugend-pressebericht",
+      "reason": "Der Scan-Dateiname wird durch das Berichtsthema ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-09-26",
+      "detectedTitle": "Ehrung Christel Bayer 2018",
+      "title": "Ehrung für Christel Bayer 2018 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2019-09-26-ehrung-fuer-christel-bayer-2018-pressebericht",
+      "reason": "Der Scan-Dateiname wird als lesbarer Pressetitel formuliert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-09-26",
+      "detectedTitle": "K.Gedenktag18 3",
+      "title": "Kolpinggedenktag 2018 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2019-09-26-kolpinggedenktag-2018-pressebericht",
+      "reason": "Der technische Scan-Dateiname wird als lesbarer Pressetitel formuliert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-09-26",
+      "detectedTitle": "Prunksitzung 19",
+      "title": "Prunksitzung 2019 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2019-09-26-prunksitzung-2019-pressebericht",
+      "reason": "Der technische Scan-Dateiname wird als lesbarer Pressetitel formuliert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-09-27",
+      "detectedTitle": "2017 1 Interview",
+      "title": "Unser Gesamtkonzept stimmt – Interview mit Wolfgang Rörig",
+      "targetPath": "/rueckblick/presse/2019-09-27-unser-gesamtkonzept-stimmt-interview-wolfgang-roerig",
+      "reason": "Der Scan-Dateiname wird durch die erkennbare Interviewüberschrift ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-09-27",
+      "detectedTitle": "2018 7 Bericht Wolfgang Rörig",
+      "title": "Ein Leben lang für die Kolpingsfamilie aktiv – Wolfgang Rörig",
+      "targetPath": "/rueckblick/presse/2019-09-27-ein-leben-lang-fuer-kolping-aktiv-wolfgang-roerig",
+      "reason": "Der Scan-Dateiname wird durch die erkennbare Artikelüberschrift ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-09-29",
+      "detectedTitle": "2019 3 Pfr. Voss Wechsel",
+      "title": "Pfarrerwechsel 2019 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2019-09-29-pfarrerwechsel-2019-pressebericht",
+      "reason": "Der Scan-Dateiname wird als lesbarer Pressetitel formuliert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-09-29",
+      "detectedTitle": "2019 6 Klostermauer Bericht",
+      "title": "Klostermauerfest 2019 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2019-09-29-klostermauerfest-2019-pressebericht",
+      "reason": "Der Scan-Dateiname wird als lesbarer Pressetitel formuliert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-10-05",
+      "detectedTitle": "Voss Verabschiedung",
+      "title": "Verabschiedung von Pfarrer Voß 2019 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2019-10-05-verabschiedung-von-pfarrer-voss-2019-pressebericht",
+      "reason": "Der Scan-Dateiname wird als lesbarer Pressetitel formuliert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-10-06",
+      "detectedTitle": "2013 5 Zeltlager",
+      "title": "Familienzeltlager 2013 – Pressebericht I",
+      "targetPath": "/rueckblick/presse/2019-10-06-familienzeltlager-2013-pressebericht-1",
+      "reason": "Der Scan-Dateiname wird als lesbarer Teil eines zweiteiligen Presseberichts formuliert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-10-07",
+      "detectedTitle": "2013 4 Zeltlager",
+      "title": "Familienzeltlager 2013 – Pressebericht II",
+      "targetPath": "/rueckblick/presse/2019-10-07-familienzeltlager-2013-pressebericht-2",
+      "reason": "Der Scan-Dateiname wird als lesbarer Teil eines zweiteiligen Presseberichts formuliert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-10-08",
+      "detectedTitle": "2013 3 60. Jubiläum Bericht",
+      "title": "60 Jahre Kolpingsfamilie Ramsen – Jubiläumsbericht 2013",
+      "targetPath": "/rueckblick/presse/2019-10-08-60-jahre-kolpingsfamilie-ramsen-jubilaeumsbericht",
+      "reason": "Der technische Scan-Dateiname wird durch das Berichtsthema ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-10-10",
+      "detectedTitle": "2013 2 60. Jubiläum Vorbericht",
+      "title": "60 Jahre Kolpingsfamilie Ramsen – Vorbericht 2013",
+      "targetPath": "/rueckblick/presse/2019-10-10-60-jahre-kolpingsfamilie-ramsen-vorbericht",
+      "reason": "Der technische Scan-Dateiname wird durch das Berichtsthema ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-10-19",
+      "detectedTitle": "2012 1 Vortrag Georg Heiner",
+      "title": "Vortrag von Georg Heiner 2012 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2019-10-19-vortrag-von-georg-heiner-2012-pressebericht",
+      "reason": "Der Scan-Dateiname wird als lesbarer Pressetitel formuliert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-10-19",
+      "detectedTitle": "2012 2 Homepage Bericht",
+      "title": "Direkter Link nach oben – Website-Porträt 2012",
+      "targetPath": "/rueckblick/presse/2019-10-19-direkter-link-nach-oben-website-portraet-2012",
+      "reason": "Der Scan-Dateiname wird durch die erkennbare Artikelüberschrift ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-10-29",
+      "detectedTitle": "2019 11 Einführung Pater Cliffton",
+      "title": "Einführung von Pater Clifford 2019 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2019-10-29-einfuehrung-von-pater-clifford-2019-pressebericht",
+      "reason": "Der Scan-Dateiname wird lesbar formuliert und der Name aus dem Artikel korrigiert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2019-12-02",
+      "detectedTitle": "2019 12 Kolpinggedenktag 2019",
+      "title": "Kolpinggedenktag 2019 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2019-12-02-kolpinggedenktag-2019-pressebericht",
+      "reason": "Der technische Scan-Dateiname wird als lesbarer Pressetitel formuliert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2021-08-31",
+      "detectedTitle": "2021 01 Vorbericht 25.08.21",
+      "title": "Open-Air-Theater „Malleus Maleficarum“ 2021 – Vorbericht",
+      "targetPath": "/rueckblick/presse/2021-08-31-open-air-theater-malleus-maleficarum-vorbericht",
+      "reason": "Der Scan-Dateiname wird durch Stücktitel und Berichtstyp ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2021-08-31",
+      "detectedTitle": "2021 02 Theater Bericht",
+      "title": "Open-Air-Theater „Malleus Maleficarum“ 2021 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2021-08-31-open-air-theater-malleus-maleficarum-pressebericht",
+      "reason": "Der Scan-Dateiname wird durch Stücktitel und Berichtstyp ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2022-09-05",
+      "detectedTitle": "Rheinpfalzbericht 2022",
+      "title": "Open-Air-Theater „Goldfieber“ 2022 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2022-09-05-open-air-theater-goldfieber-2022-pressebericht",
+      "reason": "Der generische Scanname wird durch Stücktitel und Berichtstyp ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2022-10-17",
+      "detectedTitle": "Die Rheinpfalz",
+      "title": "Oktoberfest 2022 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2022-10-17-oktoberfest-2022-pressebericht",
+      "reason": "Der Zeitungsname wird durch das Thema des Presseberichts ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2023-07-20",
+      "detectedTitle": "2023 Jubiläum 70 jahre Kolping",
+      "title": "70 Jahre Kolpingsfamilie Ramsen – Pressebericht",
+      "targetPath": "/rueckblick/presse/2023-07-20-70-jahre-kolpingsfamilie-ramsen-pressebericht",
+      "reason": "Der technische Scan-Dateiname wird als lesbarer Pressetitel formuliert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2023-08-30",
+      "detectedTitle": "2023 01 Theater Bericht",
+      "title": "Traum von Freiheit 2023: Spannung, Witz und Emotionen",
+      "targetPath": "/rueckblick/presse/2023-08-30-traum-von-freiheit-spannung-witz-und-emotionen",
+      "reason": "Der Scan-Dateiname wird durch die erkennbare Artikelüberschrift ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2023-12-20",
+      "detectedTitle": "Rheinpfalz Kultur Regional Theater 2023 3",
+      "title": "Sagenhaft: Dramatischer Stoff aus einer düsteren Zeit",
+      "targetPath": "/rueckblick/presse/2023-12-20-sagenhaft-dramatischer-stoff-aus-einer-duesteren-zeit",
+      "reason": "Der technische Scan-Dateiname wird durch die erkennbare Artikelüberschrift ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2024-01-02",
+      "detectedTitle": "2024 1Kreativtheater Bericht",
+      "title": "Kreativbühne „Sagenhaft“ 2023/24 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2024-01-02-kreativbuehne-sagenhaft-2023-24-pressebericht",
+      "reason": "Der technische Scan-Dateiname wird durch Stücktitel und Berichtstyp ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2024-02-06",
+      "detectedTitle": "Rheinpfalz, 06.02.2024",
+      "title": "Prunksitzung 2024 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2024-02-06-prunksitzung-2024-pressebericht",
+      "reason": "Der Zeitungsname wird durch das Thema des Presseberichts ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2024-08-26",
+      "detectedTitle": "2024 4 Nexus Rheinpfalz",
+      "title": "Open-Air-Theater „NEXUS“ 2024 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2024-08-26-open-air-theater-nexus-2024-pressebericht",
+      "reason": "Der technische Scan-Dateiname wird durch Stücktitel und Berichtstyp ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2025-08-18",
+      "detectedTitle": "Ein Vorbericht der Rheinpfalz über das Open Air Theater",
+      "title": "Open-Air-Theater 2025 – Vorbericht der Rheinpfalz",
+      "targetPath": "/rueckblick/presse/2025-08-18-open-air-theater-2025-vorbericht",
+      "reason": "Der lange Satz wird zu einem klaren Pressetitel verdichtet."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2025-08-27",
+      "detectedTitle": "Theaterbericht",
+      "title": "Open-Air-Theater 2025 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2025-08-27-open-air-theater-2025-pressebericht",
+      "reason": "Der generische Scanname wird als eindeutiger Pressetitel formuliert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2025-12-20",
+      "detectedTitle": "Rheinpfalzbericht im Kulturteil",
+      "title": "Kreativbühne 2025 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2025-12-20-kreativbuehne-2025-pressebericht",
+      "reason": "Der generische Scanname wird durch das Berichtsthema ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse",
+      "publishedDate": "2026-02-09",
+      "detectedTitle": "2026 01 Prunksitzung",
+      "title": "Prunksitzung 2026 – Pressebericht",
+      "targetPath": "/rueckblick/presse/2026-02-09-prunksitzung-2026-pressebericht",
+      "reason": "Der technische Scan-Dateiname wird als lesbarer Pressetitel formuliert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse/kreativtheater2024-02",
+      "publishedDate": "2024-12-30",
+      "detectedTitle": "Rheinpfalz Montag, 30. Dezember 2024",
+      "title": "Kreativbühne 2024 – Pressebericht vom 30. Dezember",
+      "targetPath": "/rueckblick/presse/kreativtheater2024-02",
+      "reason": "Der bestehende kanonische Slug bleibt erhalten; der Zeitungsname wird um das Berichtsthema ergänzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse/prunksitzung-presse-2025",
+      "publishedDate": "2025-02-28",
+      "detectedTitle": "2025 Prunksitzung",
+      "title": "Prunksitzung 2025 – Pressebericht",
+      "targetPath": "/rueckblick/presse/prunksitzung-presse-2025",
+      "reason": "Der bestehende kanonische Slug bleibt erhalten; der technische Scanname wird als Pressetitel formuliert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2022-10-17",
+      "detectedTitle": "Oktoberfestplakat",
+      "title": "Oktoberfest 2022",
+      "targetPath": "/rueckblick/jahresprogramm/2022-10-17-oktoberfest-2022",
+      "reason": "Der technische Medienname wird durch den Veranstaltungstitel ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2023-10-20",
+      "detectedTitle": "Priestertum",
+      "title": "Frauen im Priesteramt? – Vortrag 2023",
+      "targetPath": "/rueckblick/jahresprogramm/2023-10-20-frauen-im-priesteramt-vortrag",
+      "reason": "Der Bildname wird durch das auf den Vortragsunterlagen erkennbare Thema ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2024-02-07",
+      "detectedTitle": "2024 - 120 Orden herstellen",
+      "title": "Ordenherstellung und Aufbau für die Prunksitzung 2024",
+      "targetPath": "/rueckblick/jahresprogramm/2024-02-07-ordenherstellung-und-aufbau-prunksitzung-2024",
+      "reason": "Der interne Arbeitsname wird als verständlicher Beitragsname formuliert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2024-04-15",
+      "detectedTitle": "Unser Werbeplakat",
+      "title": "Waldfest zum Vatertag 2024",
+      "targetPath": "/rueckblick/jahresprogramm/2024-04-15-waldfest-zum-vatertag-2024",
+      "reason": "Der generische Bildname wird durch den auf dem Plakat dokumentierten Anlass ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2026-04-28",
+      "detectedTitle": "Impressionen vom 28. April 2026",
+      "title": "Waldfest zum Vatertag 2026",
+      "targetPath": "/rueckblick/jahresprogramm/2026-04-28-waldfest-zum-vatertag-2026",
+      "reason": "Der generische Datums-Fallback wird durch den auf dem Plakat dokumentierten Anlass ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jugend",
+      "sourceAliases": ["/index.php/vereinsbereiche/jugendgruppe"],
+      "publishedDate": "2025-02-09",
+      "detectedTitle": "Gute Stimmung",
+      "title": "Black-Orange-Party 2025",
+      "targetPath": "/rueckblick/jugendaktivitaeten/2025-02-09-black-orange-party-2025",
+      "reason": "Eine Bildunterschrift wird durch den Veranstaltungsnamen ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jugend",
+      "sourceAliases": ["/index.php/vereinsbereiche/jugendgruppe"],
+      "publishedDate": "2025-07-20",
+      "detectedTitle": "Theaterplakat 2025",
+      "title": "Open-Air-Theater „Anno 1475 – Alles hat eine Geschichte“ 2025",
+      "targetPath": "/rueckblick/jugendaktivitaeten/2025-07-20-open-air-theater-anno-1475-2025",
+      "reason": "Der Bilddateiname wird durch den auf dem Plakat dokumentierten Stücktitel ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jugend",
+      "sourceAliases": ["/index.php/vereinsbereiche/jugendgruppe"],
+      "publishedDate": "2026-02-21",
+      "detectedTitle": "Impressionen vom 21. Februar 2026",
+      "title": "Black-Orange-Party 2026",
+      "targetPath": "/rueckblick/jugendaktivitaeten/2026-02-21-black-orange-party-2026",
+      "reason": "Der generische Datums-Fallback wird durch den auf dem Plakat dokumentierten Anlass ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/aktuelles",
+      "publishedDate": "2026-07-29",
+      "detectedTitle": "Impressionen vom 29. Juli 2026",
+      "title": "Next Generation: Ausflug zum Barfußpfad 2026",
+      "targetPath": "/aktuelles/2026-07-29-next-generation-ausflug-zum-barfusspfad-2026",
+      "reason": "Der generische Datums-Fallback wird durch den auf dem Plakat dokumentierten Ausflug ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jugend",
+      "sourceAliases": ["/index.php/vereinsbereiche/jugendgruppe"],
+      "publishedDate": "2019-09-26",
+      "detectedTitle": "\"Verrat im Kloster\" war der Titel des Open Air Theaterstücks der Kolpingjugend 2017",
+      "title": "Open-Air-Theater „Verrat im Kloster“ 2017",
+      "targetPath": "/rueckblick/jugendaktivitaeten/2019-09-26-open-air-theater-verrat-im-kloster-2017",
+      "reason": "Der lange Satz wird zu einem prägnanten Stücktitel verdichtet."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse/kreativbuehne-2024",
+      "publishedDate": "2024-12-19",
+      "detectedTitle": "2024 4 Theater",
+      "title": "Kreativbühne 2024",
+      "targetPath": "/rueckblick/presse/kreativbuehne-2024",
+      "reason": "Der bestehende kanonische Slug bleibt erhalten; der technische Scanname wird durch den redaktionellen Titel ersetzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse/kirchner-hans",
+      "publishedDate": "2025-01-19",
+      "detectedTitle": "Unser Gründungsmitglied Hans Kirchner ist verstorben.",
+      "title": "Nachruf auf Hans Kirchner",
+      "targetPath": "/rueckblick/presse/kirchner-hans",
+      "reason": "Der bestehende kanonische Slug bleibt erhalten; der Satz wird als respektvoller, knapper Nachruftitel formuliert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/reisen/rumaenien-2018",
+      "publishedDate": "2019-07-03",
+      "detectedTitle": "Studienreise Rumänien mit der Kolpingsfamilie Ramsen:",
+      "title": "Studienreise Rumänien 2018",
+      "targetPath": "/rueckblick/reisen/rumaenien-2018",
+      "reason": "Der bestehende kanonische Slug bleibt erhalten; der überlange Quellheading wird zu einem klaren Archivtitel gekürzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm/sommer21",
+      "sourceAliases": ["/index.php/rueckblick/jahresprogramm"],
+      "publishedDate": "2021-07-04",
+      "detectedTitle": "Sommer - Sonderprogramm 2021",
+      "title": "Sommer-Sonderprogramm 2021",
+      "targetPath": "/rueckblick/jahresprogramm/2021-07-04-sommer-sonderprogramm-2021",
+      "reason": "Der fehlerhafte Leerzeichen-Bindestrich aus dem Joomla-Titel wird typografisch korrigiert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm/hospiz2022",
+      "sourceAliases": ["/index.php/rueckblick/jahresprogramm"],
+      "publishedDate": "2022-09-23",
+      "detectedTitle": "Das Stationäre Hospiz - Ein Ort der Würde, Wärme und Geborgenheit",
+      "title": "Das stationäre Hospiz – ein Ort der Würde, Wärme und Geborgenheit",
+      "targetPath": "/rueckblick/jahresprogramm/2022-09-23-das-stationaere-hospiz-ein-ort-der-wuerde-waerme-und-geborgenheit",
+      "reason": "Großschreibung und Trennzeichen werden zu einem lesbaren deutschen Titel normalisiert."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm/bezirksfriedensgebet-2024",
+      "sourceAliases": ["/index.php/rueckblick/jahresprogramm"],
+      "publishedDate": "2024-02-25",
+      "detectedTitle": "Das Bezirks - Friedensgebet",
+      "title": "Bezirksfriedensgebet 2024",
+      "targetPath": "/rueckblick/jahresprogramm/2024-02-25-das-bezirks-friedensgebet",
+      "reason": "Der künstlich getrennte zusammengesetzte Begriff wird repariert und um das Veranstaltungsjahr ergänzt."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm/abendwanderung-2024",
+      "sourceAliases": ["/index.php/rueckblick/jahresprogramm"],
+      "publishedDate": "2024-04-28",
+      "detectedTitle": "\"Sterne schauen,\"",
+      "title": "Sterne schauen – Abendwanderung 2024",
+      "targetPath": "/rueckblick/jahresprogramm/2024-04-28-sterne-schauen",
+      "reason": "Lose Anführungszeichen und Komma werden entfernt; der Veranstaltungstyp aus dem Quellpfad macht den Titel eindeutig."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm/lieblingsweinprobe-2025",
+      "sourceAliases": ["/index.php/rueckblick/jahresprogramm"],
+      "publishedDate": "2025-10-18",
+      "detectedTitle": "\"Lieblings - Weinprobe\"",
+      "title": "Lieblingsweinprobe 2025",
+      "targetPath": "/rueckblick/jahresprogramm/2025-10-18-lieblings-weinprobe",
+      "reason": "Anführungszeichen und die falsche Worttrennung werden entfernt; das Jahr ordnet den Archivbeitrag ein."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/presse/norddeutschlandbericht2020",
+      "sourceAliases": ["/index.php/rueckblick/presse"],
+      "publishedDate": "2020-11-01",
+      "detectedTitle": "Studienreise 2020 - Ostfriesland",
+      "title": "Studienreise 2020 – Ostfriesland",
+      "targetPath": "/rueckblick/presse/2020-11-01-studienreise-2020-ostfriesland",
+      "reason": "Der als Trennzeichen verwendete Bindestrich wird typografisch vereinheitlicht."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/prunksitzung/prunk2020",
+      "sourceAliases": ["/index.php/rueckblick/prunksitzung"],
+      "publishedDate": "2020-02-16",
+      "detectedTitle": "Kolping - Prunksitzung 2020",
+      "title": "Kolping-Prunksitzung 2020",
+      "targetPath": "/rueckblick/prunksitzung/prunk2020",
+      "reason": "Der zusammengesetzte Veranstaltungsname wird ohne fehlerhafte Leerzeichen geschrieben; der bestehende kanonische Slug bleibt erhalten."
+    },
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm/arzneimittel-vortrag-2024",
+      "sourceAliases": ["/index.php/rueckblick/jahresprogramm"],
+      "publishedDate": "2024-02-06",
+      "detectedTitle": "Arzneimittel richtig einnehmen",
+      "title": "Arzneimittel richtig einnehmen – Wechselwirkungen vermeiden",
+      "targetPath": "/rueckblick/jahresprogramm/2024-02-06-arzneimittel-richtig-einnehmen",
+      "reason": "Die im Joomla-HTML auf zwei Überschriften verteilte zweite Titelhälfte wird in den kanonischen Artikeltitel übernommen."
+    },
+    {
+      "sourcePath": "/index.php/aktuelles/tintenpatronen-sammelaktion-2025",
+      "sourceAliases": ["/index.php/aktuelles"],
+      "publishedDate": "2025-10-13",
+      "detectedTitle": "Tintenpatronen - Sammelaktion der KF Ramsen",
+      "title": "Tintenpatronen-Sammelaktion der Kolpingsfamilie Ramsen",
+      "targetPath": "/aktuelles/2025-10-13-tintenpatronen-sammelaktion-der-kf-ramsen",
+      "reason": "Die falsche Bindestrichsetzung und die unnötige Abkürzung werden im redaktionellen Titel bereinigt."
+    },
+    {
+      "sourcePath": "/index.php/ueber-uns/relevante-vereinsdaten",
+      "publishedDate": "2019-07-03",
+      "detectedTitle": "Relevante Vereins - Daten",
+      "title": "Relevante Vereinsdaten",
+      "targetPath": "/ueber-uns/vereinsdaten",
+      "reason": "Das zusammengesetzte Substantiv wird ohne fehlerhafte Leerzeichen und Trennstrich geschrieben."
+    }
+  ],
+  "recordExcludes": [
+    {
+      "sourcePath": "/index.php/rueckblick/jahresprogramm",
+      "publishedDate": "2024-02-06",
+      "detectedTitle": "Bilder unter Prunksitzung",
+      "sourceFingerprint": "sha256:c9567ef4ed66894af99cd447e7686650dc3d49373cace11aec2eb87e09903a83",
+      "expectedAssetStates": [
+        {
+          "sourceUrl": "https://kolping-ramsen.de/images/Plakat_Prunksitzung_NEW.jpg",
+          "status": "failed",
+          "reason": "HTTP 404"
+        }
+      ],
+      "reason": "Der Datensatz besteht ausschließlich aus einem inzwischen fehlenden Bild und enthält keinen wiederherstellbaren redaktionellen Text."
+    }
+  ],
+  "redirects": [
+    {
+      "fromPath": "/index.php/component/content/article/datenschutzerklaerung?catid=2:uncategorised",
+      "targetPath": "/datenschutz",
+      "reason": "Der historische Joomla-Komponentenlink wird von der unveröffentlichten Altseite auf die kanonische Datenschutzseite korrigiert."
+    },
+    {
+      "fromPath": "/index.php/rueckblick/jahresprogramm/prunksitzung-2024",
+      "targetPath": "/rueckblick/prunksitzung/2023-12-15-unsere-prunksitzung-2024",
+      "reason": "Der bildlose Altbeitrag verweist auf den vollständigen Rückblick zur Prunksitzung 2024."
+    },
+    {
+      "fromPath": "/index.php/rueckblick/jahresprogramm/adventskalender2020",
+      "targetPath": "/rueckblick/jahresprogramm/2020-12-20-lebendiger-adventskalender",
+      "reason": "Die leere Legacy-Detailansicht verweist auf den vollständig aus der Jahresprogramm-Collection übernommenen Beitrag."
+    },
+    {
+      "fromPath": "/vereinsbereiche/familienkreis/10-jahre-familienkreis-2009-2019",
+      "targetPath": "/rueckblick/familienkreis/10-jahre-familienkreis-2009-2019",
+      "reason": "Historische Familienkreis-Beiträge liegen ausschließlich im Rückblick."
+    },
+    {
+      "fromPath": "/vereinsbereiche/familienkreis/familienkreis",
+      "targetPath": "/rueckblick/familienkreis/familienfreizeit-2024",
+      "reason": "Historische Familienkreis-Beiträge liegen ausschließlich im Rückblick."
+    },
+    {
+      "fromPath": "/vereinsbereiche/familienkreis/familienkreis-1-0-wanderte-05-2019",
+      "targetPath": "/rueckblick/familienkreis/familienkreis-wanderung-2019",
+      "reason": "Historische Familienkreis-Beiträge liegen ausschließlich im Rückblick."
+    },
+    {
+      "fromPath": "/vereinsbereiche/familienkreis/strassburg",
+      "targetPath": "/rueckblick/familienkreis/strassburg-2019",
+      "reason": "Historische Familienkreis-Beiträge liegen ausschließlich im Rückblick."
+    },
+    {
+      "fromPath": "/vereinsbereiche/jugendgruppe/einweihung-barfusspfad-2024",
+      "targetPath": "/rueckblick/jugendaktivitaeten/einweihung-barfusspfad-2024",
+      "reason": "Historische Jugend-Beiträge liegen ausschließlich im Rückblick."
+    },
+    {
+      "fromPath": "/vereinsbereiche/jugendgruppe/nexus-2024-open-air",
+      "targetPath": "/rueckblick/jugendaktivitaeten/nexus-2024-open-air",
+      "reason": "Historische Jugend- und Theaterbeiträge liegen ausschließlich im Rückblick."
+    },
+    {
+      "fromPath": "/vereinsbereiche/jugendgruppe/sommerferienbetreuung-2024",
+      "targetPath": "/rueckblick/jugendaktivitaeten/sommerferienbetreuung-2024",
+      "reason": "Historische Jugend-Beiträge liegen ausschließlich im Rückblick."
+    },
+    {
+      "fromPath": "/vereinsbereiche/jugendgruppe/winterstueck-der-theatergruppe",
+      "targetPath": "/rueckblick/jugendaktivitaeten/winterstueck-der-theatergruppe-2024",
+      "reason": "Historische Jugend- und Theaterbeiträge liegen ausschließlich im Rückblick."
+    }
+  ],
+  "canonicalTargets": [
+    {
+      "targetPrefixes": [
+        "/rueckblick/familienkreis",
+        "/vereinsbereiche/familienkreis"
+      ],
+      "preferTargetPrefix": "/rueckblick/familienkreis",
+      "reason": "Historische Aktivitäten gehören kanonisch in den Rückblick; der Vereinsbereich bleibt die aktuelle Gruppenübersicht."
+    },
+    {
+      "targetPrefixes": [
+        "/rueckblick/jugendaktivitaeten",
+        "/vereinsbereiche/jugendgruppe"
+      ],
+      "preferTargetPrefix": "/rueckblick/jugendaktivitaeten",
+      "reason": "Historische Aktivitäten gehören kanonisch in den Rückblick; der Vereinsbereich bleibt die aktuelle Gruppenübersicht."
+    }
+  ],
+  "draftUpdates": [
+    {
+      "targetPath": "/rueckblick/presse/kreativbuehne-2024",
+      "kind": "page",
+      "publish": true,
+      "reason": "Der unvollständige Presseentwurf wird aus dem kanonischen Legacy-Beitrag samt lokalisierten Bildern repariert und veröffentlicht.",
+      "title": "Kreativbühne 2024"
+    },
+    {
+      "targetPath": "/rueckblick/presse/kreativtheater2024-02",
+      "kind": "page",
+      "publish": true,
+      "reason": "Der unvollständige Presseentwurf wird aus dem kanonischen Legacy-Beitrag samt lokalisierten Bildern repariert und veröffentlicht."
+    },
+    {
+      "targetPath": "/rueckblick/presse/prunksitzung-presse-2025",
+      "kind": "page",
+      "publish": true,
+      "reason": "Der unvollständige Presseentwurf wird aus dem kanonischen Legacy-Beitrag samt lokalisierten Bildern repariert und veröffentlicht."
+    },
+    {
+      "targetPath": "/rueckblick/prunksitzung/prunksitzung2021",
+      "kind": "page",
+      "publish": true,
+      "reason": "Der unvollständige Prunksitzungsentwurf wird aus dem kanonischen Legacy-Beitrag samt lokalisierten Medien repariert und veröffentlicht."
+    },
+    {
+      "targetPath": "/rueckblick/reisen/rumaenien-2018",
+      "kind": "page",
+      "publish": true,
+      "reason": "Der schlecht migrierte Reiseentwurf wird aus dem vollständigen Legacy-Bericht mit lokalisierten Bildern repariert und veröffentlicht."
+    },
+    {
+      "targetPath": "/rueckblick/jahresprogramm/ebiketour-im-september",
+      "kind": "page",
+      "publish": true,
+      "reason": "Der vollständige, bislang unveröffentlichte Archivbeitrag wird aus der kanonischen Legacy-Quelle veröffentlicht."
+    },
+    {
+      "targetPath": "/rueckblick/jahresprogramm/familienzeltlager-geiselberg-2025",
+      "kind": "page",
+      "publish": true,
+      "reason": "Der vollständige, bislang unveröffentlichte Archivbeitrag wird samt vollständig erfasster Bilder veröffentlicht."
+    },
+    {
+      "targetPath": "/rueckblick/jahresprogramm/turmuhrenmuseum-2025",
+      "kind": "page",
+      "publish": true,
+      "reason": "Der vollständige, bislang unveröffentlichte Archivbeitrag wird aus der kanonischen Legacy-Quelle veröffentlicht."
+    },
+    {
+      "targetPath": "/rueckblick/presse/kirchner-hans",
+      "kind": "page",
+      "publish": true,
+      "reason": "Der vollständige, bislang unveröffentlichte Pressebeitrag wird aus der kanonischen Legacy-Quelle veröffentlicht."
+    },
+    {
+      "targetPath": "/rueckblick/prunksitzung/55-prunksitzung",
+      "kind": "page",
+      "publish": true,
+      "reason": "Der vollständige, bislang unveröffentlichte Prunksitzungsbeitrag wird samt lokalisierten Bildern veröffentlicht."
+    },
+    {
+      "targetPath": "/rueckblick/prunksitzung/digiprunk2022",
+      "kind": "page",
+      "publish": true,
+      "reason": "Der vollständige, bislang unveröffentlichte Prunksitzungsbeitrag wird samt lokalisierten Bildern veröffentlicht."
+    },
+    {
+      "targetPath": "/rueckblick/prunksitzung/prunk2020",
+      "kind": "page",
+      "publish": true,
+      "reason": "Der vollständige, bislang unveröffentlichte Prunksitzungsbeitrag wird samt vollständig erfasster Bilder veröffentlicht."
+    },
+    {
+      "targetPath": "/aktuelles/2025-09-06-strick-und-haekeln",
+      "kind": "news",
+      "publish": true,
+      "reason": "Die öffentlich erreichbare Legacy-Meldung wird mit ihrem lokalisierten Bild aus dem unveröffentlichten CMS-Entwurf repariert und veröffentlicht."
+    }
+  ],
+  "currentNormalizations": [
+    {
+      "targetPath": "/rueckblick/jahresprogramm/ramser-kerwe-2025",
+      "kind": "page",
+      "reason": "Nur dekorative Joomla-Überschriften bereinigen; bestehende cache-sichere lokale Bild-URLs unverändert erhalten."
+    },
+    {
+      "targetPath": "/rueckblick/trachtengruppe",
+      "kind": "page",
+      "reason": "Präsentations-Markdown bereinigen und den bestehenden lokalen Bildpfad unverändert erhalten."
+    },
+    {
+      "targetPath": "/ueber-uns/kolpingsfamilie-ramsen",
+      "kind": "page",
+      "reason": "Kopierte Joomla-Schriftformatierung entfernen, ohne redaktionellen Text oder interne Verweise zu ersetzen."
+    },
+    {
+      "targetPath": "/ueber-uns/vereinsdaten",
+      "kind": "page",
+      "reason": "Überschriftenhierarchie und redundante Präsentationsauszeichnung bereinigen, lokale Medien unverändert erhalten."
+    },
+    {
+      "targetPath": "/aktuelles/2019-07-03-adresse-pfarrheim",
+      "kind": "news",
+      "reason": "Dekorative Joomla-Auszeichnung entfernen und die Meldung als schlichtes, semantisches Markdown erhalten."
+    },
+    {
+      "targetPath": "/aktuelles/2025-10-13-tintenpatronen-sammelaktion-der-kf-ramsen",
+      "kind": "news",
+      "reason": "Dekorative Joomla-Überschriften bereinigen und den bestehenden lokalen Bildpfad unverändert erhalten."
+    },
+    {
+      "targetPath": "/mitglied-werden",
+      "kind": "page",
+      "reason": "Dekorative Joomla-Auszeichnung bereinigen; alle vier versionierten Antragsdokumente und das lokale Bild unverändert erhalten."
+    },
+    {
+      "targetPath": "/vereinsbereiche/vorstandschaft",
+      "kind": "page",
+      "reason": "Kaputte Unterstrich-Auszeichnung und kopierte Einrückungen bereinigen, ohne Namen oder Kontaktdaten zu verändern."
+    },
+    {
+      "targetPath": "/rueckblick/staedtereisen",
+      "kind": "page",
+      "reason": "Präsentationsüberschriften und kopierte Einrückungen als zugängliche Reisetabelle strukturieren, ohne Einträge zu entfernen.",
+      "format": "travel-history"
+    },
+    {
+      "targetPath": "/datenschutz",
+      "kind": "page",
+      "reason": "Kopierte Präsentationsformatierung in eine semantische Überschriftenhierarchie überführen, ohne den rechtlichen Inhalt zu verändern.",
+      "format": "legal-outline"
+    }
+  ],
+  "excludes": [
+    {
+      "pattern": "^/index\\.php/component/content/category/",
+      "reason": "Redundante Joomla-Kategorie-Aliase; die kanonischen Menü- und Artikelseiten werden separat erfasst."
+    },
+    {
+      "pattern": "^/index\\.php/component/content/article/datenschutzerklaerung\\?catid=8$",
+      "reason": "Nicht mehr existierender Alias; die kanonische Datenschutzerklärung wird separat erfasst."
+    },
+    {
+      "pattern": "^/index\\.php/component/content/article/datenschutzerklaerung\\?catid=2%3Auncategorised$",
+      "reason": "Fehlerhafter Joomla-Alias, der aktuell die Startseite statt der Datenschutzerklärung ausliefert; die kanonische Datenschutzerklärung wird separat erfasst."
+    },
+    {
+      "pattern": "^/index\\.php/(?:rueckblick|ueber-uns|vereinsbereiche)$",
+      "reason": "Nicht existierende Joomla-Menücontainer; ihre erreichbaren Unterseiten werden vollständig separat erfasst."
+    },
+    {
+      "pattern": "^/$",
+      "reason": "Die neue Startseite ist eine native Übersicht; den alten Willkommenstext nicht als zweite Inhaltsseite importieren."
+    },
+    {
+      "pattern": "^https?://theater\\.kolping-ramsen\\.de(?:/|$)",
+      "reason": "Eigenständige Theater-Website außerhalb der Joomla-Inhaltsmigration; aktuelles Ziel ist https://kolpingtheater-ramsen.de."
+    },
+    {
+      "pattern": "^/(?:administrator|api)(?:/|$)",
+      "reason": "Joomla-System- und Administrationsendpunkte sind keine redaktionellen Inhalte."
+    },
+    {
+      "pattern": "^/(?:cache|media|modules|plugins|templates|tmp)(?:/|$)",
+      "reason": "Joomla-Ressourcen und Laufzeitverzeichnisse gehören nicht in den Content-Crawl."
+    },
+    {
+      "pattern": "\\.(?:avif|docx?|gif|jpe?g|pdf|png|svg|webp|xlsx?|zip)(?:[?#].*)?$",
+      "reason": "Binärdateien werden über das Asset-Manifest verarbeitet und nicht als Inhaltsseite gecrawlt."
+    },
+    {
+      "pattern": "^/index\\.php/component/(?:search|tags|users)(?:/|$|\\?)",
+      "reason": "Generierte Joomla-Suche, Tags und Benutzeransichten sind keine kanonischen Inhalte."
+    },
+    {
+      "pattern": "[?&](?:format=(?:feed|json)|print=1|tmpl=component)(?:&|$)",
+      "reason": "Feed-, Druck- und Komponentenansichten duplizieren bereits erfasste Inhalte."
+    }
+  ]
+}

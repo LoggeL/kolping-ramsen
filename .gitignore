@@ -12,6 +12,7 @@
 
 # testing
 /coverage
+/.cache/legacy-migration/
 
 # next.js
 /.next/

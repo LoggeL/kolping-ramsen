@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { MobileNav } from "./mobile-nav";
 import { SiteBrand } from "./site-brand";
 import { DesktopNavigation } from "./site-navigation";
@@ -13,12 +12,6 @@ export function SiteHeader() {
           Gemeinschaft, Glaube und gelebtes Miteinander im Herzen von Ramsen.
         </p>
         <div className="ml-auto flex items-center gap-2">
-          <Link
-            href="/mitglied-werden"
-            className="hidden min-h-11 items-center border border-brand px-4 text-sm font-medium text-brand-dark transition-colors hover:bg-brand-soft sm:inline-flex"
-          >
-            Mitglied werden
-          </Link>
           <MobileNav brand={<SiteBrand compact />} />
         </div>
       </div>

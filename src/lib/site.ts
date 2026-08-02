@@ -8,6 +8,12 @@ export const SITE = {
     "Die Kolpingsfamilie Ramsen — Verein, Termine, Aktuelles, Jugend, Familienkreis, Kapelle und mehr.",
   locale: "de_DE",
   contactEmail: "kolping-ramsen@gmx.de",
+  leadershipTeam: ["Bettina Schach", "Heiko Schmitt-Sattler", "Sebastian Sattler"],
+  venue: {
+    name: "Pfarrheim der Kolpingsfamilie",
+    street: "Klosterhof 7",
+    locality: "67305 Ramsen",
+  },
 } as const;
 
 export type NavItem = {
@@ -214,7 +220,6 @@ export const MAIN_NAV: NavItem[] = [
   sectionNavItem(SITE_SECTIONS.rueckblick),
   sectionNavItem(SITE_SECTIONS.galerien),
   { label: "Theater", href: "https://kolpingtheater-ramsen.de", external: true },
-  { label: "Mitglied werden", href: "/mitglied-werden" },
   { label: "Gästebuch", href: "/gaestebuch" },
   { label: "Kontakt", href: "/kontakt" },
 ];

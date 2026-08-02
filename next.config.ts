@@ -48,6 +48,11 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
+    localPatterns: [
+      { pathname: "/brand/**" },
+      { pathname: "/images/**" },
+      { pathname: "/uploads/**" },
+    ],
   },
   async headers() {
     return [

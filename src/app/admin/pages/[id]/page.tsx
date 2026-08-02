@@ -50,6 +50,7 @@ export default async function EditPage(
           metaTitle: item.metaTitle,
           metaDesc: item.metaDesc,
           sortOrder: item.sortOrder,
+          archiveDate: item.archiveDate?.toISOString().slice(0, 10) ?? null,
           published: item.published,
           gallerySlug: item.gallerySlug,
         }}

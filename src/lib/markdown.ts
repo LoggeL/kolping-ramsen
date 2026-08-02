@@ -60,14 +60,9 @@ class PublicMarkdownRenderer extends Renderer {
 }
 
 const IMAGE_FIGURE_SOURCE =
-  '<figure class="md-image-card" data-markdown-image><button[\\s\\S]*?<\\/button><\\/figure>';
-const IMAGE_CAPTION_SOURCE = '<p>((?:(?!<\\/p>)[\\s\\S])*?)<\\/p>';
-const IMAGE_ITEM_SOURCE = `${IMAGE_FIGURE_SOURCE}(?:\\s*${IMAGE_CAPTION_SOURCE})?`;
-const IMAGE_RUN_RE = new RegExp(`(?:${IMAGE_ITEM_SOURCE}\\s*){3,}`, "g");
-const IMAGE_ITEM_RE = new RegExp(
-  `(${IMAGE_FIGURE_SOURCE})(?:\\s*${IMAGE_CAPTION_SOURCE})?\\s*`,
-  "g",
-);
+  '<figure class="md-image-card" data-markdown-image><button(?:(?!<\\/button>)[\\s\\S])*?<\\/button><\\/figure>';
+const IMAGE_RUN_RE = new RegExp(`(?:${IMAGE_FIGURE_SOURCE}\\s*){3,}`, "g");
+const IMAGE_ITEM_RE = new RegExp(`(${IMAGE_FIGURE_SOURCE})\\s*`, "g");
 
 function groupImageRuns(html: string): string {
   return html.replace(IMAGE_RUN_RE, (run) => {
@@ -75,17 +70,10 @@ function groupImageRuns(html: string): string {
     const count = matches.length;
     const items = matches
       .map((match) => {
-        const caption = match[2]?.trim();
-        const figure = match[1].replace(
+        return match[1].replace(
           "data-markdown-image",
           'data-markdown-image role="listitem"',
         );
-        return caption
-          ? figure.replace(
-              "</figure>",
-              `<figcaption class="md-image-caption">${caption}</figcaption></figure>`,
-            )
-          : figure;
       })
       .join("");
     return `<div class="md-image-series" data-lightbox-group role="list" aria-label="Bildergalerie mit ${count} Bildern">${items}</div>\n`;

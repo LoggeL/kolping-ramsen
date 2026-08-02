@@ -6,6 +6,12 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { requireSession } from "@/lib/session";
 import { slugify } from "@/lib/slug";
+import { isCivilDate, todayInTimeZone } from "@/lib/event-time";
+
+const optionalArchiveDate = z.string().trim().refine(
+  (value) => value === "" || isCivilDate(value),
+  "Ungültiges Archivdatum",
+);
 
 const pageSchema = z.object({
   title: z.string().min(2).max(200).trim(),
@@ -15,6 +21,7 @@ const pageSchema = z.object({
   metaTitle: z.string().max(160).optional(),
   metaDesc: z.string().max(300).optional(),
   sortOrder: z.string().optional(),
+  archiveDate: optionalArchiveDate.optional(),
   published: z.string().optional(),
   gallerySlug: z.string().max(140).optional(),
 });
@@ -24,6 +31,13 @@ function pickSlug(slug: string | undefined, title: string, parent?: string) {
   const own = slugify(base);
   if (parent && parent.trim()) return `${parent.replace(/^\/+|\/+$/g, "")}/${own}`;
   return own;
+}
+
+function archiveDate(value: string | undefined, fallbackToToday = false): Date | null {
+  if (value) return new Date(`${value}T00:00:00.000Z`);
+  if (!fallbackToToday) return null;
+  const today = todayInTimeZone();
+  return new Date(`${today}T00:00:00.000Z`);
 }
 
 async function pickGallerySlug(value: string | undefined): Promise<string | null> {
@@ -54,6 +68,7 @@ export async function createPage(formData: FormData) {
       metaDesc: data.metaDesc || null,
       parent: data.parent || null,
       sortOrder: data.sortOrder ? Number(data.sortOrder) : 0,
+      archiveDate: archiveDate(data.archiveDate, true),
       published: data.published === "on",
       gallerySlug,
       authorId: session.userId,
@@ -80,6 +95,7 @@ export async function updatePage(id: string, formData: FormData) {
       metaDesc: data.metaDesc || null,
       parent: data.parent || null,
       sortOrder: data.sortOrder ? Number(data.sortOrder) : 0,
+      archiveDate: archiveDate(data.archiveDate),
       published: data.published === "on",
       gallerySlug,
     },
