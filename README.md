@@ -89,6 +89,7 @@ Die Vorlage steht in [`.env.example`](.env.example). Für Docker setzt das
 | Variable | Bedeutung |
 |---|---|
 | `DATABASE_URL` | SQLite-URL; lokal `file:./dev.db`, im Container `file:/data/dev.db` |
+| `MIGRATION_DATABASE_URL` | Nur für Legacy-Vergleich, Staging und Verifikation; Standard `file:./build-dev.db` |
 | `SESSION_SECRET` | Pflichtwert mit mindestens 32 Zeichen für Session-JWTs |
 | `NEXT_PUBLIC_SITE_URL` | Öffentlicher Origin für Canonicals, Open Graph, Sitemap, Robots und Kalenderlinks |
 | `MEDIA_UPLOAD_DIR` | Verzeichnis für verwaltete Uploads; Produktion standardmäßig `/data/uploads`, Entwicklung `public/uploads` |
@@ -128,6 +129,7 @@ Das Schema liegt in [`prisma/schema.prisma`](prisma/schema.prisma).
 | `MediaGroupItem` | Sortierte Referenz auf ein `MediaAsset`, optional mit Alt-/Caption-Override |
 | `GuestbookEntry` | Moderierbarer Gästebucheintrag |
 | `Redirect` | Mapping alter Pfade auf neue URLs |
+| `LegacyContentRevision` | Digest-verankerte Provenienz angewendeter Legacy-Inhalte und Bereinigungen |
 | `PageHit` | Anonymer Seitenaufruf für die interne Statistik |
 
 Es gibt bewusst keine separaten `Gallery`- oder `Image`-Modelle mehr.
@@ -178,6 +180,114 @@ persistente Uploads und gegebenenfalls alte `public/uploads` mit dem
 einmal atomar in das persistente Verzeichnis kopiert und dort mit
 `.legacy-import-v1.complete` als abgeschlossen markiert; spätere Löschungen
 werden dadurch bei Neustarts nicht wiederhergestellt.
+
+## Legacy-Inhaltsmigration
+
+Die Joomla-Migration ist ein reproduzierbarer, prüfbarer Workflow. Capture und
+Compare verändern die CMS-Datenbank nicht. Stage und Reconcile erzeugen
+geguardete SQL-Migrationen und Manifeste; erst `db:deploy` wendet diese
+vorwärtsgerichtet auf eine Datenbank an.
+
+### Capture, Compare und Stage
+
+1. **Capture** liest die in `content/legacy-decisions.json` freigegebenen
+   Joomla-Routen, normalisiert HTML zu Markdown, lädt Medien in den lokalen
+   Cache und schreibt den versiegelten Snapshot samt lesbarem Bericht und
+   Einzelrecords.
+2. **Compare** gleicht diesen Snapshot read-only mit der durch
+   `MIGRATION_DATABASE_URL` gewählten SQLite-Datenbank sowie `public` ab. Der
+   Vergleich enthält auch den Digest des gelesenen Datenbankstands.
+3. **Stage** akzeptiert nur explizit freigegebene Snapshot- und
+   Comparison-Digests. Eine nachträglich veränderte Quelldatei, ein
+   unvollständiger Crawl, ein Error-Finding oder Datenbank-Drift bricht den
+   Vorgang ab. Das Ergebnis sind lokalisierte Assets, eine Prisma-Migration und
+   `content/legacy/stage-manifest.json`; die Zieldatenbank bleibt unverändert.
+
+```bash
+npm run content:migrate -- capture --max-pages 500 --concurrency 4
+MIGRATION_DATABASE_URL=file:./build-dev.db npm run content:migrate:compare
+
+# Vollständige sha256:-Werte aus snapshot.json und comparison.json setzen.
+MIGRATION_DATABASE_URL=file:./build-dev.db npm run content:migrate:stage -- \
+  --approve "$LEGACY_SNAPSHOT_DIGEST" \
+  --approve-comparison "$LEGACY_COMPARISON_DIGEST"
+
+DATABASE_URL=file:./build-dev.db npm run db:deploy
+```
+
+`npm run content:migrate -- all` führt Capture und Compare nacheinander aus.
+Mit `--reuse-assets` kann ein erneuter Capture bereits verifizierte Assets
+wiederverwenden; `--output`, `--cache`, `--decisions` und beim Compare
+`--snapshot` überschreiben die Standardpfade.
+
+### Reconcile und finaler Audit
+
+Nach dem ersten Staging klassifiziert
+`content/legacy-route-resolutions.json` jede zu prüfende Route ausdrücklich als
+`merge`, `keep-current` oder `draft`. Die geguardeten Änderungen stehen in
+`content/legacy-reconciliation-decisions.json`. Reconcile prüft beide Dateien
+gegen dasselbe Snapshot-/Comparison-Paar und erzeugt ausschließlich eine
+weitere Migration sowie `content/legacy/reconciliation-manifest.json`.
+Nach dem abschließenden Compare wird `content/legacy-final/resolutions.json`
+redaktionell vollständig, deterministisch sortiert und mit seinem eigenen
+Digest versiegelt, bevor der finale Verifier läuft.
+
+```bash
+MIGRATION_DATABASE_URL=file:./build-dev.db npm run content:reconcile:stage
+DATABASE_URL=file:./build-dev.db npm run db:deploy
+MIGRATION_DATABASE_URL=file:./build-dev.db npm run content:reconcile:verify
+
+MIGRATION_DATABASE_URL=file:./build-dev.db npm run content:migrate:compare -- \
+  --snapshot content/legacy/snapshot.json \
+  --output content/legacy-final
+npm run content:migrate:verify
+```
+
+`content:reconcile:verify` prüft die angewendeten Inhalts-, Termin- und
+Metadaten-Digests sowie die erwarteten `LegacyContentRevision`-Einträge.
+`content:migrate:verify` validiert anschließend den versiegelten finalen
+Vergleich und dessen vollständiges Resolution-Ledger. Der finale Vergleich
+darf keine fehlenden oder mehrdeutigen Ziele, fehlgeschlagenen Quell-URLs oder
+Error-Findings enthalten. Jede verbleibende `different`- beziehungsweise
+`native-review`-Route benötigt genau eine begründete Entscheidung als
+`accepted-current`, `accepted-draft` oder `native-replacement`.
+
+### Versiegelung und Forward-only-Regeln
+
+- Snapshot und Comparison tragen einen SHA-256-Digest über ihre kanonisch
+  sortierten Inhalte. Die Comparison ist zusätzlich an Snapshot und
+  Datenbankstand gebunden.
+- Das Reconciliation-Manifest speichert die Digests der Entscheidungen und des
+  vollständigen Route-Ledgers. Das finale Ledger besitzt zusätzlich einen
+  eigenen Digest und ist am finalen Snapshot-/Comparison-Paar verankert.
+- Generierte Migrationen prüfen den vollständigen erwarteten Vorzustand,
+  schreiben Provenienz-Digests und rollen die gesamte Transaktion bei Drift
+  zurück.
+- Bereits veröffentlichte Migrationen werden weder editiert noch neu erzeugt.
+  Weitere Korrekturen erhalten ein neues, zeitlich nachgelagertes Verzeichnis
+  unter `prisma/migrations`; die Stage-Kommandos akzeptieren dafür
+  `--migration`.
+- Auf einer wirklich frischen Datenbank dürfen baselineabhängige Updates und
+  Assertions kontrolliert übersprungen werden. Neue versiegelte Records und
+  Redirects werden weiterhin angelegt. Follow-up-Migrationen erkennen eine
+  migrierte Baseline an `LegacyContentRevision`; ohne diesen Seed-Nachweis sind
+  sie ein No-op, bei einem unerwarteten Mischzustand schlagen sie sicher fehl.
+
+Die versionierten Nachweise des abgeschlossenen Laufs sind:
+
+| Artefakt | Inhalt |
+|---|---|
+| `content/legacy/snapshot.json` | Versiegelte Quellrecords, Crawl-Ergebnisse, Assets und Findings |
+| `content/legacy/report.md` | Menschenlesbarer Capture-Bericht |
+| `content/legacy/comparison.json` | Versiegelter Vergleich mit dem freigegebenen Ausgangsstand |
+| `content/legacy/records/*.md` | Normalisierte Einzelrecords zur redaktionellen Prüfung |
+| `content/legacy/stage-manifest.json` | Inserts, Assets, Redirects, Normalisierungen und Stage-Ergebnis |
+| `content/legacy-route-resolutions.json` | Vollständiges Ledger der fachlich geprüften Vergleichsrouten |
+| `content/legacy-reconciliation-decisions.json` | Digest-geguardete Merge-, Termin- und Metadatenentscheidungen |
+| `content/legacy/reconciliation-manifest.json` | Erwartete Reconcile-Ergebnisse und Provenienz-Digests |
+| `content/legacy-final/comparison.json` und `report.md` | Finaler maschinen- und menschenlesbarer Vergleich |
+| `content/legacy-final/resolutions.json` | Selbst versiegeltes finales Resolution-Ledger |
+| `prisma/migrations/20260801200000_*` bis `20260801211000_*` | Initiale Migration, geguardetes Reconcile und nachgelagerte Forward-only-Bereinigung |
 
 ## Öffentliche und administrative Routen
 
@@ -256,7 +366,8 @@ npm run check
 
 `check` erzeugt den Prisma-Client, prüft Datenbankintegrität und
 Migrationsprüfsummen, führt Next-Typgenerierung und TypeScript, alle Node-Tests,
-den Inhalts-Audit und den Produktions-Build aus.
+den Inhalts-Audit, die Reconciliation-Verifikation, den finalen
+Legacy-Migrationsaudit und den Produktions-Build aus.
 `npm run content:audit` kann separat genutzt werden. Der Audit meldet unter
 anderem zu kurze veröffentlichte Inhalte, fehlende Assets, inkonsistente
 Termindaten, unerreichbare Navigationsziele sowie fehlende oder leere
@@ -277,6 +388,12 @@ Startseite und Sitemap.
 | `npm test` | Unit- und Integrationstests unter `src/lib/*.test.ts` |
 | `npm run typecheck` | Next-Routentypen und TypeScript prüfen |
 | `npm run content:audit` | Veröffentlichte Inhalte, Assets, Navigation und Galerien prüfen |
+| `npm run content:migrate -- [capture, compare oder all]` | Joomla-Inhalte erfassen und/oder read-only mit der CMS-Datenbank vergleichen |
+| `npm run content:migrate:compare` | Vorhandenen Snapshot erneut read-only vergleichen |
+| `npm run content:migrate:stage` | Digest-freigegebene Assets, Migration und Stage-Manifest erzeugen |
+| `npm run content:reconcile:stage` | Geprüftes Route-Ledger in eine geguardete Follow-up-Migration überführen |
+| `npm run content:reconcile:verify` | Reconcile-Manifest, Zielinhalte und Provenienzrevisionen verifizieren |
+| `npm run content:migrate:verify` | Finalen Vergleich und vollständiges Resolution-Ledger verifizieren |
 | `npm run db:prepare` | Fehlende Zieldatenbank atomar aus `build-dev.db` initialisieren |
 | `npm run db:deploy` | Vorhandene Prisma-Migrationen anwenden |
 | `npm run db:verify` | Integrität und Prüfsummen der Zieldatenbank prüfen |
@@ -285,7 +402,7 @@ Startseite und Sitemap.
 | `npm run media:sync` | Dateisystem und `MediaAsset`-Katalog abgleichen |
 | `npm run seed` | Initiales Admin-Konto anlegen; Beispiel-News höchstens als Entwurf |
 | `npm run admin:reset` | Passwort eines vorhandenen Kontos sicher zurücksetzen |
-| `npm run scrape` | Versiegelten Joomla-Snapshot und Vergleich erzeugen (schreibt nicht direkt ins CMS) |
+| `npm run scrape` | Alias für den Capture-/Compare-Einstieg über `content:migrate` |
 
 ## Deployment mit Docker und Dokploy
 
@@ -338,9 +455,15 @@ Migrationsstand und synchronisiert den Medienkatalog.
 ```text
 kolping-ramsen/
 ├── .github/workflows/       # CI-Quality-Gate
+├── content/
+│   ├── legacy/              # Snapshot, Vergleich, Records und Stage-/Reconcile-Manifeste
+│   ├── legacy-final/        # Finaler Vergleich, Bericht und Resolution-Ledger
+│   ├── legacy-decisions.json
+│   ├── legacy-reconciliation-decisions.json
+│   └── legacy-route-resolutions.json
 ├── prisma/
 │   ├── schema.prisma        # Aktuelles Datenmodell
-│   └── migrations/          # Versionierte SQL-Migrationen
+│   └── migrations/          # Versionierte, ausschließlich vorwärts angewendete SQL-Migrationen
 ├── public/
 │   ├── brand/               # Logo und Wortmarke
 │   ├── images/              # Versionierte/importierte Medien
@@ -352,7 +475,10 @@ kolping-ramsen/
 │   ├── verify-database.mjs   # Integrität, Migrationen und Schemas prüfen
 │   ├── seed-admin.mjs        # Bewusste Konto-Erstinitialisierung
 │   ├── migrate-legacy.ts    # Deterministischer Joomla-Capture und Read-only-Vergleich
-│   └── stage-legacy-content.ts # Digest-freigegebene, geguardete Datenmigration
+│   ├── stage-legacy-content.ts # Digest-freigegebene, geguardete Datenmigration
+│   ├── stage-legacy-reconciliation.ts # Geprüfte Follow-up-Migration erzeugen
+│   ├── verify-legacy-reconciliation.ts # Reconcile-Ergebnis und Provenienz prüfen
+│   └── verify-legacy-final-audit.ts # Finalen Vergleich und Ledger prüfen
 └── src/
     ├── app/                 # Öffentliches Frontend, Admin, API und Health
     ├── components/          # Navigation, Lightbox, Redaktions-UI

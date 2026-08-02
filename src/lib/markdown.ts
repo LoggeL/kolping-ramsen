@@ -20,13 +20,33 @@ function renderImage(token: Tokens.Image): string {
   return `<img src="${escapeAttribute(token.href)}" alt="${escapeAttribute(token.text)}" loading="lazy" decoding="async"${title}>`;
 }
 
+const IMAGE_FILENAME_RE = /\.(?:avif|bmp|gif|heic|heif|jpe?g|png|svg|tiff?|webp)$/iu;
+const CAMERA_FILENAME_RE = /^(?:(?:c?img|dsc[fn]?|image|pict|pxl|sam|wp)[\s_-]*[a-z0-9_-]*\d[a-z0-9_. -]*|p\d{7,}|\d{8}[\s_-]?\d{4,})$/iu;
+
+function isFilenameLikeImageLabel(value: string): boolean {
+  const basename = value.trim().replace(/^.*[\\/]/u, "");
+  return IMAGE_FILENAME_RE.test(basename) || CAMERA_FILENAME_RE.test(basename);
+}
+
+function visibleImageCaption(token: Tokens.Image): string {
+  const explicitTitle = token.title?.trim();
+  if (explicitTitle) return explicitTitle;
+  const alt = token.text.trim();
+  return isFilenameLikeImageLabel(alt) ? "" : alt;
+}
+
 function renderImageFigure(token: Tokens.Image): string {
-  const description = token.text.trim();
+  const caption = visibleImageCaption(token);
+  const alt = token.text.trim();
+  const description = caption || (isFilenameLikeImageLabel(alt) ? "" : alt);
   const label = description
     ? `Bild „${description}“ in Großansicht öffnen`
     : "Bild in Großansicht öffnen";
+  const figcaption = caption
+    ? `<figcaption class="md-image-caption">${escapeAttribute(caption)}</figcaption>`
+    : "";
 
-  return `<figure class="md-image-card" data-markdown-image><button type="button" class="md-image-trigger" data-lightbox-trigger data-lightbox-src="${escapeAttribute(token.href)}" aria-label="${escapeAttribute(label)}">${renderImage(token)}<span class="md-image-zoom" aria-hidden="true">Vergrößern</span></button></figure>`;
+  return `<figure class="md-image-card" data-markdown-image><button type="button" class="md-image-trigger" data-lightbox-trigger data-lightbox-src="${escapeAttribute(token.href)}" aria-label="${escapeAttribute(label)}">${renderImage(token)}<span class="md-image-zoom" aria-hidden="true">Vergrößern</span></button>${figcaption}</figure>`;
 }
 
 function isImageToken(token: Token): token is Tokens.Image {
@@ -60,7 +80,7 @@ class PublicMarkdownRenderer extends Renderer {
 }
 
 const IMAGE_FIGURE_SOURCE =
-  '<figure class="md-image-card" data-markdown-image><button(?:(?!<\\/button>)[\\s\\S])*?<\\/button><\\/figure>';
+  '<figure class="md-image-card" data-markdown-image><button(?:(?!<\\/button>)[\\s\\S])*?<\\/button>(?:<figcaption class="md-image-caption">(?:(?!<\\/figcaption>)[\\s\\S])*?<\\/figcaption>)?<\\/figure>';
 const IMAGE_RUN_RE = new RegExp(`(?:${IMAGE_FIGURE_SOURCE}\\s*){3,}`, "g");
 const IMAGE_ITEM_RE = new RegExp(`(${IMAGE_FIGURE_SOURCE})\\s*`, "g");
 
