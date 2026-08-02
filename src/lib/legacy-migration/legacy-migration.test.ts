@@ -963,6 +963,9 @@ test("stages inserts, guarded normalization, draft repairs, assets and parent ba
         </div></div><div class="blog-item"><div class="item-content">
           <h2>Entwurfsnachricht</h2><dl class="article-info"><dd>Veröffentlicht: 02. Juni 2025</dd></dl>
           <p>Vollständige öffentliche Testmeldung.</p><img src="/images/eins.png" alt="Bild zur Entwurfsnachricht">
+        </div></div><div class="blog-item"><div class="item-content">
+          <h2>Bildmeldung</h2><dl class="article-info"><dd>Veröffentlicht: 03. Juni 2025</dd></dl>
+          <img src="/images/eins.png" alt="Bildmeldung aus dem Vereinsleben">
         </div></div></main></body></html>
       `)],
       [`${ORIGIN}/images/eins.png`, {
@@ -993,7 +996,10 @@ test("stages inserts, guarded normalization, draft repairs, assets and parent ba
         archiveDate DATETIME, published INTEGER NOT NULL DEFAULT 0, gallerySlug TEXT, createdAt DATETIME,
         updatedAt DATETIME, authorId TEXT
       );
-      CREATE TABLE News (slug TEXT, title TEXT, date TEXT, teaser TEXT, content TEXT, coverImage TEXT, published INTEGER, updatedAt DATETIME);
+      CREATE TABLE News (
+        id TEXT PRIMARY KEY, slug TEXT, title TEXT, date TEXT, teaser TEXT, content TEXT,
+        coverImage TEXT, published INTEGER, createdAt DATETIME, updatedAt DATETIME, authorId TEXT
+      );
       CREATE TABLE Event (slug TEXT, title TEXT, startDate TEXT, endDate TEXT, startTime TEXT, endTime TEXT, location TEXT, description TEXT, published INTEGER);
       CREATE TABLE Redirect (id TEXT PRIMARY KEY, fromPath TEXT UNIQUE, toPath TEXT, createdAt DATETIME);
       INSERT INTO Page VALUES ('parent', 'archiv', 'Archiv', 'Sauberer Archivtext.', NULL, NULL, NULL, 0, NULL, 1, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL);
@@ -1002,8 +1008,8 @@ test("stages inserts, guarded normalization, draft repairs, assets and parent ba
       INSERT INTO Page VALUES ('format', 'formatseite', 'Formatseite', '#### _**Kurze Zwischenüberschrift**_\n\n_**Ein sauberer Satz.**_', NULL, NULL, NULL, 0, NULL, 1, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL);
       INSERT INTO Page VALUES ('stale', 'theater', 'Theater', '#### _**Veraltete Theaterseite**_', NULL, NULL, NULL, 0, NULL, 0, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL);
       INSERT INTO Page VALUES ('moved', 'archiv/verschoben', 'Verschoben', 'Alte doppelte Ablage.', NULL, NULL, 'archiv', 0, NULL, 0, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL);
-      INSERT INTO News VALUES ('2025-06-01-saubere-meldung', 'Saubere Meldung', '2025-06-01', 'Saubere Meldung für alle.', '### _**Saubere Meldung für alle.**_', NULL, 1, CURRENT_TIMESTAMP);
-      INSERT INTO News VALUES ('2025-06-02-entwurfsnachricht', 'Entwurfsnachricht', '2025-06-02', 'Alter Teaser', 'Unvollständiger Entwurf.', NULL, 0, CURRENT_TIMESTAMP);
+      INSERT INTO News VALUES ('clean-news', '2025-06-01-saubere-meldung', 'Saubere Meldung', '2025-06-01', 'Saubere Meldung für alle.', '### _**Saubere Meldung für alle.**_', NULL, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL);
+      INSERT INTO News VALUES ('draft-news', '2025-06-02-entwurfsnachricht', 'Entwurfsnachricht', '2025-06-02', 'Alter Teaser', 'Unvollständiger Entwurf.', NULL, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL);
       INSERT INTO Redirect VALUES ('raw-query', '/index.php/alt?catid=2:roh', '/archiv/bestehend', CURRENT_TIMESTAMP);
     `]);
     await mkdir(publicDir, { recursive: true });
@@ -1065,6 +1071,7 @@ test("stages inserts, guarded normalization, draft repairs, assets and parent ba
     });
 
     assert.equal(staged.stagedPages, 1);
+    assert.equal(staged.stagedNews, 1);
     assert.equal(staged.updatedDraftPages, 1);
     assert.equal(staged.updatedDraftNews, 1);
     assert.equal(staged.normalizedCurrentPages, 1);
@@ -1113,7 +1120,7 @@ test("stages inserts, guarded normalization, draft repairs, assets and parent ba
     const freshInsertedPages = Number(execFileSync("sqlite3", [freshDatabase, "SELECT count(*) FROM Page;"], { encoding: "utf8" }).trim());
     const freshRevisions = Number(execFileSync("sqlite3", [freshDatabase, "SELECT count(*) FROM LegacyContentRevision;"], { encoding: "utf8" }).trim());
     assert.equal(freshInsertedPages, 1, "Ein frischer Deploy übernimmt ausschließlich neue, versiegelte Datensätze.");
-    assert.equal(freshRevisions, 1, "Baseline-abhängige Revisionen dürfen einen frischen Deploy nicht blockieren.");
+    assert.equal(freshRevisions, 2, "Baseline-abhängige Revisionen dürfen einen frischen Deploy nicht blockieren.");
 
     execFileSync("sqlite3", [databaseFile], { input: migration });
     const rows = JSON.parse(execFileSync("sqlite3", ["-json", databaseFile, "SELECT slug, parent, sortOrder, archiveDate, published, content FROM Page ORDER BY slug"], { encoding: "utf8" })) as Array<{
@@ -1164,6 +1171,10 @@ test("stages inserts, guarded normalization, draft repairs, assets and parent ba
     assert.equal(repairedNews?.teaser, "Vollständige öffentliche Testmeldung.");
     assert.match(repairedNews?.content ?? "", /Vollständige öffentliche Testmeldung\./u);
     assert.match(repairedNews?.coverImage ?? "", /\/images\/legacy-v2\//u);
+    const imageNews = newsRows.find((row) => row.slug === "2025-06-03-bildmeldung");
+    assert.equal(imageNews?.teaser, "Bilder und Erinnerungen aus unserem Vereinsleben vom 3. Juni 2025.");
+    assert.doesNotMatch(imageNews?.content ?? "", /Bilder und Erinnerungen/u);
+    assert.match(imageNews?.content ?? "", /^!\[Bildmeldung aus dem Vereinsleben\]\(\/images\/legacy-v2\//u);
   } finally {
     await rm(root, { recursive: true, force: true });
   }

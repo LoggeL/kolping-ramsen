@@ -1,0 +1,673 @@
+{
+  "comparisonDigest": "sha256:bb5ebad0d931557df350d809353e898e76e5a5d9395cdaa6a682db139273c84f",
+  "contentUpdates": [
+    {
+      "action": "source-reconciliation",
+      "appliedContentDigest": "sha256:a6f385e77c0ce68ca9b25c3a78e362dfb7a7ea5a99828fb4b54eb8642dc4c43e",
+      "kind": "page",
+      "previousContentDigest": "sha256:080c53ea26dc7cb51ad3e48f30dace15d85ccc9f9ece1b81c615b830e4b9f8e5",
+      "reason": "Das an der Quelle fehlende erste Bild als Textbefund erhalten und die drei verfügbaren Bilder wieder ihren tatsächlichen Bildunterschriften zuordnen.",
+      "sourceDigest": "sha256:97f92692db1fc76e416fba082172038690fbfa23b31be42cb3724e7061a1b414",
+      "sourceKey": "article:/index.php/ueber-uns/geschichte-pfarrheim#2019-07-03-die-geschichte-des-katholischen-pfarrheims-p3161022-jpg",
+      "targetKey": "ueber-uns/pfarrheim"
+    },
+    {
+      "action": "source-reconciliation",
+      "appliedContentDigest": "sha256:5a09c4d58955ea6cedf3b989a6eb702c7ffcb5699eb6ad5b89ca94a7d227e5ae",
+      "kind": "page",
+      "previousContentDigest": "sha256:1633b61623759082accda7967257eec7700a10a2c066fcf5086230c204d4b767",
+      "reason": "Die versiegelte Quelle als Faktenbasis verwenden, die Ehrennadel 2026 ergänzen und Überschriften sowie Listen semantisch ordnen; ungeklärte Datumsangaben unverändert erhalten.",
+      "sourceDigest": "sha256:1d21a14d82b9981794a69b1e5edebfc4933a0493001612981c7975b333800da1",
+      "sourceKey": "article:/index.php/ueber-uns/relevante-vereinsdaten#2019-07-03-relevante-vereinsdaten-pfr-dr-karl-zinke-jpg",
+      "targetKey": "ueber-uns/vereinsdaten"
+    },
+    {
+      "action": "source-reconciliation",
+      "appliedContentDigest": "sha256:8f6af69ebc2197d60de47ba3cc22a4ff66b525e1d1cf8c4ae2bc8d058e0abe40",
+      "kind": "page",
+      "previousContentDigest": "sha256:4f0a0ec23616ed5000dab66e44b12c4cf66b3cdba3387d1bfbd92e74b21e9c18",
+      "reason": "Die neuere Legacy-Fassung in eine zugängliche Tabelle überführen, den überholten Planungszusatz 2026 entfernen und den Eintrag 2027 ergänzen.",
+      "sourceDigest": "sha256:e7358dfa891bde3a8ac401c4034eb30af2497ab9bee5f35ce1d29ccbfbc2cd3e",
+      "sourceKey": "article:/index.php/vereinsbereiche/zeltlager#2019-07-03-familien-zeltlager-historie-der-kolpingfamilie-ramsen-e7358dfa891b",
+      "targetKey": "vereinsbereiche/zeltlager"
+    },
+    {
+      "action": "guarded-current-merge",
+      "appliedContentDigest": "sha256:dc901221070c7577b6c2119df9299433ab8a434050a4cf45e4c05205e49d4fed",
+      "kind": "page",
+      "previousContentDigest": "sha256:96de6355b23f3a9a186f06c7a254a5b239099f84a892508e40afa9e5619082a2",
+      "reason": "Den beim Bildimport verlorenen Baseline-Hinweis auf das Gründungsmitglied wiederherstellen und das lokalisierte Pressebild behalten.",
+      "sourceDigest": "sha256:1dcdbdb49fb8873f66b32f03985c0f2980f5654d01780e4983595b2dd89d7726",
+      "sourceKey": "article:/index.php/rueckblick/presse/kirchner-hans#2025-01-19-nachruf-auf-hans-kirchner-kirchner-hans-2025-01-jpg",
+      "targetKey": "rueckblick/presse/kirchner-hans"
+    },
+    {
+      "action": "guarded-current-merge",
+      "appliedContentDigest": "sha256:76bd86a0ef3a65c490c980dc5e61474a51bc1a6028a8b3465427b22fde589f83",
+      "kind": "page",
+      "previousContentDigest": "sha256:2f4328c128bfeee68a24cc9d91428b6438346ab4553c6c3858262e127d730a7f",
+      "reason": "Die beim Bildimport verlorene Zeitungszuordnung aus dem bestehenden CMS-Inhalt wiederherstellen.",
+      "sourceDigest": "sha256:fd75c9ba41478c176bfbdd7d8f13ab34d51261ed24de87f6c9e753db17563e35",
+      "sourceKey": "article:/index.php/rueckblick/presse/kreativtheater2024-02#2024-12-30-kreativbuehne-2024-pressebericht-vom-30-dezember-kreativtheater-2024-02-jpg",
+      "targetKey": "rueckblick/presse/kreativtheater2024-02"
+    },
+    {
+      "action": "guarded-current-merge",
+      "appliedContentDigest": "sha256:e54bcb7687a10e1f3d4c64c25103c428c35672667154eaf7d98cfa7ade68ccc3",
+      "kind": "page",
+      "previousContentDigest": "sha256:30dd49a553ca8169a9baa454e60b97902b292b6899f9b41502aa8ca236f9ca26",
+      "reason": "Den nachweislich unpassenden Wochentag entfernen, ohne ein unbelegtes Ersatzdatum zu erfinden.",
+      "sourceDigest": "sha256:725059cba64061e09735d9bd4f199bfbc7b3e385ab2cea1739b44834af77883f",
+      "sourceKey": "article:/index.php/rueckblick/prunksitzung/prunksitzung2021#2021-02-07-digitale-ramser-fastnacht-2021-plakat-prunk-2021-jpg",
+      "targetKey": "rueckblick/prunksitzung/prunksitzung2021"
+    },
+    {
+      "action": "guarded-current-merge",
+      "appliedContentDigest": "sha256:028f22cc239f05b1fae495b9ef6f944d68cb456b711d1326b1ed09e1655c0f80",
+      "kind": "news",
+      "previousContentDigest": "sha256:68d7448619614c934b1ba98509d57996430334450b22788c5463ff06f684d1c5",
+      "reason": "Die im Detail bereits als Teaser sichtbare Aussage nicht direkt darunter als Überschrift wiederholen; Adresse und Bild unverändert behalten.",
+      "sourceDigest": "sha256:13f125a2f4043fe07916617cc1b5fc17997005bc7ad5fd7499240b797208c998",
+      "sourceKey": "article:/index.php/aktuelles#2025-10-13-tintenpatronen-sammelaktion-der-kolpingsfamilie-ramsen-tintenpatronen-sammeln-jpg",
+      "targetKey": "2025-10-13-tintenpatronen-sammelaktion-der-kf-ramsen"
+    }
+  ],
+  "decisionsDigest": "sha256:86505ff0b1fc7878220dd1d90c47bb6e2b5b03d2bcad19a67d48fb8d11e7fd7e",
+  "eventUpdates": [
+    {
+      "action": "guarded-event-merge",
+      "appliedContentDigest": "sha256:23c2ddd6efe8c6a634777aaaa7bc12eca3cb69793483f232408dc9d36f57762b",
+      "previousContentDigest": "sha256:eb87ced7ba04ea0d745d8dab683dcdc2b63cbe1a974ae8b03d652cc97cd8098d",
+      "reason": "Die im Beschreibungstext vollständig erhaltene Ortsangabe auch im strukturierten Ortsfeld abbilden.",
+      "sourceDigest": "sha256:72084d4e239442c33ed41f821129965173a7b168302fb3767e65ab60e5e398f4",
+      "sourceKey": "event:2026-03-20:bezirks-kreuzweg",
+      "targetKey": "2026-03-20-bezirks-kreuzweg"
+    },
+    {
+      "action": "guarded-event-merge",
+      "appliedContentDigest": "sha256:7c30eef64154fe94eb33415b2a903b84a389d2f1ab8d6bceca5637884812add2",
+      "previousContentDigest": "sha256:4a151d6105e203f330b79d375ed61dc4c1faf2267a4896d5e8800b1131622b11",
+      "reason": "Den Anschluss im Pfarrheim ergänzen und Haupt- sowie Anschlussort sauber trennen.",
+      "sourceDigest": "sha256:b1348910e4da16764ba50c34cb62e7a6e3dd4cc189ac0ecbaa99785bcd407862",
+      "sourceKey": "event:2026-05-22:bezirksmaiandacht",
+      "targetKey": "2026-05-22-bezirksmaiandacht"
+    },
+    {
+      "action": "guarded-event-merge",
+      "appliedContentDigest": "sha256:dc2a2df46a7dd4437b21dddd797d18150782051ac7d30c09d94c474f8331ac73",
+      "previousContentDigest": "sha256:66a7aeadaba1269986f6474febb5395a0fb74258a27aaedd864fa0d6d318e39a",
+      "reason": "Das in der Quelle genannte Gemeindefest und den Veranstalter im bestehenden strukturierten Termin ergänzen.",
+      "sourceDigest": "sha256:fe30494c2b6c70b0b219d757226e1954b4e3018393a089d10887b3ec144bcb8d",
+      "sourceKey": "event:2026-06-14:gottesdienst-in-der-pfarrkirche",
+      "targetKey": "2026-06-14-gottesdienst"
+    },
+    {
+      "action": "guarded-event-merge",
+      "appliedContentDigest": "sha256:102852e5dbaa0fe03a0e0c5302d7291c39072615ddfe1dfbfeb268fc5348b53b",
+      "previousContentDigest": "sha256:40a6da2f13996241a56256601c45a454379eabf385250e0eb02c9895498e015f",
+      "reason": "Den Legacy-Veranstalter ergänzen und die reicheren aktuellen Stück-, Eintritts- und Linkangaben behalten.",
+      "sourceDigest": "sha256:d3e3d0154d990c0659072122fc92bb30fd50eb122a8ebf0d69c56f2ff98a2a00",
+      "sourceKey": "event:2026-08-21:open-air-theater",
+      "targetKey": "2026-08-21-open-air-theater"
+    },
+    {
+      "action": "guarded-event-merge",
+      "appliedContentDigest": "sha256:9a966b46714c39d99d4b48c0a17910b606f26dad93db8694db0bcf0c78604a0b",
+      "previousContentDigest": "sha256:a5d90ca1ee74d4690189b9ec59bff8e78ca62efe4d58568f911c65b817e1bc09",
+      "reason": "Den Legacy-Zeitraum 21.–22. August auf dem bereits korrekt gesplitteten zweiten Aufführungstag vollständig abbilden.",
+      "sourceDigest": "sha256:d3e3d0154d990c0659072122fc92bb30fd50eb122a8ebf0d69c56f2ff98a2a00",
+      "sourceKey": "event:2026-08-21:open-air-theater",
+      "targetKey": "2026-08-22-creepshow-open-air-theater"
+    },
+    {
+      "action": "guarded-event-merge",
+      "appliedContentDigest": "sha256:6ee2456f0d40d8ae70946117d229e438bebd95c66554d439fa43a0c526a57f03",
+      "previousContentDigest": "sha256:7053afc32e5e1eab412eed0c9723054fddc4e2fe75a5fa2a5e1ccd3778d6b64d",
+      "reason": "Den Legacy-Veranstalter ergänzen und die reicheren aktuellen Stück-, Eintritts- und Linkangaben behalten.",
+      "sourceDigest": "sha256:accf822198528b7fe0bcb4e57aba8b727d30d5e3ebfa1de294187931935a4ed0",
+      "sourceKey": "event:2026-08-28:open-air-theater",
+      "targetKey": "2026-08-28-open-air-theater"
+    },
+    {
+      "action": "guarded-event-merge",
+      "appliedContentDigest": "sha256:91ec64e87162834fbf256fdd273d6d7fe252acb9156caaa90563f1ab2108fde1",
+      "previousContentDigest": "sha256:b0919c6b8a24630448103f71b9cfe419a6e62f6ac761beef89f02c556e0a9dd3",
+      "reason": "Den Legacy-Zeitraum 28.–29. August auf dem bereits korrekt gesplitteten zweiten Aufführungstag vollständig abbilden.",
+      "sourceDigest": "sha256:accf822198528b7fe0bcb4e57aba8b727d30d5e3ebfa1de294187931935a4ed0",
+      "sourceKey": "event:2026-08-28:open-air-theater",
+      "targetKey": "2026-08-29-creepshow-open-air-theater"
+    },
+    {
+      "action": "guarded-event-merge",
+      "appliedContentDigest": "sha256:06c19d0b1c5a802bde59683d8dd02df55a62a5ffad5066399e5a5b2c416ca404",
+      "previousContentDigest": "sha256:9cd563f5a616eabe3967a427da0c321dddafb85ff1a8da59b7435eec8b322518",
+      "reason": "Ziel und Begleitung aus dem vollständigen Legacy-Termin ergänzen.",
+      "sourceDigest": "sha256:db577fe31ea2db76146cbaff688433e4f37be48252fe0a95a0f3d1ff0f29cb67",
+      "sourceKey": "event:2026-09-05:kennst-du-deine-heimat-besuch-der-erdekaut-mit-erika-gruen",
+      "targetKey": "2026-09-05-kennst-du-deine-heimat"
+    },
+    {
+      "action": "guarded-event-merge",
+      "appliedContentDigest": "sha256:68167af7d65fc1c41f74fb876897d3b838730c0cb7442a3de188293332382795",
+      "previousContentDigest": "sha256:bf90373e1088056295bdd4e3426cb857fd044dbbbb04fd5ffe60c9e0c2a6b770",
+      "reason": "Den in der Quelle genannten gemeinsamen Veranstalter ergänzen.",
+      "sourceDigest": "sha256:79cc166985eb5c29b69129c458fd57a023b9b195adf54f8d22656c5d208ca271",
+      "sourceKey": "event:2026-11-29:musikalische-adventsandacht-in-der-ev-kirche",
+      "targetKey": "2026-11-29-musikalische-adventsandacht"
+    },
+    {
+      "action": "guarded-event-merge",
+      "appliedContentDigest": "sha256:3afd765ca042170d86d3eca1ebfc9ac0c9b268ae190d16e99684fba5318303d9",
+      "previousContentDigest": "sha256:7af3d15cca7cc1049c0e82a4875c4b71e5c9da4c4138744858aa42e98f21769b",
+      "reason": "Den ausdrücklichen Legacy-Vorbehalt bewahren und einen unbestätigten Termin nicht öffentlich als sicher ankündigen.",
+      "sourceDigest": "sha256:ae22b24b75b50525cf44055393440bac9ba55d65d73a5fe8129f0a729c862adc",
+      "sourceKey": "event:2026-12-26:theaterauffuehrung-sollte-es-ein-winterstueck-geben",
+      "targetKey": "2026-12-26-theaterauffuehrung"
+    }
+  ],
+  "metadataUpdates": [
+    {
+      "action": "guarded-metadata-cleanup",
+      "appliedContentDigest": "sha256:353b2aa4ec38955ac6ca3e21bcbeda3d3b636290e93f610aad7f121d6238a51e",
+      "previousContentDigest": "sha256:66574e745b930802986779a15bad69359e8b22d5fa7e1a9e417d52eb5de59cea",
+      "reason": "HTML-Entities aus der kopierten Joomla-Metabeschreibung entfernen.",
+      "targetPath": "/datenschutz"
+    },
+    {
+      "action": "guarded-metadata-cleanup",
+      "appliedContentDigest": "sha256:4935b347f8a7c4bc0ff0e7c6947878e8890fab57b71b1f12f3b36d57e459d01c",
+      "previousContentDigest": "sha256:d888964f3db1202cdc6b42264de671cdccc657eee346b9225da827b3fe8a0adb",
+      "reason": "Den veralteten Joomla-Spambots-Hinweis aus den Suchmaschinen-Metadaten entfernen.",
+      "targetPath": "/impressum"
+    },
+    {
+      "action": "guarded-metadata-cleanup",
+      "appliedContentDigest": "sha256:648010710165f356a842c4f381870265c558a78689e910c96f01009d6f4e7eaf",
+      "previousContentDigest": "sha256:cf81daddeab331783a0b9e376e8da958b76f966e28b35adbd7f9d77c9adf6f99",
+      "reason": "Die wiederhergestellte inhaltliche Einordnung auch in den Metadaten abbilden.",
+      "targetPath": "/rueckblick/presse/kirchner-hans"
+    },
+    {
+      "action": "guarded-metadata-cleanup",
+      "appliedContentDigest": "sha256:b84d638172122bdb6ba24138c57d46c9ff595a9f70b5d4b5520b37d3f86fd7fd",
+      "previousContentDigest": "sha256:8cea78a43f3413e5284d90a123f8770608d9022f246022d55c99c17fb5d2fcae",
+      "reason": "Die wiederhergestellte Zeitungszuordnung auch in den Metadaten abbilden.",
+      "targetPath": "/rueckblick/presse/kreativtheater2024-02"
+    },
+    {
+      "action": "guarded-metadata-cleanup",
+      "appliedContentDigest": "sha256:943c26fc9fa31e884ac5db56bca5c22e9f2918a33716871ede49e3eea97638fe",
+      "previousContentDigest": "sha256:868cbc9703fb7c98d1f8877b8422c766d2a0b72c3e93b36d1d369deb8aacd511",
+      "reason": "Den falschen Wochentag auch aus der Metabeschreibung entfernen.",
+      "targetPath": "/rueckblick/prunksitzung/prunksitzung2021"
+    },
+    {
+      "action": "guarded-metadata-cleanup",
+      "appliedContentDigest": "sha256:fbee9c3faac6e5995da3052449ccff2962a5e5eb83d056404ef107b1800f3a1f",
+      "previousContentDigest": "sha256:b06fa9338f3e6edec596604aa3ee9d37964ea0a91074dd3571f0ef7dd3545cdf",
+      "reason": "HTML-Abstände aus der kopierten Joomla-Metabeschreibung entfernen.",
+      "targetPath": "/rueckblick/staedtereisen"
+    },
+    {
+      "action": "guarded-metadata-cleanup",
+      "appliedContentDigest": "sha256:34325e22945e6057ff425c71671a153cdf2e84f32be52903c5a6bf6061893154",
+      "previousContentDigest": "sha256:c5a559376ecfbeb336a7fe2095007017c8c1688a8065d864fe48ce67119e0799",
+      "reason": "HTML-Entities und leere Joomla-Abstände aus den Metadaten entfernen.",
+      "targetPath": "/rueckblick/trachtengruppe"
+    },
+    {
+      "action": "guarded-metadata-cleanup",
+      "appliedContentDigest": "sha256:02b1e643b01133083e8d70ea6d2ce2ccddda74e7b0e6699f55d5381b73461230",
+      "previousContentDigest": "sha256:0366c09e1f5eda8abd65174458c17849a347d2268c8970bd8349d95fe3b93691",
+      "reason": "Joomla-Autoren-, Veröffentlichungs- und Zugriffstext aus den Metadaten entfernen.",
+      "targetPath": "/ueber-uns/adolf-kolping"
+    },
+    {
+      "action": "guarded-metadata-cleanup",
+      "appliedContentDigest": "sha256:17d093affe17dd18b84a79e0645ebe89fd950be39a6ac4e1846d3cc419450514",
+      "previousContentDigest": "sha256:27638c5f6487697d0a60da28893193c72abf340890e62d6473fecd5efa72203c",
+      "reason": "Joomla-Autoren-, Veröffentlichungs-, Zugriffs- und Abstandstext aus den Metadaten entfernen.",
+      "targetPath": "/ueber-uns/kolpingsfamilie-ramsen"
+    },
+    {
+      "action": "guarded-metadata-cleanup",
+      "appliedContentDigest": "sha256:b157c6b8aeb76bb79dd82e8d2b32459453f8c546b01a9b696d9214c080039569",
+      "previousContentDigest": "sha256:bd6ac86849ffda4d525168376caa937770f4481e8939fe09d973f5a67dfa94f1",
+      "reason": "Joomla-Autoren-, Veröffentlichungs-, Zugriffs- und HTML-Abstandstext aus den Metadaten entfernen.",
+      "targetPath": "/ueber-uns/vereinsdaten"
+    },
+    {
+      "action": "guarded-metadata-cleanup",
+      "appliedContentDigest": "sha256:6ce36077a2ddc1a5fba27c8b40431561a61be5cab39c5d95187a032c76a1734c",
+      "previousContentDigest": "sha256:20c6bfcba5b75f032ea22e12a19967b47df28da2472da441477e765e9f5d4eee",
+      "reason": "Die neue tabellarische Inhaltsstruktur mit einer knappen, stabilen Metabeschreibung versehen.",
+      "targetPath": "/vereinsbereiche/zeltlager"
+    }
+  ],
+  "resolutionsDigest": "sha256:937a66b2c035c413a060a704671d88cb8482ce6469f38c5346899173a1a091f0",
+  "result": {
+    "contentUpdates": 7,
+    "eventUpdates": 10,
+    "manifestPath": "reconciliation-manifest.json",
+    "metadataUpdates": 11,
+    "migrationPath": "../../prisma/migrations/20260801210000_legacy_content_followup/migration.sql",
+    "reviewedRoutes": 59
+  },
+  "reviewedRoutes": [
+    {
+      "kind": "news",
+      "reason": "Der Inhalt und das Bild sind vollständig; der ausgeschriebene Legacy-Titel soll mit der bestehenden News zusammengeführt werden.",
+      "resolution": "merge",
+      "sourceKey": "article:/index.php/aktuelles#2025-10-13-tintenpatronen-sammelaktion-der-kolpingsfamilie-ramsen-tintenpatronen-sammeln-jpg",
+      "targetPath": "/aktuelles/2025-10-13-tintenpatronen-sammelaktion-der-kf-ramsen"
+    },
+    {
+      "kind": "page",
+      "reason": "Die aktuelle Fassung modernisiert bewusst Domain und E-Mail-Link; alle übrigen Legacy-Angaben und Rechtstexte sind erhalten.",
+      "resolution": "keep-current",
+      "sourceKey": "article:/index.php/kontakt/impressum#2019-07-03-impressum-de12713bc818",
+      "targetPath": "/impressum"
+    },
+    {
+      "kind": "page",
+      "reason": "Der aktuelle Beitrag enthält den vollständigen Legacy-Text und das korrespondierende Bild; Abweichungen betreffen Entwurfsstatus und Assetpfad.",
+      "resolution": "keep-current",
+      "sourceKey": "article:/index.php/rueckblick/jahresprogramm/ebiketour-im-september#2025-09-11-ebiketour-im-september-2025-ebiketour-09-2025-jpg",
+      "targetPath": "/rueckblick/jahresprogramm/ebiketour-im-september"
+    },
+    {
+      "kind": "page",
+      "reason": "Der aktuelle Beitrag enthält alle Legacy-Fakten und vier Bilder; Abweichungen betreffen Entwurfsstatus und Assetpfade.",
+      "resolution": "keep-current",
+      "sourceKey": "article:/index.php/rueckblick/jahresprogramm/familienzeltlager-geiselberg-2025#2025-06-21-familienzeltlager-2025-zeltlager-2025-01-jpg",
+      "targetPath": "/rueckblick/jahresprogramm/familienzeltlager-geiselberg-2025"
+    },
+    {
+      "kind": "page",
+      "reason": "Der aktuelle Beitrag enthält alle Legacy-Fakten und drei Bilder; Abweichungen betreffen Entwurfsstatus und Assetpfade.",
+      "resolution": "keep-current",
+      "sourceKey": "article:/index.php/rueckblick/jahresprogramm/turmuhrenmuseum-2025#2025-08-04-museum-fuer-zeit-museum-01-jpg",
+      "targetPath": "/rueckblick/jahresprogramm/turmuhrenmuseum-2025"
+    },
+    {
+      "kind": "page",
+      "reason": "Das Legacy-Bild und der Nachruf-Titel müssen mit dem nur in der aktuellen Baseline vorhandenen Faktum „Gründungsmitglied“ zusammengeführt werden.",
+      "resolution": "merge",
+      "sourceKey": "article:/index.php/rueckblick/presse/kirchner-hans#2025-01-19-nachruf-auf-hans-kirchner-kirchner-hans-2025-01-jpg",
+      "targetPath": "/rueckblick/presse/kirchner-hans"
+    },
+    {
+      "kind": "page",
+      "reason": "Der aktuelle redaktionelle Vorspann enthält bereits Quelle, Datum und Thema; das Legacy-Bild ist vollständig vorhanden.",
+      "resolution": "keep-current",
+      "sourceKey": "article:/index.php/rueckblick/presse/kreativbuehne-2024#2024-12-19-kreativbuehne-2024-2024-4-theater-jpg",
+      "targetPath": "/rueckblick/presse/kreativbuehne-2024"
+    },
+    {
+      "kind": "page",
+      "reason": "Legacy-Titel und -Bild müssen mit den nur in der aktuellen Baseline vorhandenen Angaben „Rheinpfalz“ und „Montag“ zusammengeführt werden.",
+      "resolution": "merge",
+      "sourceKey": "article:/index.php/rueckblick/presse/kreativtheater2024-02#2024-12-30-kreativbuehne-2024-pressebericht-vom-30-dezember-kreativtheater-2024-02-jpg",
+      "targetPath": "/rueckblick/presse/kreativtheater2024-02"
+    },
+    {
+      "kind": "page",
+      "reason": "Der aktuelle bildbasierte Pressebeitrag enthält das vollständige Legacy-Asset; die Textabweichung ist nur eine Titelvariante.",
+      "resolution": "keep-current",
+      "sourceKey": "article:/index.php/rueckblick/presse/prunksitzung-presse-2025#2025-02-28-prunksitzung-2025-pressebericht-2025-prunksitzung-jpg",
+      "targetPath": "/rueckblick/presse/prunksitzung-presse-2025"
+    },
+    {
+      "kind": "page",
+      "reason": "Der aktuelle Beitrag enthält sämtliche Legacy-Texte und 18 Bilder; Abweichungen betreffen nur Entwurfsstatus und Assetpfade.",
+      "resolution": "keep-current",
+      "sourceKey": "article:/index.php/rueckblick/prunksitzung/55-prunksitzung#2019-07-03-55-prunksitzung-2019-prunk-korm-c3-bcll-jpg",
+      "targetPath": "/rueckblick/prunksitzung/55-prunksitzung"
+    },
+    {
+      "kind": "page",
+      "reason": "Der aktuelle Beitrag enthält sämtliche Legacy-Texte und drei Bilder; Abweichungen betreffen nur Entwurfsstatus und Assetpfade.",
+      "resolution": "keep-current",
+      "sourceKey": "article:/index.php/rueckblick/prunksitzung/digiprunk2022#2022-02-26-digitale-prunksitzung-2022-digi-prunk-2022-01-jpg",
+      "targetPath": "/rueckblick/prunksitzung/digiprunk2022"
+    },
+    {
+      "kind": "page",
+      "reason": "Der aktuelle Beitrag enthält sämtliche Legacy-Texte und 23 Bilder; Abweichungen betreffen nur Entwurfsstatus und Assetpfade.",
+      "resolution": "keep-current",
+      "sourceKey": "article:/index.php/rueckblick/prunksitzung/prunk2020#2020-02-16-kolping-prunksitzung-2020-elferrat-2020-jpg",
+      "targetPath": "/rueckblick/prunksitzung/prunk2020"
+    },
+    {
+      "kind": "page",
+      "reason": "Legacy und aktuelle Baseline widersprechen sich beim Datumstext; „Samstag, 06. Januar 2021“ ist kalendarisch unmöglich und muss redaktionell geklärt werden.",
+      "resolution": "merge",
+      "sourceKey": "article:/index.php/rueckblick/prunksitzung/prunksitzung2021#2021-02-07-digitale-ramser-fastnacht-2021-plakat-prunk-2021-jpg",
+      "targetPath": "/rueckblick/prunksitzung/prunksitzung2021"
+    },
+    {
+      "kind": "page",
+      "reason": "Die aktuelle Baseline enthält alle Legacy-Fakten und 30 Bilder in sprachlich bereinigter Form; die redaktionell bessere Fassung soll maßgeblich bleiben.",
+      "resolution": "keep-current",
+      "sourceKey": "article:/index.php/rueckblick/reisen/rumaenien-2018#2019-07-03-studienreise-rumaenien-2018-rum-c3-a4nien-1-jpg",
+      "targetPath": "/rueckblick/reisen/rumaenien-2018"
+    },
+    {
+      "kind": "page",
+      "reason": "Alle Reisen sind vollständig und semantisch strukturiert. Der gemeinsam übernommene, chronologisch unmögliche Zeitraum „28.10. – 05. Okt. 2002“ bleibt bis zu einer belegten redaktionellen Korrektur unverändert.",
+      "resolution": "keep-current",
+      "sourceKey": "article:/index.php/rueckblick/staedtereisen#2019-07-03-reisen-historie-der-kolpingsfamlie-ramsen-seit-1979-904180f3e889",
+      "targetPath": "/rueckblick/staedtereisen"
+    },
+    {
+      "kind": "page",
+      "reason": "Das nicht mehr abrufbare P3161033.JPG darf die drei vorhandenen Bilder nicht ihren falschen Bildunterschriften zuordnen; Text, Assets und Captions müssen explizit gemergt werden.",
+      "resolution": "merge",
+      "sourceKey": "article:/index.php/ueber-uns/geschichte-pfarrheim#2019-07-03-die-geschichte-des-katholischen-pfarrheims-p3161022-jpg",
+      "targetPath": "/ueber-uns/pfarrheim"
+    },
+    {
+      "kind": "page",
+      "reason": "Der Legacy-Eintrag „31.01.2026 Manfred Zengerle“ fehlt unter der goldenen Ehrennadel und muss ergänzt werden.",
+      "resolution": "merge",
+      "sourceKey": "article:/index.php/ueber-uns/relevante-vereinsdaten#2019-07-03-relevante-vereinsdaten-pfr-dr-karl-zinke-jpg",
+      "targetPath": "/ueber-uns/vereinsdaten"
+    },
+    {
+      "kind": "page",
+      "reason": "Der zentrale Jugendkontakt ersetzt die persönlichen Legacy-Adressen bewusst datenschutzfreundlich; alle Rollen und Namen sind erhalten.",
+      "resolution": "keep-current",
+      "sourceKey": "article:/index.php/vereinsbereiche/vorstandschaft#2019-07-03-die-vorstandschaft-567705aa18b4",
+      "targetPath": "/vereinsbereiche/vorstandschaft"
+    },
+    {
+      "kind": "page",
+      "reason": "Der Legacy-Eintrag für 2027 fehlt, während der aktuelle 2026-Eintrag noch den veralteten Zusatz „In Planung“ enthält; beide Stände müssen abgeglichen werden.",
+      "resolution": "merge",
+      "sourceKey": "article:/index.php/vereinsbereiche/zeltlager#2019-07-03-familien-zeltlager-historie-der-kolpingfamilie-ramsen-e7358dfa891b",
+      "targetPath": "/vereinsbereiche/zeltlager"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-01-10:kartenvorverkauf-prunksitzung",
+      "targetPath": "/termine/2026-01-10-kartenvorverkauf-prunksitzung"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-02-07:prunksitzung",
+      "targetPath": "/termine/2026-02-07-prunksitzung"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-02-14:fastnachtsfeier-fuer-kinder",
+      "targetPath": "/termine/2026-02-14-fastnachtsfeier-fuer-kinder"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-03-07:black-orange-party",
+      "targetPath": "/termine/2026-03-07-black-orange-party"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-03-15:bezirks-friedengebet",
+      "targetPath": "/termine/2026-03-15-bezirks-friedengebet"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-03-19:mitgliederversammlung",
+      "targetPath": "/termine/2026-03-19-mitgliederversammlung"
+    },
+    {
+      "kind": "event",
+      "reason": "Der sichtbare Text ist vollständig, das strukturierte Ortsfeld muss jedoch von „Park“ auf „Park von Dirmstein“ präzisiert werden.",
+      "resolution": "merge",
+      "sourceKey": "event:2026-03-20:bezirks-kreuzweg",
+      "targetPath": "/termine/2026-03-20-bezirks-kreuzweg"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-03-21:ostereier-basteln",
+      "targetPath": "/termine/2026-03-21-ostereier-basteln"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-03-22:konzert",
+      "targetPath": "/termine/2026-03-22-konzert"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-04-19:besichtigung-kloster-sion-mit-wolfgang-mueller",
+      "targetPath": "/termine/2026-04-19-besichtigung-kloster-sion-mit-wolfgang-mueller"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-05-03:kolpinggedenktag-pfarrkirche-pfarrheim",
+      "targetPath": "/termine/2026-05-03-kolpinggedenktag-pfarrkirche-pfarrheim"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-05-14:waldfest",
+      "targetPath": "/termine/2026-05-14-waldfest"
+    },
+    {
+      "kind": "event",
+      "reason": "Der Legacy-Zusatz „anschl. Maibowle im Pfarrheim“ fehlt; Hauptort Mariengrotte und Anschlussort Pfarrheim müssen sauber zusammengeführt werden.",
+      "resolution": "merge",
+      "sourceKey": "event:2026-05-22:bezirksmaiandacht",
+      "targetPath": "/termine/2026-05-22-bezirksmaiandacht"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-06-12:singen-mit-walter",
+      "targetPath": "/termine/2026-06-12-singen-mit-walter"
+    },
+    {
+      "kind": "event",
+      "reason": "Der Legacy-Zusatz „anschl. Gemeindefest auf der Kolpingwiese (Kath. Pfarrgemeinde)“ fehlt und muss bei unverändertem Hauptort Pfarrkirche ergänzt werden.",
+      "resolution": "merge",
+      "sourceKey": "event:2026-06-14:gottesdienst-in-der-pfarrkirche",
+      "targetPath": "/termine/2026-06-14-gottesdienst-in-der-pfarrkirche"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-06-20:erlebnistag-einweihung-der-wanderwege",
+      "targetPath": "/termine/2026-06-20-erlebnistag-einweihung-der-wanderwege"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-06-21:sommerfest",
+      "targetPath": "/termine/2026-06-21-sommerfest"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-06-27:poolparty",
+      "targetPath": "/termine/2026-06-27-poolparty"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-07-04:10-jahre-kolping-open-air-theater",
+      "targetPath": "/termine/2026-07-04-10-jahre-kolping-open-air-theater"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-07-18:familien-zeltlager",
+      "targetPath": "/termine/2026-07-18-familien-zeltlager"
+    },
+    {
+      "kind": "event",
+      "reason": "Die aktuellen Creepshow-Angaben, der freie Eintritt und der Link bleiben erhalten; die Legacy-Zuordnung zur Jugend muss ergänzt werden.",
+      "resolution": "merge",
+      "sourceKey": "event:2026-08-21:open-air-theater",
+      "targetPath": "/termine/2026-08-21-open-air-theater"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-08-22:ausflug-zum-barfusspfad-bad-sobernheim",
+      "targetPath": "/termine/2026-08-22-ausflug-zum-barfusspfad-bad-sobernheim"
+    },
+    {
+      "kind": "event",
+      "reason": "Die aktuellen Creepshow-Angaben, der freie Eintritt und der Link bleiben erhalten; die Legacy-Zuordnung zur Jugend muss ergänzt werden.",
+      "resolution": "merge",
+      "sourceKey": "event:2026-08-28:open-air-theater",
+      "targetPath": "/termine/2026-08-28-open-air-theater"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-09-04:steaktasting",
+      "targetPath": "/termine/2026-09-04-steaktasting"
+    },
+    {
+      "kind": "event",
+      "reason": "Der Legacy-Fakt „Besuch der Erdekaut mit Erika Grün“ fehlt in Titel und Beschreibung und muss ergänzt werden.",
+      "resolution": "merge",
+      "sourceKey": "event:2026-09-05:kennst-du-deine-heimat-besuch-der-erdekaut-mit-erika-gruen",
+      "targetPath": "/termine/2026-09-05-kennst-du-deine-heimat-besuch-der-erdekaut-mit-erika-gruen"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-09-26:krimidinner",
+      "targetPath": "/termine/2026-09-26-krimidinner"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-10-02:rosenkranzandacht",
+      "targetPath": "/termine/2026-10-02-rosenkranzandacht"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-10-17:oktoberfest",
+      "targetPath": "/termine/2026-10-17-oktoberfest"
+    },
+    {
+      "kind": "event",
+      "reason": "Der Legacy-Termin enthält weiterhin den ungeklärten Ortsplatzhalter „?????“ und bleibt bis zur redaktionellen Klärung unveröffentlicht.",
+      "resolution": "draft",
+      "sourceKey": "event:2026-10-21:bezirksrosenkranz-in",
+      "targetPath": "/termine/2026-10-21-bezirksrosenkranz-in"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-10-24:herbstwanderung",
+      "targetPath": "/termine/2026-10-24-herbstwanderung"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-10-25:kuerbis-schnitzen",
+      "targetPath": "/termine/2026-10-25-kuerbis-schnitzen"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-11-07:lieblings-weinprobe",
+      "targetPath": "/termine/2026-11-07-lieblings-weinprobe"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-11-21:dioezesan-ehrung-in-hessheim",
+      "targetPath": "/termine/2026-11-21-dioezesan-ehrung-in-hessheim"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-11-28:arbeitseinsatz-wir-machen-unser-gelaende-winterfest",
+      "targetPath": "/termine/2026-11-28-arbeitseinsatz-wir-machen-unser-gelaende-winterfest"
+    },
+    {
+      "kind": "event",
+      "reason": "Der Legacy-Veranstalterhinweis „Kath. & Evang. Pfarrgemeinde“ fehlt und muss ergänzt werden.",
+      "resolution": "merge",
+      "sourceKey": "event:2026-11-29:musikalische-adventsandacht-in-der-ev-kirche",
+      "targetPath": "/termine/2026-11-29-musikalische-adventsandacht-in-der-ev-kirche"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-12-06:kolpinggedenktag-pfarrkirche-pfarrheim",
+      "targetPath": "/termine/2026-12-06-kolpinggedenktag-pfarrkirche-pfarrheim"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-12-13:plaetzchen-backen",
+      "targetPath": "/termine/2026-12-13-plaetzchen-backen"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-12-20:adventsfeier",
+      "targetPath": "/termine/2026-12-20-adventsfeier"
+    },
+    {
+      "kind": "event",
+      "reason": "Der aktuelle Termin behauptet eine sichere Aufführung; der Legacy-Vorbehalt und die Zuordnung zur Jugend werden übernommen, der Termin bleibt bis zur Bestätigung als Entwurf unveröffentlicht.",
+      "resolution": "draft",
+      "sourceKey": "event:2026-12-26:theaterauffuehrung-sollte-es-ein-winterstueck-geben",
+      "targetPath": "/termine/2026-12-26-theaterauffuehrung-sollte-es-ein-winterstueck-geben"
+    },
+    {
+      "kind": "event",
+      "reason": "Der strukturierte aktuelle Termin enthält sämtliche Legacy-Fakten; die niedrige Ähnlichkeit entsteht durch die getrennten Datums-, Zeit-, Orts- und Beschreibungsfelder.",
+      "resolution": "keep-current",
+      "sourceKey": "event:2026-12-28:winterwanderung-in-unserer-region",
+      "targetPath": "/termine/2026-12-28-winterwanderung-in-unserer-region"
+    }
+  ],
+  "schemaVersion": 1,
+  "snapshotDigest": "sha256:08e8f0a7058f4ee7a1b5d6eed3ae685cc68946f15b3567f2ede66d0e313e70b1"
+}

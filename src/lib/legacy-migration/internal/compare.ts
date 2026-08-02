@@ -25,7 +25,26 @@ type CurrentRecord = Readonly<{
   imageCount: number;
   documentCount: number;
   dateKey?: string;
+  event?: Readonly<{
+    startDate?: string;
+    endDate?: string;
+    startTime?: string;
+    endTime?: string;
+    location?: string;
+    description: string;
+  }>;
 }>;
+
+type SemanticBlock = Readonly<{
+  text: string;
+  comparable: string;
+  compact: string;
+  tokens: ReadonlySet<string>;
+  tokenCounts: ReadonlyMap<string, number>;
+  tokenCount: number;
+}>;
+
+type SemanticCoverage = NonNullable<RouteComparison["semanticCoverage"]>;
 
 const NATIVE_ROUTES = new Set([
   "/",
@@ -109,28 +128,76 @@ function loadCurrentRecords(snapshot: ContentDatabaseSnapshot): CurrentRecord[] 
     }>).map((row): CurrentRecord => {
       const images = imageUrls(row.description);
       const documents = documentUrls(row.description);
+      const startDate = civilKey(row.startDate);
+      const endDate = civilKey(row.endDate);
       return {
         route: `/termine/${row.slug.replace(/^\/+|\/+$/g, "")}`,
         kind: "event",
         title: row.title,
-        content: [String(row.startDate), row.endDate === null ? "" : String(row.endDate), row.startTime ?? "", row.endTime ?? "", row.location ?? "", row.description]
-          .filter(Boolean)
-          .join("\n"),
+        content: row.description,
         published: Boolean(row.published),
         imageUrls: images,
         documentUrls: documents,
         imageCount: images.length,
         documentCount: documents.length,
-        dateKey: civilKey(row.startDate),
+        dateKey: startDate,
+        event: {
+          startDate,
+          endDate,
+          startTime: normalizeTime(row.startTime),
+          endTime: normalizeTime(row.endTime),
+          location: normalizeOptionalText(row.location),
+          description: row.description,
+        },
       };
     });
     return [...pages, ...news, ...events].sort((left, right) => left.route.localeCompare(right.route, "de"));
 }
 
+function imageAttribute(tag: string, name: string): string | undefined {
+  return tag.match(new RegExp(`\\b${name}\\s*=\\s*["']([^"']*)["']`, "iu"))?.[1];
+}
+
+function imageLabel(alt: string | undefined, title: string | undefined, source: string | undefined): string {
+  let stem = "";
+  if (source) {
+    try {
+      const pathname = new URL(source, "https://image.invalid").pathname;
+      stem = decodeURIComponent(path.posix.basename(pathname, path.posix.extname(pathname)));
+    } catch {
+      stem = "";
+    }
+  }
+  const comparable = (value: string) => value
+    .normalize("NFKC")
+    .toLocaleLowerCase("de")
+    .replace(/[^\p{L}\p{N}]+/gu, "")
+    .trim();
+  const stemKey = comparable(stem);
+  return [title, alt]
+    .filter((value): value is string => Boolean(value?.trim()))
+    .map((value) => value.trim())
+    .filter((value) => {
+      const key = comparable(value);
+      return key.length > 0
+        && key !== stemKey
+        && !/^(?:bild|image|foto|photo)\d*$/u.test(key);
+    })[0] ?? "";
+}
+
+function replaceImageLabels(value: string): string {
+  return value
+    .replace(/<img\b[^>]*>/giu, (tag) =>
+      imageLabel(imageAttribute(tag, "alt"), imageAttribute(tag, "title"), imageAttribute(tag, "src")))
+    .replace(
+      /!\[([^\]]*)\]\((?:<)?([^\s)>]+)(?:>)?(?:\s+["']([^"']*)["'])?\)/giu,
+      (_whole, alt: string, source: string, title: string | undefined) => imageLabel(alt, title, source),
+    );
+}
+
 function visibleText(markdown: string): string {
-  return markdown
+  return replaceImageLabels(markdown)
     .replace(/<[^>]*>/g, " ")
-    .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
     .replace(/https?:\/\/\S+/g, " ")
     .replace(/[#*_>`|~\\-]/g, " ")
@@ -157,6 +224,199 @@ function contentSimilarity(left: string, right: string): number {
   return union === 0 ? 0 : Number((intersection / union).toFixed(3));
 }
 
+function normalizeOptionalText(value: string | null | undefined): string | undefined {
+  const normalized = value?.replace(/[\u00a0\u200b\ufeff]/gu, " ").replace(/\s+/gu, " ").trim();
+  return normalized || undefined;
+}
+
+function normalizeTime(value: string | null | undefined): string | undefined {
+  const normalized = normalizeOptionalText(value);
+  if (!normalized) return undefined;
+  const time = normalized.match(/^(\d{1,2}):(\d{2})(?::\d{2})?$/u);
+  return time ? `${time[1].padStart(2, "0")}:${time[2]}` : normalized;
+}
+
+function semanticText(value: string): string {
+  return replaceImageLabels(value.normalize("NFKC"))
+    .replace(/\[([^\]]+)\]\((?:<)?[^)]*(?:>)?\)/giu, "$1")
+    .replace(/<[^>]*>/gu, " ")
+    .replace(/https?:\/\/\S+/giu, " ")
+    .replace(/[#*_>`|~\\-]/gu, " ")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .toLocaleLowerCase("de")
+    .replace(/\s+/gu, " ")
+    .trim();
+}
+
+function semanticBlock(value: string): SemanticBlock | undefined {
+  const text = visibleText(value);
+  const comparable = semanticText(value);
+  if (!comparable) return undefined;
+  const tokenList = comparable.split(" ").filter(Boolean);
+  const tokenCounts = new Map<string, number>();
+  for (const token of tokenList) tokenCounts.set(token, (tokenCounts.get(token) ?? 0) + 1);
+  return {
+    text,
+    comparable,
+    compact: comparable.replace(/\s+/gu, ""),
+    tokens: new Set(tokenList),
+    tokenCounts,
+    tokenCount: tokenList.length,
+  };
+}
+
+function semanticBlocks(markdown: string, title: string): SemanticBlock[] {
+  const output: SemanticBlock[] = [];
+  let paragraph: string[] = [];
+  const comparableTitle = semanticText(title).replace(/\s+/gu, "");
+  const flush = () => {
+    const block = semanticBlock(paragraph.join(" "));
+    if (block) output.push(block);
+    paragraph = [];
+  };
+  const addStructural = (line: string, heading: boolean) => {
+    const block = semanticBlock(line);
+    if (!block) return;
+    if (heading && block.compact === comparableTitle) return;
+    output.push(block);
+  };
+
+  for (const rawLine of markdown.replace(/\r\n?/gu, "\n").replace(/<br\s*\/?>/giu, "\n").split("\n")) {
+    const line = rawLine.trim();
+    if (!line) {
+      flush();
+      continue;
+    }
+    if (/^(?:!\[[^\]]*\]\([^)]*\)|<img\b[^>]*>)$/iu.test(line)) {
+      flush();
+      addStructural(line, false);
+      continue;
+    }
+    if (/^\|?(?:\s*:?-{3,}:?\s*\|)+\s*$/u.test(line)) {
+      flush();
+      continue;
+    }
+    const heading = /^#{1,6}\s+/u.test(line);
+    const structural = heading
+      || /^\s*(?:[-+*]|\d+[.)])\s+/u.test(line)
+      || /^\s*>\s?/u.test(line)
+      || /^\|.*\|$/u.test(line);
+    if (structural) {
+      flush();
+      addStructural(line, heading);
+      continue;
+    }
+    paragraph.push(line);
+  }
+  flush();
+  return output;
+}
+
+function blockIsCovered(
+  source: SemanticBlock,
+  targets: readonly SemanticBlock[],
+  targetDocument: string,
+  targetDocumentTokenCounts: ReadonlyMap<string, number>,
+): boolean {
+  if (source.compact.length >= 8 && targetDocument.includes(source.compact)) return true;
+  const matchedBlock = targets.some((target) => {
+    if (source.compact === target.compact) return true;
+    const shorterLength = Math.min(source.compact.length, target.compact.length);
+    if (shorterLength >= 18 && (source.compact.includes(target.compact) || target.compact.includes(source.compact))) return true;
+    if (source.tokens.size < 4) return false;
+    const coveredTokens = [...source.tokens].filter((token) => target.tokens.has(token)).length;
+    return coveredTokens / source.tokens.size >= 0.95;
+  });
+  if (matchedBlock) return true;
+  if (source.tokenCount < 4) return false;
+  const coveredDocumentTokens = [...source.tokenCounts].reduce(
+    (count, [token, wanted]) => count + Math.min(wanted, targetDocumentTokenCounts.get(token) ?? 0),
+    0,
+  );
+  return coveredDocumentTokens / source.tokenCount >= 0.95;
+}
+
+function documentTokenCounts(blocks: readonly SemanticBlock[]): ReadonlyMap<string, number> {
+  const counts = new Map<string, number>();
+  for (const block of blocks) {
+    for (const [token, count] of block.tokenCounts) counts.set(token, (counts.get(token) ?? 0) + count);
+  }
+  return counts;
+}
+
+function semanticCoverage(
+  sourceMarkdown: string,
+  currentMarkdown: string,
+  sourceTitle: string,
+  currentTitle: string,
+): { metrics: SemanticCoverage; missingSource: SemanticBlock[]; currentOnly: SemanticBlock[] } {
+  const source = semanticBlocks(sourceMarkdown, sourceTitle);
+  const current = semanticBlocks(currentMarkdown, currentTitle);
+  const sourceDocument = source.map((block) => block.compact).join("");
+  const currentDocument = current.map((block) => block.compact).join("");
+  const sourceDocumentTokens = documentTokenCounts(source);
+  const currentDocumentTokens = documentTokenCounts(current);
+  const missingSource = source.filter((block) => !blockIsCovered(block, current, currentDocument, currentDocumentTokens));
+  const currentOnly = current.filter((block) => !blockIsCovered(block, source, sourceDocument, sourceDocumentTokens));
+  const coveredSourceBlocks = source.length - missingSource.length;
+  const coveredCurrentBlocks = current.length - currentOnly.length;
+  return {
+    metrics: {
+      sourceBlocks: source.length,
+      currentBlocks: current.length,
+      coveredSourceBlocks,
+      coveredCurrentBlocks,
+      sourceToCurrent: source.length === 0 ? 1 : Number((coveredSourceBlocks / source.length).toFixed(3)),
+      currentToSource: current.length === 0 ? 1 : Number((coveredCurrentBlocks / current.length).toFixed(3)),
+    },
+    missingSource,
+    currentOnly,
+  };
+}
+
+function blockExamples(blocks: readonly SemanticBlock[]): string {
+  return blocks.slice(0, 3).map((block) => {
+    const value = block.text.replace(/\s+/gu, " ").trim();
+    return `„${value.length > 140 ? `${value.slice(0, 137)}…` : value}“`;
+  }).join("; ");
+}
+
+function eventFieldComparison(
+  source: LegacySnapshot["records"][number],
+  current: CurrentRecord,
+  coverage: SemanticCoverage,
+): { preservesSource: boolean; notes: string[] } {
+  if (source.kind !== "event") return { preservesSource: true, notes: [] };
+  if (!source.event || !current.event) {
+    return { preservesSource: false, notes: ["Strukturierte Event-Felder fehlen auf der Legacy- oder aktuellen Seite."] };
+  }
+  const notes: string[] = [];
+  let preservesSource = true;
+  const fields = [
+    { label: "Titel", source: normalizeOptionalText(source.title), current: normalizeOptionalText(current.title) },
+    { label: "Startdatum", source: civilKey(source.event.startDate), current: current.event.startDate },
+    { label: "Enddatum", source: civilKey(source.event.endDate ?? null), current: current.event.endDate },
+    { label: "Startzeit", source: normalizeTime(source.event.startTime), current: current.event.startTime },
+    { label: "Endzeit", source: normalizeTime(source.event.endTime), current: current.event.endTime },
+    { label: "Ort", source: normalizeOptionalText(source.event.location), current: current.event.location },
+  ] as const;
+  for (const field of fields) {
+    const sourceValue = field.source;
+    const currentValue = field.current;
+    const equal = semanticText(sourceValue ?? "") === semanticText(currentValue ?? "");
+    if (equal) continue;
+    if (sourceValue !== undefined) preservesSource = false;
+    notes.push(`Event-Feld ${field.label} weicht ab: Legacy „${sourceValue ?? "leer"}“, aktuell „${currentValue ?? "leer"}“.`);
+  }
+  if (coverage.coveredSourceBlocks < coverage.sourceBlocks) {
+    preservesSource = false;
+    notes.push(`Event-Feld Beschreibung deckt nur ${coverage.coveredSourceBlocks}/${coverage.sourceBlocks} Legacy-Blöcke ab.`);
+  } else if (coverage.coveredCurrentBlocks < coverage.currentBlocks) {
+    notes.push(`Event-Feld Beschreibung enthält ${coverage.currentBlocks - coverage.coveredCurrentBlocks} zusätzliche aktuelle Blöcke.`);
+  }
+  return { preservesSource, notes };
+}
+
 function titleInferenceScore(left: string, right: string): number {
   const similarity = contentSimilarity(left, right);
   const leftTokens = tokens(left);
@@ -168,6 +428,14 @@ function titleInferenceScore(left: string, right: string): number {
     && (shorter.size >= 2 || singleSpecificToken)
     && [...shorter].every((token) => longer.has(token));
   return specificContainment ? Math.max(0.6, similarity) : similarity;
+}
+
+function routeInferenceScore(left: string, right: string): number {
+  const leaf = (value: string) => value
+    .replace(/^.*\//u, "")
+    .replace(/^\d{4}-\d{2}-\d{2}-/u, "")
+    .replace(/[-_]+/gu, " ");
+  return titleInferenceScore(leaf(left), leaf(right));
 }
 
 function imageUrls(markdown: string): string[] {
@@ -328,10 +596,10 @@ function reportMarkdown(report: ComparisonReport): string {
     "",
     "## Routenvergleich",
     "",
-    "| Status | Ziel | Quelle | Titel | Ähnlichkeit | Zeichen alt/neu | Bilder alt/neu | Dokumente alt/neu |",
-    "| --- | --- | --- | --- | ---: | ---: | ---: | ---: |",
+    "| Status | Ziel | Quelle | Titel | Ähnlichkeit | Blöcke Quelle→aktuell | Blöcke aktuell→Quelle | Zeichen alt/neu | Bilder alt/neu | Dokumente alt/neu |",
+    "| --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |",
     ...report.routes.map((route) =>
-      `| ${route.status} | \`${markdownEscape(route.targetPath)}\` | [alt](${route.sourceUrl}) | ${markdownEscape(route.title)} | ${route.similarity ?? "–"} | ${route.sourceCharacters}/${route.currentCharacters ?? "–"} | ${route.sourceImages}/${route.currentImages ?? "–"} | ${route.sourceDocuments}/${route.currentDocuments ?? "–"} |`,
+      `| ${route.status} | \`${markdownEscape(route.targetPath)}\` | [alt](${route.sourceUrl}) | ${markdownEscape(route.title)} | ${route.similarity ?? "–"} | ${route.semanticCoverage ? `${route.semanticCoverage.coveredSourceBlocks}/${route.semanticCoverage.sourceBlocks}` : "–"} | ${route.semanticCoverage ? `${route.semanticCoverage.coveredCurrentBlocks}/${route.semanticCoverage.currentBlocks}` : "–"} | ${route.sourceCharacters}/${route.currentCharacters ?? "–"} | ${route.sourceImages}/${route.currentImages ?? "–"} | ${route.sourceDocuments}/${route.currentDocuments ?? "–"} |`,
     ),
     "",
     "## Fehlende oder ungeklärte Assets",
@@ -421,7 +689,13 @@ export async function compareLegacyContent(options: CompareOptions): Promise<Com
       if (sourceDate) {
         const candidates = current
           .filter((candidate) => candidate.kind === source.kind && candidate.dateKey === sourceDate && !usedCurrent.has(candidate.route))
-          .map((candidate) => ({ candidate, score: titleInferenceScore(source.title, candidate.title) }))
+          .map((candidate) => ({
+            candidate,
+            score: Math.max(
+              titleInferenceScore(source.title, candidate.title),
+              routeInferenceScore(source.targetPath, candidate.route),
+            ),
+          }))
           .sort((left, right) => right.score - left.score || left.candidate.route.localeCompare(right.candidate.route, "de"));
         const best = candidates[0];
         const runnerUp = candidates[1];
@@ -451,9 +725,16 @@ export async function compareLegacyContent(options: CompareOptions): Promise<Com
       && availableSourceDocumentUrls.length === currentDocuments
       && imagesCorrelate
       && documentsCorrelate;
+    const coverage = semanticCoverage(source.markdown, currentRecord.content, source.title, currentRecord.title);
+    const eventFields = eventFieldComparison(source, currentRecord, coverage.metrics);
+    const hasCompleteSourceCoverage = coverage.metrics.coveredSourceBlocks === coverage.metrics.sourceBlocks;
+    const titlePreservesSource = source.kind === "event"
+      ? true
+      : titleInferenceScore(source.title, currentRecord.title) >= 0.6;
     const notes = [
       currentRecord.published ? "Aktueller Datensatz ist veröffentlicht." : "Aktueller Datensatz ist ein Entwurf.",
       ...(source.kind === currentRecord.kind ? [] : [`Inhaltstyp weicht ab: ${currentRecord.kind}`]),
+      ...(titlePreservesSource ? [] : [`Titel weicht semantisch ab: Legacy „${source.title}“, aktuell „${currentRecord.title}“.`]),
       ...(inferredMatch ? [inferredMatch] : []),
       ...(availableSourceImageUrls.length >= currentImages ? [] : [`Legacy-Extraktion enthält weniger lokal verfügbare Bilder als der aktuelle Datensatz (${availableSourceImageUrls.length}/${currentImages}).`]),
       ...(availableSourceImageUrls.length <= currentImages ? [] : [`Aktueller Datensatz enthält nicht alle lokal verfügbaren Legacy-Bilder (${currentImages}/${availableSourceImageUrls.length}).`]),
@@ -461,15 +742,29 @@ export async function compareLegacyContent(options: CompareOptions): Promise<Com
       ...(availableSourceDocumentUrls.length <= currentDocuments ? [] : [`Aktueller Datensatz enthält nicht alle lokal verfügbaren Legacy-Dokumente (${currentDocuments}/${availableSourceDocumentUrls.length}).`]),
       ...(imagesCorrelate ? [] : ["Aktuelle Bildpfade lassen sich nicht den erfassten Legacy-Bildern zuordnen."]),
       ...(documentsCorrelate ? [] : ["Aktuelle Dokumentpfade lassen sich nicht den erfassten Legacy-Dokumenten zuordnen."]),
+      ...(!hasCompleteSourceCoverage
+        ? [`Im aktuellen Datensatz nicht belegte Legacy-Blöcke (${coverage.missingSource.length}): ${blockExamples(coverage.missingSource)}.`]
+        : []),
+      ...(coverage.currentOnly.length
+        ? [`Nur im aktuellen Datensatz belegte Blöcke (${coverage.currentOnly.length}): ${blockExamples(coverage.currentOnly)}.`]
+        : []),
+      ...eventFields.notes,
       ...(source.warnings ?? []),
     ];
     return {
       ...common,
-      status: similarity >= 0.94 && hasCompleteAssetSet ? "equivalent" : "different",
+      status: source.kind === currentRecord.kind
+        && hasCompleteAssetSet
+        && hasCompleteSourceCoverage
+        && titlePreservesSource
+        && eventFields.preservesSource
+        ? "equivalent"
+        : "different",
       currentCharacters,
       similarity,
       currentImages,
       currentDocuments,
+      semanticCoverage: coverage.metrics,
       notes,
     };
   }).sort((left, right) => left.targetPath.localeCompare(right.targetPath, "de") || left.sourceKey.localeCompare(right.sourceKey, "de"));

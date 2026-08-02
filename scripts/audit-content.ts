@@ -76,6 +76,7 @@ async function main() {
         slug: true,
         title: true,
         content: true,
+        metaDesc: true,
         gallerySlug: true,
         published: true,
       },
@@ -141,12 +142,27 @@ async function main() {
     ) {
       issues.push({ owner, message: "sichtbares Joomla-Importartefakt im Inhalt" });
     }
+    if (
+      page.published &&
+      page.metaDesc &&
+      (/(?:Details\s+(?:Geschrieben|Veröffentlicht)|Zugriffe:)/iu.test(page.metaDesc) ||
+        /Spambots geschützt|&(?:nbsp|amp);|<[^>]+>/iu.test(page.metaDesc))
+    ) {
+      issues.push({ owner, message: "Joomla-Importartefakt in der Metabeschreibung" });
+    }
     checkAssets(owner, page.content, page.published);
   }
   for (const item of news) {
     const owner = `News /aktuelles/${item.slug}`;
     if (item.published && textLength(`${item.teaser}\n${item.content}`) < 20) {
       issues.push({ owner, message: "veröffentlichter Inhalt ist leer oder zu kurz" });
+    }
+    if (
+      item.published &&
+      item.teaser.trim().length > 0 &&
+      item.content.trimStart().startsWith(item.teaser.trim())
+    ) {
+      issues.push({ owner, message: "Teaser wird am Anfang des Detailinhalts sichtbar wiederholt" });
     }
     checkAssets(owner, `${item.coverImage ?? ""}\n${item.content}`, item.published);
   }

@@ -30,14 +30,18 @@ function flag(name: string): boolean {
 async function main() {
   const rawMode = process.argv[2] && !process.argv[2].startsWith("-") ? process.argv[2] : "all";
   if (!["capture", "compare", "all"].includes(rawMode)) {
-    throw new Error("Aufruf: npm run content:migrate -- [capture|compare|all] [--max-pages 500] [--concurrency 4]");
+    throw new Error("Aufruf: npm run content:migrate -- [capture|compare|all] [--snapshot content/legacy/snapshot.json] [--max-pages 500] [--concurrency 4]");
   }
   const mode = rawMode as Mode;
   const decisionsPath = path.resolve(option("--decisions") ?? "content/legacy-decisions.json");
   const outputDir = path.resolve(option("--output") ?? "content/legacy");
   const cacheDir = path.resolve(option("--cache") ?? ".cache/legacy-migration");
   const decisions = await loadMigrationDecisions(decisionsPath);
-  const snapshotPath = path.join(outputDir, "snapshot.json");
+  const snapshotOption = option("--snapshot");
+  if (snapshotOption && mode !== "compare") {
+    throw new Error("--snapshot kann nur im compare-Modus verwendet werden.");
+  }
+  const snapshotPath = path.resolve(snapshotOption ?? path.join(outputDir, "snapshot.json"));
 
   if (mode === "capture" || mode === "all") {
     const result = await captureLegacySource(

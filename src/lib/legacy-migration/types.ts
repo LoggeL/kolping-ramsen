@@ -195,6 +195,14 @@ export type RouteComparison = Readonly<{
   currentImages?: number;
   sourceDocuments: number;
   currentDocuments?: number;
+  semanticCoverage?: Readonly<{
+    sourceBlocks: number;
+    currentBlocks: number;
+    coveredSourceBlocks: number;
+    coveredCurrentBlocks: number;
+    sourceToCurrent: number;
+    currentToSource: number;
+  }>;
   notes: readonly string[];
 }>;
 

@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "snapshotDigest": "sha256:08e8f0a7058f4ee7a1b5d6eed3ae685cc68946f15b3567f2ede66d0e313e70b1",
+  "comparisonDigest": "sha256:d56894a95bcb0533494d88b55be7ed2ecf7cc27cb7bb3d70de4d8cb113e2ea39",
+  "resolutions": [
+    {
+      "sourceKey": "article:/index.php#2019-06-20-herzlich-willkommen-auf-der-startseite-pfarrheim-mit-text-comp-jpg",
+      "targetPath": "/",
+      "status": "native-review",
+      "resolution": "native-replacement",
+      "reason": "Die native Startseite ersetzt den statischen Joomla-Willkommenstext durch aktuelle News, Termine und kuratierte Einstiege; die Vereinsidentität und Pfarrheim-Verweise bleiben erreichbar."
+    },
+    {
+      "sourceKey": "article:/index.php/component/content/article/datenschutzerklaerung#2019-07-03-datenschutzerklaerung-de191ebde4db",
+      "targetPath": "/datenschutz",
+      "status": "different",
+      "resolution": "accepted-current",
+      "reason": "Alle 118 Legacy-Blöcke sind erhalten; der kürzere Seitentitel und die zusätzliche Abschnittsstruktur verbessern Lesbarkeit und Navigation."
+    },
+    {
+      "sourceKey": "article:/index.php/gaestebuch#2019-03-02-sicherheitsabfrage-a6c76d1fb9d0",
+      "targetPath": "/gaestebuch",
+      "status": "native-review",
+      "resolution": "native-replacement",
+      "reason": "Das native moderierte Gästebuch ersetzt die Joomla-Ansicht und deren veraltete Sicherheitsabfrage funktional und zugänglich."
+    },
+    {
+      "sourceKey": "article:/index.php/kontakt/impressum#2019-07-03-impressum-de12713bc818",
+      "targetPath": "/impressum",
+      "status": "different",
+      "resolution": "accepted-current",
+      "reason": "Anschrift, Telefon, Vertretung und Rechtstexte sind erhalten; E-Mail und Internetadresse wurden bewusst auf die aktuellen, direkt nutzbaren Ziele modernisiert."
+    },
+    {
+      "sourceKey": "article:/index.php/kontakt/kontakt#2019-07-03-leitungsteam-da03d2bf134d",
+      "targetPath": "/kontakt",
+      "status": "native-review",
+      "resolution": "native-replacement",
+      "reason": "Die native Kontaktseite bündelt Leitungsteam, zentrale Vereinsadresse, Pfarrheimanschrift und ein validiertes Kontaktformular."
+    },
+    {
+      "sourceKey": "article:/index.php/rueckblick/prunksitzung/prunksitzung2021#2021-02-07-digitale-ramser-fastnacht-2021-plakat-prunk-2021-jpg",
+      "targetPath": "/rueckblick/prunksitzung/prunksitzung2021",
+      "status": "different",
+      "resolution": "accepted-current",
+      "reason": "Der kalendarisch unmögliche Legacy-Wochentag „Samstag“ wurde entfernt; das belegte Datum, der übrige Text und das Plakat bleiben erhalten."
+    },
+    {
+      "sourceKey": "article:/index.php/rueckblick/staedtereisen#2019-07-03-reisen-historie-der-kolpingsfamlie-ramsen-seit-1979-904180f3e889",
+      "targetPath": "/rueckblick/staedtereisen",
+      "status": "different",
+      "resolution": "accepted-current",
+      "reason": "Alle Reisen sind vollständig in einer semantischen Tabelle erhalten; der unbelegte, chronologisch auffällige Zeitraum 2002 bleibt bis zu einer redaktionellen Quelle unverändert."
+    },
+    {
+      "sourceKey": "article:/index.php/ueber-uns/adolf-kolping#2019-07-03-das-leben-und-wirken-adolf-kolpings-1c16ce11c698",
+      "targetPath": "/ueber-uns/adolf-kolping",
+      "status": "different",
+      "resolution": "accepted-current",
+      "reason": "Der vollständige biografische Legacy-Inhalt ist erhalten; nur der Seitentitel wurde auf „Adolf Kolping“ verkürzt und der bisherige Titel als Inhaltsüberschrift bewahrt."
+    },
+    {
+      "sourceKey": "article:/index.php/ueber-uns/geschichte-pfarrheim#2019-07-03-die-geschichte-des-katholischen-pfarrheims-p3161022-jpg",
+      "targetPath": "/ueber-uns/pfarrheim",
+      "status": "different",
+      "resolution": "accepted-current",
+      "reason": "Historie, Adresse und alle vier Bildbeschreibungen sind erhalten; drei Bilder sind korrekt beschriftet, das an der Quelle fehlende P3161033.JPG ist transparent als nicht verfügbar dokumentiert."
+    },
+    {
+      "sourceKey": "article:/index.php/vereinsbereiche/vorstandschaft#2019-07-03-die-vorstandschaft-567705aa18b4",
+      "targetPath": "/vereinsbereiche/vorstandschaft",
+      "status": "different",
+      "resolution": "accepted-current",
+      "reason": "Alle Namen und Rollen sind erhalten; persönliche Jugendadressen wurden bewusst durch den zentralen, datenschutzfreundlichen Vereinskontakt ersetzt."
+    },
+    {
+      "sourceKey": "article:/index.php/vereinsbereiche/zeltlager#2019-07-03-familien-zeltlager-historie-der-kolpingfamilie-ramsen-e7358dfa891b",
+      "targetPath": "/vereinsbereiche/zeltlager",
+      "status": "different",
+      "resolution": "accepted-current",
+      "reason": "Alle 52 Legacy-Einträge stehen in einer zugänglichen Tabelle; 2027 ist ergänzt, der veraltete Planungszusatz 2026 entfernt und der Titel bewusst verkürzt."
+    },
+    {
+      "sourceKey": "event:2026-05-22:bezirksmaiandacht",
+      "targetPath": "/termine/2026-05-22-bezirksmaiandacht",
+      "status": "different",
+      "resolution": "accepted-current",
+      "reason": "Maiandacht an der Mariengrotte und anschließende Maibowle im Pfarrheim sind vollständig enthalten; das strukturierte Ortsfeld bezeichnet bewusst den Hauptort."
+    },
+    {
+      "sourceKey": "event:2026-06-14:gottesdienst-in-der-pfarrkirche",
+      "targetPath": "/termine/2026-06-14-gottesdienst-in-der-pfarrkirche",
+      "status": "different",
+      "resolution": "accepted-current",
+      "reason": "Die kanonisch umbenannte Route enthält Gottesdienst, Pfarrkirche, Gemeindefest, Kolpingwiese und katholische Pfarrgemeinde vollständig; das Ortsfeld bezeichnet den Hauptort."
+    },
+    {
+      "sourceKey": "event:2026-08-21:open-air-theater",
+      "targetPath": "/termine/2026-08-21-open-air-theater",
+      "status": "different",
+      "resolution": "accepted-current",
+      "reason": "Der Legacy-Zeitraum ist in zwei einzelne Aufführungstage aufgeteilt; Stücktitel, Kolpingwiese, Jugend, freier Eintritt und weiterführender Link sind erhalten oder präzisiert."
+    },
+    {
+      "sourceKey": "event:2026-08-28:open-air-theater",
+      "targetPath": "/termine/2026-08-28-open-air-theater",
+      "status": "different",
+      "resolution": "accepted-current",
+      "reason": "Der Legacy-Zeitraum ist in zwei einzelne Aufführungstage aufgeteilt; Stücktitel, Kolpingwiese, Jugend, freier Eintritt und weiterführender Link sind erhalten oder präzisiert."
+    },
+    {
+      "sourceKey": "event:2026-09-05:kennst-du-deine-heimat-besuch-der-erdekaut-mit-erika-gruen",
+      "targetPath": "/termine/2026-09-05-kennst-du-deine-heimat-besuch-der-erdekaut-mit-erika-gruen",
+      "status": "different",
+      "resolution": "accepted-current",
+      "reason": "Die kanonisch kürzere Route enthält Besuch der Erdekaut und Begleitung durch Erika Grün vollständig; Erdekaut ist zusätzlich als strukturiertes Ortsfeld erfasst."
+    },
+    {
+      "sourceKey": "event:2026-10-02:rosenkranzandacht",
+      "targetPath": "/termine/2026-10-02-rosenkranzandacht",
+      "status": "different",
+      "resolution": "accepted-current",
+      "reason": "Der aktuelle Termin enthält sämtliche Legacy-Fakten und benennt im Titel zusätzlich den belegten Anschluss mit Zwiebelkuchen und neuem Wein."
+    },
+    {
+      "sourceKey": "event:2026-10-21:bezirksrosenkranz-in",
+      "targetPath": "/termine/2026-10-21-bezirksrosenkranz-in",
+      "status": "different",
+      "resolution": "accepted-draft",
+      "reason": "Der Legacy-Termin enthält weiterhin den ungeklärten Ortsplatzhalter „?????“ und bleibt bis zur redaktionellen Klärung unveröffentlicht."
+    },
+    {
+      "sourceKey": "event:2026-11-21:dioezesan-ehrung-in-hessheim",
+      "targetPath": "/termine/2026-11-21-dioezesan-ehrung-in-hessheim",
+      "status": "different",
+      "resolution": "accepted-current",
+      "reason": "Datum und Diözesanehrung sind strukturiert erfasst; Heßheim bleibt in Beschreibung und Ortsfeld vollständig erhalten."
+    },
+    {
+      "sourceKey": "event:2026-11-29:musikalische-adventsandacht-in-der-ev-kirche",
+      "targetPath": "/termine/2026-11-29-musikalische-adventsandacht-in-der-ev-kirche",
+      "status": "different",
+      "resolution": "accepted-current",
+      "reason": "Die kanonisch kürzere Route enthält evangelische Kirche sowie katholische und evangelische Pfarrgemeinde vollständig in der Beschreibung."
+    },
+    {
+      "sourceKey": "event:2026-12-26:theaterauffuehrung-sollte-es-ein-winterstueck-geben",
+      "targetPath": "/termine/2026-12-26-theaterauffuehrung-sollte-es-ein-winterstueck-geben",
+      "status": "different",
+      "resolution": "accepted-draft",
+      "reason": "Die kanonisch umbenannte Route bewahrt Jugend und Winterstück-Vorbehalt; der unbestätigte Termin bleibt folgerichtig unveröffentlicht."
+    }
+  ],
+  "digest": "sha256:6466bf8497df489a3bf82c78a8c4ac3064ddeda02acae8923f6e78070aeb9f18"
+}

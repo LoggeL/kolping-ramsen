@@ -125,13 +125,11 @@ function germanDate(value?: string): string | undefined {
     .format(new Date(Date.UTC(year, month - 1, day)));
 }
 
-function explainImageOnlyRecord(record: LegacyRecord, markdown: string): string {
-  if (textLength(markdown) >= 20) return markdown;
+function imageOnlyIntro(record: LegacyRecord): string {
   const date = germanDate(record.publishedDate);
-  const intro = record.targetPath.startsWith("/rueckblick/presse/")
+  return record.targetPath.startsWith("/rueckblick/presse/")
     ? `Pressebeitrag aus unserem Archiv${date ? ` vom ${date}` : ""}.`
     : `Bilder und Erinnerungen aus unserem Vereinsleben${date ? ` vom ${date}` : ""}.`;
-  return `${intro}\n\n${markdown}`.trim();
 }
 
 function escapeRegExp(value: string): string {
@@ -363,13 +361,17 @@ function rewriteRecord(
   for (const source of brokenUrls) markdown = removeBrokenAsset(markdown, source);
   const mappedAssets = uniqueSorted(record.assetUrls.flatMap((url) => assetReplacements.get(url) ?? []));
   const allSourceAssetsBroken = record.assetUrls.length > 0 && mappedAssets.length === 0;
-  markdown = explainImageOnlyRecord(record, markdown);
+  const isImageOnly = textLength(markdown) < 20;
+  const fallbackIntro = isImageOnly ? imageOnlyIntro(record) : null;
+  if (fallbackIntro && record.kind === "page") {
+    markdown = `${fallbackIntro}\n\n${markdown}`.trim();
+  }
   return {
     ...record,
     markdown,
-    excerpt: textLength(markdown) > 0
+    excerpt: fallbackIntro ?? (textLength(markdown) > 0
       ? markdownText(markdown).slice(0, 240)
-      : record.excerpt,
+      : record.excerpt),
     assetUrls: mappedAssets,
     internalLinks: uniqueSorted(record.internalLinks.map((url) => links.get(url) ?? url)),
     warnings: allSourceAssetsBroken

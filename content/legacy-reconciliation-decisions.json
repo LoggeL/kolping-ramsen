@@ -1,0 +1,352 @@
+{
+  "schemaVersion": 1,
+  "snapshotDigest": "sha256:08e8f0a7058f4ee7a1b5d6eed3ae685cc68946f15b3567f2ede66d0e313e70b1",
+  "comparisonDigest": "sha256:bb5ebad0d931557df350d809353e898e76e5a5d9395cdaa6a682db139273c84f",
+  "sourcePageUpdates": [
+    {
+      "sourceKey": "article:/index.php/ueber-uns/geschichte-pfarrheim#2019-07-03-die-geschichte-des-katholischen-pfarrheims-p3161022-jpg",
+      "sourceDigest": "sha256:97f92692db1fc76e416fba082172038690fbfa23b31be42cb3724e7061a1b414",
+      "targetPath": "/ueber-uns/pfarrheim",
+      "expectedComparisonStatus": "different",
+      "expectedCurrentContentDigest": "sha256:080c53ea26dc7cb51ad3e48f30dace15d85ccc9f9ece1b81c615b830e4b9f8e5",
+      "transformer": "pfarrheim-gallery",
+      "reason": "Das an der Quelle fehlende erste Bild als Textbefund erhalten und die drei verfügbaren Bilder wieder ihren tatsächlichen Bildunterschriften zuordnen."
+    },
+    {
+      "sourceKey": "article:/index.php/ueber-uns/relevante-vereinsdaten#2019-07-03-relevante-vereinsdaten-pfr-dr-karl-zinke-jpg",
+      "sourceDigest": "sha256:1d21a14d82b9981794a69b1e5edebfc4933a0493001612981c7975b333800da1",
+      "targetPath": "/ueber-uns/vereinsdaten",
+      "expectedComparisonStatus": "equivalent",
+      "expectedCurrentContentDigest": "sha256:1633b61623759082accda7967257eec7700a10a2c066fcf5086230c204d4b767",
+      "transformer": "association-data",
+      "reason": "Die versiegelte Quelle als Faktenbasis verwenden, die Ehrennadel 2026 ergänzen und Überschriften sowie Listen semantisch ordnen; ungeklärte Datumsangaben unverändert erhalten."
+    },
+    {
+      "sourceKey": "article:/index.php/vereinsbereiche/zeltlager#2019-07-03-familien-zeltlager-historie-der-kolpingfamilie-ramsen-e7358dfa891b",
+      "sourceDigest": "sha256:e7358dfa891bde3a8ac401c4034eb30af2497ab9bee5f35ce1d29ccbfbc2cd3e",
+      "targetPath": "/vereinsbereiche/zeltlager",
+      "expectedComparisonStatus": "equivalent",
+      "expectedCurrentContentDigest": "sha256:4f0a0ec23616ed5000dab66e44b12c4cf66b3cdba3387d1bfbd92e74b21e9c18",
+      "transformer": "camp-history",
+      "reason": "Die neuere Legacy-Fassung in eine zugängliche Tabelle überführen, den überholten Planungszusatz 2026 entfernen und den Eintrag 2027 ergänzen."
+    }
+  ],
+  "currentContentPatches": [
+    {
+      "kind": "page",
+      "targetKey": "rueckblick/presse/kirchner-hans",
+      "expectedCurrentContentDigest": "sha256:96de6355b23f3a9a186f06c7a254a5b239099f84a892508e40afa9e5619082a2",
+      "find": "Pressebeitrag aus unserem Archiv vom 19. Januar 2025.",
+      "replace": "Unser Gründungsmitglied Hans Kirchner ist verstorben. Der Pressebeitrag erschien am 19. Januar 2025.",
+      "sourceKey": "article:/index.php/rueckblick/presse/kirchner-hans#2025-01-19-nachruf-auf-hans-kirchner-kirchner-hans-2025-01-jpg",
+      "sourceDigest": "sha256:1dcdbdb49fb8873f66b32f03985c0f2980f5654d01780e4983595b2dd89d7726",
+      "reason": "Den beim Bildimport verlorenen Baseline-Hinweis auf das Gründungsmitglied wiederherstellen und das lokalisierte Pressebild behalten."
+    },
+    {
+      "kind": "page",
+      "targetKey": "rueckblick/presse/kreativtheater2024-02",
+      "expectedCurrentContentDigest": "sha256:2f4328c128bfeee68a24cc9d91428b6438346ab4553c6c3858262e127d730a7f",
+      "find": "Pressebeitrag aus unserem Archiv vom 30. Dezember 2024.",
+      "replace": "Rheinpfalz-Artikel vom Montag, 30. Dezember 2024 über das Kolping-Kreativtheater.",
+      "sourceKey": "article:/index.php/rueckblick/presse/kreativtheater2024-02#2024-12-30-kreativbuehne-2024-pressebericht-vom-30-dezember-kreativtheater-2024-02-jpg",
+      "sourceDigest": "sha256:fd75c9ba41478c176bfbdd7d8f13ab34d51261ed24de87f6c9e753db17563e35",
+      "reason": "Die beim Bildimport verlorene Zeitungszuordnung aus dem bestehenden CMS-Inhalt wiederherstellen."
+    },
+    {
+      "kind": "page",
+      "targetKey": "rueckblick/prunksitzung/prunksitzung2021",
+      "expectedCurrentContentDigest": "sha256:30dd49a553ca8169a9baa454e60b97902b292b6899f9b41502aa8ca236f9ca26",
+      "find": "Am Samstag, 06. Januar 2021",
+      "replace": "Am 6. Januar 2021",
+      "sourceKey": "article:/index.php/rueckblick/prunksitzung/prunksitzung2021#2021-02-07-digitale-ramser-fastnacht-2021-plakat-prunk-2021-jpg",
+      "sourceDigest": "sha256:725059cba64061e09735d9bd4f199bfbc7b3e385ab2cea1739b44834af77883f",
+      "reason": "Den nachweislich unpassenden Wochentag entfernen, ohne ein unbelegtes Ersatzdatum zu erfinden."
+    },
+    {
+      "kind": "news",
+      "targetKey": "2025-10-13-tintenpatronen-sammelaktion-der-kf-ramsen",
+      "expectedCurrentContentDigest": "sha256:68d7448619614c934b1ba98509d57996430334450b22788c5463ff06f684d1c5",
+      "find": "### Wir sammeln nur Tintenpatronen mit Druckkopf\n\n",
+      "replace": "",
+      "sourceKey": "article:/index.php/aktuelles#2025-10-13-tintenpatronen-sammelaktion-der-kolpingsfamilie-ramsen-tintenpatronen-sammeln-jpg",
+      "sourceDigest": "sha256:13f125a2f4043fe07916617cc1b5fc17997005bc7ad5fd7499240b797208c998",
+      "reason": "Die im Detail bereits als Teaser sichtbare Aussage nicht direkt darunter als Überschrift wiederholen; Adresse und Bild unverändert behalten."
+    }
+  ],
+  "eventUpdates": [
+    {
+      "sourceKey": "event:2026-03-20:bezirks-kreuzweg",
+      "sourceDigest": "sha256:72084d4e239442c33ed41f821129965173a7b168302fb3767e65ab60e5e398f4",
+      "targetSlug": "2026-03-20-bezirks-kreuzweg",
+      "expect": {
+        "title": "Bezirks Kreuzweg",
+        "startDate": "2026-03-20T00:00:00.000Z",
+        "endDate": null,
+        "startTime": "19:00",
+        "endTime": null,
+        "location": "Park",
+        "description": "19:00 Uhr — Bezirks Kreuzweg im Park von Dirmstein",
+        "category": "bezirk",
+        "published": true
+      },
+      "set": {
+        "location": "Park von Dirmstein"
+      },
+      "reason": "Die im Beschreibungstext vollständig erhaltene Ortsangabe auch im strukturierten Ortsfeld abbilden."
+    },
+    {
+      "sourceKey": "event:2026-05-22:bezirksmaiandacht",
+      "sourceDigest": "sha256:b1348910e4da16764ba50c34cb62e7a6e3dd4cc189ac0ecbaa99785bcd407862",
+      "targetSlug": "2026-05-22-bezirksmaiandacht",
+      "expect": {
+        "title": "Bezirksmaiandacht",
+        "startDate": "2026-05-22T00:00:00.000Z",
+        "endDate": null,
+        "startTime": "19:00",
+        "endTime": null,
+        "location": "Ramsen",
+        "description": "19:00 Uhr — Bezirksmaiandacht in Ramsen an der Mariengrotte",
+        "category": "bezirk",
+        "published": true
+      },
+      "set": {
+        "location": "Mariengrotte, Ramsen",
+        "description": "19:00 Uhr — Bezirksmaiandacht an der Mariengrotte in Ramsen; anschließend Maibowle im Pfarrheim."
+      },
+      "reason": "Den Anschluss im Pfarrheim ergänzen und Haupt- sowie Anschlussort sauber trennen."
+    },
+    {
+      "sourceKey": "event:2026-06-14:gottesdienst-in-der-pfarrkirche",
+      "sourceDigest": "sha256:fe30494c2b6c70b0b219d757226e1954b4e3018393a089d10887b3ec144bcb8d",
+      "targetSlug": "2026-06-14-gottesdienst",
+      "expect": {
+        "title": "Gottesdienst",
+        "startDate": "2026-06-14T00:00:00.000Z",
+        "endDate": null,
+        "startTime": "10:30",
+        "endTime": null,
+        "location": "Pfarrkirche",
+        "description": "10:30 Uhr — Gottesdienst in der Pfarrkirche",
+        "category": "glaube",
+        "published": true
+      },
+      "set": {
+        "title": "Gottesdienst mit anschließendem Gemeindefest",
+        "description": "10:30 Uhr — Gottesdienst in der Pfarrkirche; anschließend Gemeindefest auf der Kolpingwiese (Kath. Pfarrgemeinde)."
+      },
+      "reason": "Das in der Quelle genannte Gemeindefest und den Veranstalter im bestehenden strukturierten Termin ergänzen."
+    },
+    {
+      "sourceKey": "event:2026-08-21:open-air-theater",
+      "sourceDigest": "sha256:d3e3d0154d990c0659072122fc92bb30fd50eb122a8ebf0d69c56f2ff98a2a00",
+      "targetSlug": "2026-08-21-open-air-theater",
+      "expect": {
+        "title": "Creepshow – Open-Air-Premiere",
+        "startDate": "2026-08-21T00:00:00.000Z",
+        "endDate": null,
+        "startTime": "20:00",
+        "endTime": null,
+        "location": "Kolpingwiese",
+        "description": "20:00 Uhr — „Creepshow“ auf der Kolpingwiese. Der Eintritt ist frei. [Mehr zum Stück](https://kolpingtheater-ramsen.de/)",
+        "category": "kultur",
+        "published": true
+      },
+      "set": {
+        "description": "20:00 Uhr — „Creepshow“ auf der Kolpingwiese. Der Eintritt ist frei. Eine Veranstaltung der Kolpingjugend. [Mehr zum Stück](https://kolpingtheater-ramsen.de/)"
+      },
+      "reason": "Den Legacy-Veranstalter ergänzen und die reicheren aktuellen Stück-, Eintritts- und Linkangaben behalten."
+    },
+    {
+      "sourceKey": "event:2026-08-21:open-air-theater",
+      "sourceDigest": "sha256:d3e3d0154d990c0659072122fc92bb30fd50eb122a8ebf0d69c56f2ff98a2a00",
+      "targetSlug": "2026-08-22-creepshow-open-air-theater",
+      "expect": {
+        "title": "Creepshow – Open-Air-Theater",
+        "startDate": "2026-08-22T00:00:00.000Z",
+        "endDate": null,
+        "startTime": "20:00",
+        "endTime": null,
+        "location": "Kolpingwiese",
+        "description": "20:00 Uhr — „Creepshow“ auf der Kolpingwiese. Der Eintritt ist frei. [Mehr zum Stück](https://kolpingtheater-ramsen.de/)",
+        "category": "kultur",
+        "published": true
+      },
+      "set": {
+        "description": "20:00 Uhr — „Creepshow“ auf der Kolpingwiese. Der Eintritt ist frei. Eine Veranstaltung der Kolpingjugend. [Mehr zum Stück](https://kolpingtheater-ramsen.de/)"
+      },
+      "reason": "Den Legacy-Zeitraum 21.–22. August auf dem bereits korrekt gesplitteten zweiten Aufführungstag vollständig abbilden."
+    },
+    {
+      "sourceKey": "event:2026-08-28:open-air-theater",
+      "sourceDigest": "sha256:accf822198528b7fe0bcb4e57aba8b727d30d5e3ebfa1de294187931935a4ed0",
+      "targetSlug": "2026-08-28-open-air-theater",
+      "expect": {
+        "title": "Creepshow – Open-Air-Theater",
+        "startDate": "2026-08-28T00:00:00.000Z",
+        "endDate": null,
+        "startTime": "20:00",
+        "endTime": null,
+        "location": "Kolpingwiese",
+        "description": "20:00 Uhr — „Creepshow“ auf der Kolpingwiese. Der Eintritt ist frei. [Mehr zum Stück](https://kolpingtheater-ramsen.de/)",
+        "category": "kultur",
+        "published": true
+      },
+      "set": {
+        "description": "20:00 Uhr — „Creepshow“ auf der Kolpingwiese. Der Eintritt ist frei. Eine Veranstaltung der Kolpingjugend. [Mehr zum Stück](https://kolpingtheater-ramsen.de/)"
+      },
+      "reason": "Den Legacy-Veranstalter ergänzen und die reicheren aktuellen Stück-, Eintritts- und Linkangaben behalten."
+    },
+    {
+      "sourceKey": "event:2026-08-28:open-air-theater",
+      "sourceDigest": "sha256:accf822198528b7fe0bcb4e57aba8b727d30d5e3ebfa1de294187931935a4ed0",
+      "targetSlug": "2026-08-29-creepshow-open-air-theater",
+      "expect": {
+        "title": "Creepshow – Open-Air-Theater",
+        "startDate": "2026-08-29T00:00:00.000Z",
+        "endDate": null,
+        "startTime": "20:00",
+        "endTime": null,
+        "location": "Kolpingwiese",
+        "description": "20:00 Uhr — „Creepshow“ auf der Kolpingwiese. Der Eintritt ist frei. [Mehr zum Stück](https://kolpingtheater-ramsen.de/)",
+        "category": "kultur",
+        "published": true
+      },
+      "set": {
+        "description": "20:00 Uhr — „Creepshow“ auf der Kolpingwiese. Der Eintritt ist frei. Eine Veranstaltung der Kolpingjugend. [Mehr zum Stück](https://kolpingtheater-ramsen.de/)"
+      },
+      "reason": "Den Legacy-Zeitraum 28.–29. August auf dem bereits korrekt gesplitteten zweiten Aufführungstag vollständig abbilden."
+    },
+    {
+      "sourceKey": "event:2026-09-05:kennst-du-deine-heimat-besuch-der-erdekaut-mit-erika-gruen",
+      "sourceDigest": "sha256:db577fe31ea2db76146cbaff688433e4f37be48252fe0a95a0f3d1ff0f29cb67",
+      "targetSlug": "2026-09-05-kennst-du-deine-heimat",
+      "expect": {
+        "title": "„Kennst du deine Heimat“",
+        "startDate": "2026-09-05T00:00:00.000Z",
+        "endDate": null,
+        "startTime": "15:00",
+        "endTime": null,
+        "location": null,
+        "description": "15:00 Uhr — „Kennst du deine Heimat“",
+        "category": "verein",
+        "published": true
+      },
+      "set": {
+        "title": "„Kennst du deine Heimat“ – Besuch der Erdekaut",
+        "location": "Erdekaut",
+        "description": "15:00 Uhr — „Kennst du deine Heimat“: Besuch der Erdekaut mit Erika Grün."
+      },
+      "reason": "Ziel und Begleitung aus dem vollständigen Legacy-Termin ergänzen."
+    },
+    {
+      "sourceKey": "event:2026-11-29:musikalische-adventsandacht-in-der-ev-kirche",
+      "sourceDigest": "sha256:79cc166985eb5c29b69129c458fd57a023b9b195adf54f8d22656c5d208ca271",
+      "targetSlug": "2026-11-29-musikalische-adventsandacht",
+      "expect": {
+        "title": "Musikalische Adventsandacht",
+        "startDate": "2026-11-29T00:00:00.000Z",
+        "endDate": null,
+        "startTime": "18:00",
+        "endTime": null,
+        "location": "Ev. Kirche",
+        "description": "18:00 Uhr — Musikalische Adventsandacht in der Ev. Kirche",
+        "category": "glaube",
+        "published": true
+      },
+      "set": {
+        "description": "18:00 Uhr — Musikalische Adventsandacht in der Ev. Kirche (Kath. und Evang. Pfarrgemeinde)."
+      },
+      "reason": "Den in der Quelle genannten gemeinsamen Veranstalter ergänzen."
+    },
+    {
+      "sourceKey": "event:2026-12-26:theaterauffuehrung-sollte-es-ein-winterstueck-geben",
+      "sourceDigest": "sha256:ae22b24b75b50525cf44055393440bac9ba55d65d73a5fe8129f0a729c862adc",
+      "targetSlug": "2026-12-26-theaterauffuehrung",
+      "expect": {
+        "title": "Theateraufführung",
+        "startDate": "2026-12-26T00:00:00.000Z",
+        "endDate": "2026-12-27T00:00:00.000Z",
+        "startTime": null,
+        "endTime": null,
+        "location": null,
+        "description": "Theateraufführung",
+        "category": "kultur",
+        "published": true
+      },
+      "set": {
+        "title": "Theateraufführung (vorläufig)",
+        "description": "Vorläufiger Termin: Theateraufführung der Jugend, falls 2026 ein Winterstück gespielt wird.",
+        "published": false
+      },
+      "reason": "Den ausdrücklichen Legacy-Vorbehalt bewahren und einen unbestätigten Termin nicht öffentlich als sicher ankündigen."
+    }
+  ],
+  "metadataUpdates": [
+    {
+      "targetPath": "/datenschutz",
+      "expectedCurrentMetaDigest": "sha256:66574e745b930802986779a15bad69359e8b22d5fa7e1a9e417d52eb5de59cea",
+      "value": "Datenschutzerklärung der Kolpingsfamilie Ramsen mit Informationen zur Verarbeitung personenbezogener Daten und zu Ihren Rechten.",
+      "reason": "HTML-Entities aus der kopierten Joomla-Metabeschreibung entfernen."
+    },
+    {
+      "targetPath": "/impressum",
+      "expectedCurrentMetaDigest": "sha256:d888964f3db1202cdc6b42264de671cdccc657eee346b9225da827b3fe8a0adb",
+      "value": "Impressum der Kolpingsfamilie Ramsen mit Anschrift, Kontakt und rechtlichen Hinweisen.",
+      "reason": "Den veralteten Joomla-Spambots-Hinweis aus den Suchmaschinen-Metadaten entfernen."
+    },
+    {
+      "targetPath": "/rueckblick/presse/kirchner-hans",
+      "expectedCurrentMetaDigest": "sha256:cf81daddeab331783a0b9e376e8da958b76f966e28b35adbd7f9d77c9adf6f99",
+      "value": "Unser Gründungsmitglied Hans Kirchner ist verstorben. Der Pressebeitrag erschien am 19. Januar 2025.",
+      "reason": "Die wiederhergestellte inhaltliche Einordnung auch in den Metadaten abbilden."
+    },
+    {
+      "targetPath": "/rueckblick/presse/kreativtheater2024-02",
+      "expectedCurrentMetaDigest": "sha256:8cea78a43f3413e5284d90a123f8770608d9022f246022d55c99c17fb5d2fcae",
+      "value": "Rheinpfalz-Artikel vom Montag, 30. Dezember 2024 über das Kolping-Kreativtheater.",
+      "reason": "Die wiederhergestellte Zeitungszuordnung auch in den Metadaten abbilden."
+    },
+    {
+      "targetPath": "/rueckblick/prunksitzung/prunksitzung2021",
+      "expectedCurrentMetaDigest": "sha256:868cbc9703fb7c98d1f8877b8422c766d2a0b72c3e93b36d1d369deb8aacd511",
+      "value": "Am 6. Januar 2021 wurde ein Fastnachtsvideo der Kolpingjugend mit Beiträgen verschiedener Ramser Gruppen online gezeigt.",
+      "reason": "Den falschen Wochentag auch aus der Metabeschreibung entfernen."
+    },
+    {
+      "targetPath": "/rueckblick/staedtereisen",
+      "expectedCurrentMetaDigest": "sha256:b06fa9338f3e6edec596604aa3ee9d37964ea0a91074dd3571f0ef7dd3545cdf",
+      "value": "Reisehistorie der Kolpingsfamilie Ramsen von 1979 bis 2023. Seit 2024 werden keine Reisen mehr angeboten.",
+      "reason": "HTML-Abstände aus der kopierten Joomla-Metabeschreibung entfernen."
+    },
+    {
+      "targetPath": "/rueckblick/trachtengruppe",
+      "expectedCurrentMetaDigest": "sha256:c5a559376ecfbeb336a7fe2095007017c8c1688a8065d864fe48ce67119e0799",
+      "value": "Geschichte der Volkstanz- und Trachtengruppe der Kolpingsfamilie Ramsen, die im Juni 2021 offiziell aufgelöst wurde.",
+      "reason": "HTML-Entities und leere Joomla-Abstände aus den Metadaten entfernen."
+    },
+    {
+      "targetPath": "/ueber-uns/adolf-kolping",
+      "expectedCurrentMetaDigest": "sha256:0366c09e1f5eda8abd65174458c17849a347d2268c8970bd8349d95fe3b93691",
+      "value": "Stationen im Leben und Wirken Adolph Kolpings von seiner Geburt 1813 bis zur Seligsprechung 1991.",
+      "reason": "Joomla-Autoren-, Veröffentlichungs- und Zugriffstext aus den Metadaten entfernen."
+    },
+    {
+      "targetPath": "/ueber-uns/kolpingsfamilie-ramsen",
+      "expectedCurrentMetaDigest": "sha256:27638c5f6487697d0a60da28893193c72abf340890e62d6473fecd5efa72203c",
+      "value": "Die Kolpingsfamilie Ramsen stellt sich vor: gegründet 1953, heute mit über 300 Mitgliedern und vielfältigem Vereinsleben.",
+      "reason": "Joomla-Autoren-, Veröffentlichungs-, Zugriffs- und Abstandstext aus den Metadaten entfernen."
+    },
+    {
+      "targetPath": "/ueber-uns/vereinsdaten",
+      "expectedCurrentMetaDigest": "sha256:bd6ac86849ffda4d525168376caa937770f4481e8939fe09d973f5a67dfa94f1",
+      "value": "Vereinsgeschichte der Kolpingsfamilie Ramsen seit der Gründung 1953 mit Vorständen, Ehrungen und wichtigen chronologischen Daten.",
+      "reason": "Joomla-Autoren-, Veröffentlichungs-, Zugriffs- und HTML-Abstandstext aus den Metadaten entfernen."
+    },
+    {
+      "targetPath": "/vereinsbereiche/zeltlager",
+      "expectedCurrentMetaDigest": "sha256:20c6bfcba5b75f032ea22e12a19967b47df28da2472da441477e765e9f5d4eee",
+      "value": "Chronik der Familien- und Jugendzeltlager der Kolpingsfamilie Ramsen von 1977 bis 2027.",
+      "reason": "Die neue tabellarische Inhaltsstruktur mit einer knappen, stabilen Metabeschreibung versehen."
+    }
+  ]
+}
